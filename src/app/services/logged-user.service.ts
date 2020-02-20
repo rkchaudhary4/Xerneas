@@ -32,6 +32,35 @@ export class LoggedUserService {
     );
     this.$logged.subscribe(users => this.currentUser.next(users));
   }
+  SendEmailVerification(){
+    return this.afAuth.auth.currentUser.sendEmailVerification()
+    .then(() => {
+      console.log('mail sent');
+    })
+  }
+  signIn = (username: string, pass: string): Promise<any> => this.afAuth.auth.signInWithEmailAndPassword(username, pass)
+  .then((res)=> {
+    if(res.user.emailVerified !== true){
+
+    }else{
+
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  signup = (username: string, pass: string, name: string: roles: string): Promise<void> => this.afAuth.auth.createUserWithEmailAndPassword(username, pass)
+  .then((res)=> {
+    this.SendEmailVerification();
+    const user = res.user;
+    this.userRef(user.uid).set({
+      uid: user.uid,
+      role: roles,
+      displayName: name,
+      email: user.email
+    })
+  }).catch(err => {console.log(err);})
+  logout = (): Promise<void | boolean> => this.afAuth.auth.signOut();
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
