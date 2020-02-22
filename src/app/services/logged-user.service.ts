@@ -49,7 +49,7 @@ export class LoggedUserService {
   .catch(err => {
     console.log(err);
   });
-  signup = (username: string, pass: string, name: string: roles: string): Promise<void> => this.afAuth.auth.createUserWithEmailAndPassword(username, pass)
+  signup = (username: string, pass: string, name: string, roles: string): Promise<void> => this.afAuth.auth.createUserWithEmailAndPassword(username, pass)
   .then((res)=> {
     this.SendEmailVerification();
     const user = res.user;
