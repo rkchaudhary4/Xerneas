@@ -26,10 +26,9 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Role</mat-label>
-            <mat-select>
+            <mat-select formControlName="role">
                 <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
             </mat-select>
-            <!-- <input matInput type="text" formControlName="role" id="role" name="role" placeholder="Role" #role> -->
         </mat-form-field>
         <button mat-raised-button fxFlex="33" type="submit" class="btn btn-default" [disabled]="!form.valid">
       Submit
