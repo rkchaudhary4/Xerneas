@@ -1,1 +1,17 @@
-<p>login-home works!</p>
+<mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <form (ngSubmit)="onSubmit(username.value, password.value); loginform.reset();" #loginform fxLayout="column" fxLayoutAlign="center center">
+        <mat-form-field fxFlex="33">
+            <input matInput type="text" id="name" required name="name" placeholder="Username" #username>
+        </mat-form-field>
+        <mat-form-field fxFlex="33">
+            <input matInput type="password" id="password" required name="password" placeholder="Password" #password>
+        </mat-form-field>
+        <button fxFlex="33" mat-raised-button type="submit" [disabled]="submitted">Submit</button>
+    </form>
+    <mat-card-footer>
+        <p>
+            Don't have an account? <a routerLink="/signup"> Sign Up </a>
+        </p>
+    </mat-card-footer>
+</mat-card>

@@ -8,9 +8,22 @@ import { LoggedUserService } from '../../services/logged-user.service';
 })
 export class LoginHomeComponent implements OnInit {
 
-  constructor() { }
+  submitted = false;
+
+  constructor(private loginService: LoggedUserService) { }
 
   ngOnInit() {
   }
+
+  onSubmit = (username: string, password: string): void => {
+    this.submitted = true;
+    this.loginService.signIn(username, password)
+      .then(() => {
+        console.log('logged in');
+    }).catch((err) => {
+      this.submitted = false;
+      console.log(err);
+    });
+  };
 
 }

@@ -41,9 +41,11 @@ export class LoggedUserService {
   signIn = (username: string, pass: string): Promise<any> => this.afAuth.auth.signInWithEmailAndPassword(username, pass)
   .then((res)=> {
     if(res.user.emailVerified !== true){
-
+      this.router.navigate(['/signup']);
+      console.log('Not Verified');
     }else{
-
+      this.router.navigate(['/']);
+      console.log('Verified');
     }
   })
   .catch(err => {
@@ -53,6 +55,7 @@ export class LoggedUserService {
   .then((res)=> {
     this.SendEmailVerification();
     const user = res.user;
+    console.log('User Created Successfully');
     this.userRef(user.uid).set({
       uid: user.uid,
       role: roles,
