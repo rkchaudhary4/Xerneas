@@ -18,7 +18,7 @@ export class LoggedUserService {
   isAuthenticated$: Observable<boolean>;
   role: Observable<string>;
   public userRef = (id: string): AngularFirestoreDocument<User> =>
-    this.afs.doc('users/${id}');
+    this.afs.doc(`users/${id}`);
   init = (): void => {
     this.currentUser = new BehaviorSubject<User>(null);
     this.isAuthenticated$ = this.afAuth.authState.pipe(map(res => !!res));
@@ -55,6 +55,7 @@ export class LoggedUserService {
   .then((res)=> {
     this.SendEmailVerification();
     const user = res.user;
+    console.log(user.uid);
     console.log('User Created Successfully');
     this.userRef(user.uid).set({
       uid: user.uid,
