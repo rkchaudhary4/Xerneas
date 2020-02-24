@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { Router } from '@angular/router';
 
@@ -15,15 +15,17 @@ export class SignUpComponent implements OnInit {
 
   constructor(private loginService: LoggedUserService, private router: Router, @Inject(FormBuilder) fb: FormBuilder) {
     this.form = fb.group({
-      name: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
+      username: ['', Validators.compose([Validators.required, Validators.email])],
       passwords: fb.group({
         password: ['', Validators.required],
         repeat: ['', Validators.required]
       }, {validator: this.areEqual}),
-      names: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([Validators.required])],
       role: ['', Validators.required]
     });
   }
+
+  roles = ['Manager', 'Teaching Assistant (TA)']
 
   areEqual: ValidatorFn = (g: FormGroup) => {
     return g.get('password').value === g.get('repeat').value
@@ -36,7 +38,7 @@ export class SignUpComponent implements OnInit {
 
   onSubmit = () => {
     this.submitted = true;
-    this.loginService.signup(this.form.value.name, this.form.value.passwords.password, this.form.value.names, this.form.value.role)
+    this.loginService.signup(this.form.value.username, this.form.value.passwords.password, this.form.value.name, this.form.value.role)
       .then(() => {
         this.form.reset();
         this.router.navigate(['/'])
