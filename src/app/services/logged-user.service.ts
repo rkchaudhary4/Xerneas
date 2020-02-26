@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/internal/operators';
 import { User } from '../models';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,9 @@ export class LoggedUserService {
         }
       })
       .catch(err => {
-        console.log(err);
+        this.snackbar.open(err.message, '', {
+          duration: 2000,
+        });
       });
   signup = (
     username: string,
@@ -67,29 +70,32 @@ export class LoggedUserService {
             displayName: name
           })
           .then(() => {
-            console.log('Successfully Updated Name');
             this.SendEmailVerification();
           })
           .catch(err => {
-            console.log(err);
+            this.snackbar.open(err.message, '', {
+              duration: 2000,
+            });
           });
         console.log(user.uid);
-        console.log('User Created Successfully');
         this.userRef(user.uid).set({
           uid: user.uid,
           role: roles,
           displayName: name,
-          email: user.email
+          email: user.email,
         });
       })
       .catch(err => {
-        console.log(err);
+        this.snackbar.open(err.message, '', {
+          duration: 2000
+        })
       });
   logout = (): Promise<void | boolean> => this.afAuth.auth.signOut();
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private snackbar: MatSnackBar
   ) {
     this.init();
   }

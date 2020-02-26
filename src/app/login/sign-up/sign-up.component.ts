@@ -17,8 +17,8 @@ export class SignUpComponent implements OnInit {
     this.form = fb.group({
       username: ['', Validators.compose([Validators.required, Validators.email])],
       passwords: fb.group({
-        password: ['', Validators.required],
-        repeat: ['', Validators.required]
+        password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+        repeat: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
       }, {validator: this.areEqual}),
       name: ['', Validators.compose([Validators.required])],
       role: ['', Validators.required]
@@ -28,8 +28,8 @@ export class SignUpComponent implements OnInit {
   roles = ['Manager', 'Teaching Assistant (TA)']
 
   areEqual: ValidatorFn = (g: FormGroup) => {
-    return g.get('password').value === g.get('repeat').value
-      ? null : {mismatch: true};
+    console.log(g.get('password'));
+    return (g.get('password').value === g.get('repeat').value)  ? null : {mismatch: true};
   };
 
   ngOnInit() {
