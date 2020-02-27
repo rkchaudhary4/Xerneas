@@ -39,7 +39,7 @@ export class SignUpComponent implements OnInit {
     this.loginService.signup(this.form.value.username, this.form.value.passwords.password, this.form.value.name, this.form.value.role)
       .then(() => {
         this.form.reset();
-        this.router.navigate(['/'])
+        // this.router.navigate(['/'])
       }).catch((err) => {console.log(err);});
   };
 }

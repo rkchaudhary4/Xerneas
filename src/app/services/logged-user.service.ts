@@ -36,6 +36,7 @@ export class LoggedUserService {
   SendEmailVerification() {
     return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
       console.log('Mail sent');
+      this.logout();
     });
   }
   signIn = (username: string, pass: string): Promise<any> =>
@@ -43,11 +44,12 @@ export class LoggedUserService {
       .signInWithEmailAndPassword(username, pass)
       .then(res => {
         if (res.user.emailVerified !== true) {
-          this.router.navigate(['/signup']);
-          console.log('Not Verified');
+          this.logout();
+          this.snackbar.open('Your E-mail address is not verified', '', {
+            duration: 2500,
+          })
         } else {
           this.router.navigate(['/']);
-          console.log('Verified');
         }
       })
       .catch(err => {
@@ -64,6 +66,7 @@ export class LoggedUserService {
     this.afAuth.auth
       .createUserWithEmailAndPassword(username, pass)
       .then(res => {
+        this.router.navigate(['/login']);
         const user = res.user;
         user
           .updateProfile({
@@ -90,7 +93,9 @@ export class LoggedUserService {
           duration: 2000
         })
       });
-  logout = (): Promise<void | boolean> => this.afAuth.auth.signOut();
+  logout = (): Promise<void | boolean> => this.afAuth.auth.signOut().then(() => {
+      this.router.navigate(['/login']);
+  }).catch(err => {console.log(err);});
   resetPassword = (email: string) => {
     this.afAuth.auth.sendPasswordResetEmail(email).then(res => {
       this.router.navigate(['/login']);

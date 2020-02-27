@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoggedUserService } from '../services/logged-user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private logged: LoggedUserService) { }
 
   ngOnInit(): void {
+    this.logged.$logged.subscribe(res => console.log(res));
+  }
+
+  logOut(){
+    this.logged.logout();
   }
 
 }

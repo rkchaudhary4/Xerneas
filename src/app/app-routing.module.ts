@@ -3,23 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginHomeComponent } from './login/login-home/login-home.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
+import { userRoutes } from './login/routes';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LocalUserGuard, LoggedInGuard } from './auth.guard';
 
 const routes: Routes = [
   {path: '',
-    component: LoginHomeComponent
-  },
-  {
-    path: 'signup',
-    component: SignUpComponent
-  },
-  {
-    path:'reset_password',
-    component: ResetPasswordComponent
+    component: DashboardComponent,
+    canActivate: [LocalUserGuard]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),
+RouterModule.forChild(userRoutes)],
 exports: [RouterModule]
 })
 export class AppRoutingModule {
