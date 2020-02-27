@@ -9,5 +9,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class AppComponent {
   title = 'Xerneas';
 
-  constructor(db: AngularFirestore) {}
+  constructor(db: AngularFirestore) {
+    console.log('Hi hackers!!');
+  }
 }

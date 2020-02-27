@@ -28,7 +28,6 @@ export class SignUpComponent implements OnInit {
   roles = ['Manager', 'Teaching Assistant (TA)']
 
   areEqual: ValidatorFn = (g: FormGroup) => {
-    console.log(g.get('password'));
     return (g.get('password').value === g.get('repeat').value)  ? null : {mismatch: true};
   };
 

@@ -35,7 +35,7 @@ export class LoggedUserService {
   };
   SendEmailVerification() {
     return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
-      console.log('mail sent');
+      console.log('Mail sent');
     });
   }
   signIn = (username: string, pass: string): Promise<any> =>
@@ -91,6 +91,16 @@ export class LoggedUserService {
         })
       });
   logout = (): Promise<void | boolean> => this.afAuth.auth.signOut();
+  resetPassword = (email: string) => {
+    this.afAuth.auth.sendPasswordResetEmail(email).then(res => {
+      this.router.navigate(['/login']);
+    }).catch(err => {
+      this.snackbar.open(err.message, '', {
+        duration: 2000
+      });
+    }
+    );
+  }
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,

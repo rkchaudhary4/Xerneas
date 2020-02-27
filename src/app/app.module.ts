@@ -20,12 +20,16 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule} from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginHomeComponent,
-    SignUpComponent
+    SignUpComponent,
+    DashboardComponent,
+    ResetPasswordComponent
   ],
   imports: [
   BrowserModule,

@@ -31,7 +31,7 @@
                 <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-raised-button fxFlex="33" type="submit" class="btn btn-default">
+        <button mat-raised-button fxFlex="33" type="submit" class="btn btn-default" [disabled]="!form.valid">
       Submit
       </button>
     </form>
