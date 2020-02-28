@@ -10,11 +10,6 @@
     margin-top: 10vh;
 }
 
-.side {
-    position: absolute;
-    top: 5vh;
-}
-
 .left {
     margin-left: 1vw;
     height: 100%;
@@ -35,5 +30,65 @@
 }
 
 .side {
-    margin-top: 0vh;
+    width: 15%;
+}
+
+.sidenav {
+    margin-top: 5vh;
+    height: 95%;
+}
+
+.mat-list-item {
+    text-transform: capitalize;
+}
+
+.menuFive {
+    width: 35px;
+    height: 20px;
+    margin: 10px 10px;
+    margin-left: 1vw;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.menuFive span {
+    background-color: black;
+    position: absolute;
+    border-radius: 2px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    width: 100%;
+    height: 4px;
+    transition-duration: 500ms;
+}
+
+.menuFive span:nth-child(1) {
+    top: 0px;
+    left: 0px;
+}
+
+.menuFive span:nth-child(2) {
+    top: 8.6px;
+    left: 0px;
+}
+
+.menuFive span:nth-child(3) {
+    bottom: 0px;
+    left: 0px;
+}
+
+.isOpen span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 13px;
+    opacity: 0;
+}
+
+.isOpen span:nth-child(2) {
+    transform: rotate(495deg);
+    top: 13px;
+}
+
+.isOpen span:nth-child(3) {
+    transform: rotate(45deg);
+    top: 13px;
 }

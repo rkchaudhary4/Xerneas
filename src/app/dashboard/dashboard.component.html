@@ -1,19 +1,25 @@
 <div class="top">
-    <div class="left" fxLayout="row" fxLayoutAlign="start center">
-        {{ user.displayName }}
-    </div>
     <div class="center" fxLayout="row" fxLayoutAlign="center center">
         Xerneas
+    </div>
+    <div class="left" fxLayout="row" fxLayoutAlign="start center">
+        <div class="menuFive isOpen" (click)="sidenav.toggle();" [class.isOpen]="isOpen">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        {{ user.displayName }}
     </div>
     <div class="right" fxLayout="row" fxLayoutAlign="end center">
         <button mat-raised-button (click)="logOut()">LogOut</button>
     </div>
 </div>
 
-<!-- <mat-sidenvav-container class="sidenav"> -->
-<mat-sidenav role="navigation" [opened]="isOpen" class="side" #sidenav>
-    <mat-nav-list fxLayout="column">
-        <a mat-list-item *ngFor="let link of links" [innerHTML]="link"></a>
-    </mat-nav-list>
-</mat-sidenav>
-<!-- </mat-sidenvav-container> -->
+<mat-sidenav-container class="sidenav">
+    <mat-sidenav role="navigation" [(opened)]="isOpen" [mode]="'side'" class="side" #sidenav>
+        <mat-nav-list fxLayout="column">
+            <a mat-list-item *ngFor="let link of links" [innerHTML]="link" [routerLink]="'/' + link == 'home'? '': link"></a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <router-outlet></router-outlet>
+</mat-sidenav-container>

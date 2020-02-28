@@ -9,33 +9,23 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoginHomeComponent } from './login/login-home/login-home.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule} from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { LoadMaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginHomeComponent,
     SignUpComponent,
-    DashboardComponent,
     ResetPasswordComponent,
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
@@ -44,18 +34,10 @@ import { MatListModule } from '@angular/material/list';
     AngularFireStorageModule,
     AngularFirestoreModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule
+    DashboardModule,
+    LoadMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
