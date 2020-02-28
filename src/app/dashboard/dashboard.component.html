@@ -1,2 +1,19 @@
-<p>dashboard works!</p>
-<button mat-raised-button (click)="logOut()">LogOut</button>
+<div class="top">
+    <div class="left" fxLayout="row" fxLayoutAlign="start center">
+        {{ user.displayName }}
+    </div>
+    <div class="center" fxLayout="row" fxLayoutAlign="center center">
+        Xerneas
+    </div>
+    <div class="right" fxLayout="row" fxLayoutAlign="end center">
+        <button mat-raised-button (click)="logOut()">LogOut</button>
+    </div>
+</div>
+
+<!-- <mat-sidenvav-container class="sidenav"> -->
+<mat-sidenav role="navigation" [opened]="isOpen" class="side" #sidenav>
+    <mat-nav-list fxLayout="column">
+        <a mat-list-item *ngFor="let link of links" [innerHTML]="link"></a>
+    </mat-nav-list>
+</mat-sidenav>
+<!-- </mat-sidenvav-container> -->

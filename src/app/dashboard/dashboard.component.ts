@@ -7,15 +7,17 @@ import { LoggedUserService } from '../services/logged-user.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  user;
+  isOpen = true;
+  links = ['home', 'people', 'data', 'profile'];
 
   constructor(private logged: LoggedUserService) { }
 
   ngOnInit(): void {
-    this.logged.$logged.subscribe(res => console.log(res));
+    this.logged.$logged.subscribe(res => this.user=res);
   }
 
   logOut(){
     this.logged.logout();
   }
-
 }

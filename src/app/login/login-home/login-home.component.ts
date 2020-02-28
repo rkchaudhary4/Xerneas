@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user.service';
-import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-home',
@@ -10,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login-home.component.css']
 })
 export class LoginHomeComponent implements OnInit {
-
+  hide = true;
   submitted;
 
   constructor(private loginService: LoggedUserService) {

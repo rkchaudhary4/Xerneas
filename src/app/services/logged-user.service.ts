@@ -86,6 +86,7 @@ export class LoggedUserService {
           role: roles,
           displayName: name,
           email: user.email,
+          approved: false
         });
       })
       .catch(err => {

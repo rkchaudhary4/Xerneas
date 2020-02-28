@@ -1,0 +1,39 @@
+.top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 5vh;
+}
+
+.content {
+    margin-top: 10vh;
+}
+
+.side {
+    position: absolute;
+    top: 5vh;
+}
+
+.left {
+    margin-left: 1vw;
+    height: 100%;
+}
+
+.center {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.right {
+    position: absolute;
+    top: 0;
+    right: 1.2vw;
+    height: 100%;
+}
+
+.side {
+    margin-top: 0vh;
+}

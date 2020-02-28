@@ -22,6 +22,9 @@ import { MatSelectModule} from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -29,10 +32,10 @@ import { ResetPasswordComponent } from './login/reset-password/reset-password.co
     LoginHomeComponent,
     SignUpComponent,
     DashboardComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
@@ -49,7 +52,10 @@ import { ResetPasswordComponent } from './login/reset-password/reset-password.co
     FormsModule,
     MatInputModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

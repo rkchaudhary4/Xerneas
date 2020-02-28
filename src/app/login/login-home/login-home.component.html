@@ -3,10 +3,14 @@
         <mat-card-title>Login</mat-card-title>
         <form (ngSubmit)="onSubmit(username.value, password.value); loginform.reset();" #loginform fxLayout="column" fxLayoutAlign="center center">
             <mat-form-field fxFlex="33">
-                <input matInput type="text" id="name" required name="name" placeholder="Username" #username>
+                <input matInput type="text" id="name" required name="name" placeholder="E-mail ID" #username>
+                <mat-icon matSuffix>mail</mat-icon>
             </mat-form-field>
             <mat-form-field fxFlex="33">
-                <input matInput type="password" id="password" required name="password" placeholder="Password" #password>
+                <input matInput [type]="hide ? 'password': 'text'" id="password" required name="password" placeholder="Password" #password>
+                <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="'hide'">
+                <mat-icon>{{hide ? 'visibility_off': 'visibility'}}</mat-icon>
+                </button>
             </mat-form-field>
             <mat-card-actions>
                 <button mat-raised-button type="submit" [disabled]="submitted">Submit</button>
