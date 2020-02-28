@@ -35,7 +35,6 @@ export class LoggedUserService {
   };
   SendEmailVerification() {
     return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
-      console.log('Mail sent');
       this.logout();
     });
   }
@@ -66,7 +65,6 @@ export class LoggedUserService {
     this.afAuth.auth
       .createUserWithEmailAndPassword(username, pass)
       .then(res => {
-        this.router.navigate(['/login']);
         const user = res.user;
         user
           .updateProfile({
@@ -80,7 +78,6 @@ export class LoggedUserService {
               duration: 2000,
             });
           });
-        console.log(user.uid);
         this.userRef(user.uid).set({
           uid: user.uid,
           role: roles,
@@ -111,7 +108,7 @@ export class LoggedUserService {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
   ) {
     this.init();
   }

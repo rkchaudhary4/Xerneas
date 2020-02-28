@@ -39,7 +39,7 @@ import { LoadMaterialModule } from './material.module';
     DashboardModule,
     LoadMaterialModule
   ],
-  providers: [],
+  providers: [SignUpComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

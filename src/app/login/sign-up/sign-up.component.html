@@ -11,17 +11,17 @@
             <!-- <span id="name-help" class="text-warning" [hidden]="form.controls.name.valid || form.controls.name.pristine"> -->
             <!-- Username should be atleast 5 letters -->
             <!-- </span> -->
-            <div class="form-group" formGroupName="passwords" fxFlex="33" fxLayout="column" fxLayoutAlign="center center">
+            <div class="form-group" formGroupName="passwords" fxFlex="33" fxLayout="column" fxLayoutAlign="center start">
                 <mat-form-field>
                     <input matInput type="password" formControlName="password" id="password" required name="password" placeholder="Password" #password>
-                    <mat-error *ngIf="form.controls.passwords.get('password').errors?.minlength">Password should have at least 6 characters</mat-error>
+                    <mat-error *ngIf="form.controls.passwords.get('password').errors?.minlength">Enter minimum 6 characters</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <input matInput type="password" class="form-control" formControlName="repeat" id="repeat" name="repeat" placeholder="Repeat Password">
                 </mat-form-field>
                 <span id="repeat-help" class="text-warning" *ngIf="form.controls.passwords.errors?.mismatch && !form.controls.passwords.pristine && (form.controls.passwords.value.repeat !== '')">
-       Passwords don't match
-     </span>
+                Passwords don't match
+                </span>
             </div>
             <mat-form-field>
                 <input matInput type="text" formControlName="name" id="name" name="name" placeholder="Name" #names>
@@ -33,14 +33,14 @@
                 </mat-select>
             </mat-form-field>
             <mat-card-actions>
-                <button mat-raised-button type="submit" class="btn btn-default" [disabled]="!form.valid">
+                <button mat-raised-button type="submit" class="btn btn-default" [disabled]="!form.valid || submitted">
       Submit
       </button>
             </mat-card-actions>
         </form>
         <mat-card-footer>
             <p>
-                Already have an account? <a routerLink=""> Sign In </a>
+                Already have an account? <span routerLink=""> Sign In </span>
             </p>
         </mat-card-footer>
     </mat-card>

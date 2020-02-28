@@ -1,22 +1,37 @@
 mat-card {
     width: 21vw;
+    color: #303030;
+    background-color: #eddacc;
 }
 
 mat-card-title {
     text-align: center;
+    color: #303030;
 }
 
 mat-card-footer {
-    margin-left: 1.2vw;
+    margin-left: 1.1vw;
+    color: #303030;
+}
+
+mat-card-footer span {
+    cursor: pointer;
+    color: #806a6a;
+}
+
+.mat-raised-button {
+    background-color: #353535;
+    color: white;
 }
 
 .wrapper {
     width: 100vw;
     height: 100vh;
+    background-color: #303030;
 }
 
 @media only screen and (max-width: 720px) {
     mat-card {
-        width: 90vw;
+        width: 80vw;
     }
 }
