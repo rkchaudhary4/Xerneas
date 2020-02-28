@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   constructor(private logged: LoggedUserService) { }
 
   ngOnInit(): void {
-    this.logged.$logged.subscribe(res => this.user=res);
+    this.logged.currentUser.subscribe(res => this.user=res);
   }
 
   logOut(){

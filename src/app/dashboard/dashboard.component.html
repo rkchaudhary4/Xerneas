@@ -3,12 +3,12 @@
         Xerneas
     </div>
     <div class="left" fxLayout="row" fxLayoutAlign="start center">
-        <div class="menuFive isOpen" (click)="sidenav.toggle();" [class.isOpen]="isOpen">
+        <div class="menuFive  " (click)="sidenav.toggle();" [class.isOpen]="isOpen">
             <span></span>
             <span></span>
             <span></span>
         </div>
-        {{ user.displayName }}
+        <span *ngIf="user">{{ user.displayName }}</span>
     </div>
     <div class="right" fxLayout="row" fxLayoutAlign="end center">
         <button mat-raised-button (click)="logOut()">LogOut</button>

@@ -12,7 +12,6 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    // canLoad: [LocalUserGuard],
     loadChildren: './dashboard/dashboard.module#DashboardModule',
   },
 ];

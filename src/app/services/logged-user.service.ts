@@ -35,6 +35,9 @@ export class LoggedUserService {
   };
   SendEmailVerification() {
     return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
+      this.snackbar.open('Verification E-mail has been sent to your mail', '', {
+        duration: 2000
+      })
       this.logout();
     });
   }
@@ -45,15 +48,15 @@ export class LoggedUserService {
         if (res.user.emailVerified !== true) {
           this.logout();
           this.snackbar.open('Your E-mail address is not verified', '', {
-            duration: 2500,
-          })
+            duration: 2500
+          });
         } else {
           this.router.navigate(['/']);
         }
       })
       .catch(err => {
         this.snackbar.open(err.message, '', {
-          duration: 2000,
+          duration: 2000
         });
       });
   signup = (
@@ -75,7 +78,7 @@ export class LoggedUserService {
           })
           .catch(err => {
             this.snackbar.open(err.message, '', {
-              duration: 2000,
+              duration: 2000
             });
           });
         this.userRef(user.uid).set({
@@ -89,26 +92,34 @@ export class LoggedUserService {
       .catch(err => {
         this.snackbar.open(err.message, '', {
           duration: 2000
-        })
+        });
       });
-  logout = (): Promise<void | boolean> => this.afAuth.auth.signOut().then(() => {
-      this.router.navigate(['/login']);
-  }).catch(err => {console.log(err);});
+  logout = (): Promise<void | boolean> =>
+    this.afAuth.auth
+      .signOut()
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   resetPassword = (email: string) => {
-    this.afAuth.auth.sendPasswordResetEmail(email).then(res => {
-      this.router.navigate(['/login']);
-    }).catch(err => {
-      this.snackbar.open(err.message, '', {
-        duration: 2000
+    this.afAuth.auth
+      .sendPasswordResetEmail(email)
+      .then(res => {
+        this.router.navigate(['/login']);
+      })
+      .catch(err => {
+        this.snackbar.open(err.message, '', {
+          duration: 2000
+        });
       });
-    }
-    );
-  }
+  };
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
-    private snackbar: MatSnackBar,
+    private snackbar: MatSnackBar
   ) {
     this.init();
   }
