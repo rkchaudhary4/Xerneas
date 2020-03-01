@@ -13,7 +13,6 @@ export class LocalUserGuard implements CanActivate {
   canActivate(): Observable<boolean>{
     return this.localUserService.isAuthenticated$.pipe(
       map(res => {
-        console.log(res);
         if(!res){
           this.router.navigate(['/login']);
         }
@@ -34,7 +33,6 @@ export class LoggedInGuard implements CanActivate {
   canActivate(): Observable<boolean>{
     return this.localUserService.$logged.pipe(
       map(res => {
-        console.log(res);
         if(res){
           this.router.navigate(['/']);
         }

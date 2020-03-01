@@ -8,7 +8,7 @@ import { LoggedUserService } from '../services/logged-user.service';
 })
 export class DashboardComponent implements OnInit {
   user;
-  isOpen = true;
+  isOpen: boolean;
   mobile = window.screen.width < 720;
   links = ['home', 'people', 'data', 'profile'];
 
@@ -16,9 +16,20 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.logged.currentUser.subscribe(res => this.user=res);
+    if( this.mobile ) {
+      this.isOpen = false;
+    } else {
+      this.isOpen = true;
+    }
   }
 
   logOut(){
     this.logged.logout();
+  }
+
+  toggle(){
+    if ( this.mobile ) {
+      this.isOpen = !this.isOpen;
+    }
   }
 }
