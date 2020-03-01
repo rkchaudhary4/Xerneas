@@ -9,6 +9,7 @@ import { LoggedUserService } from '../services/logged-user.service';
 export class DashboardComponent implements OnInit {
   user;
   isOpen = true;
+  mobile = window.screen.width < 720;
   links = ['home', 'people', 'data', 'profile'];
 
   constructor(private logged: LoggedUserService) { }

@@ -59,7 +59,7 @@
     transition: .3s cubic-bezier(.8, .5, .2, 1.4);
     width: 100%;
     height: 4px;
-    transition-duration: 500ms;
+    /* transition-duration: 500ms; */
 }
 
 .menuFive span:nth-child(1) {
@@ -91,4 +91,16 @@
 .isOpen span:nth-child(3) {
     transform: rotate(45deg);
     top: 13px;
+}
+
+@media only screen and (max-width: 720px) {
+    .top {
+        height: 7vh;
+    }
+    .side {
+        width: 50%;
+    }
+    .sidenav {
+        margin-top: 8vh;
+    }
 }
