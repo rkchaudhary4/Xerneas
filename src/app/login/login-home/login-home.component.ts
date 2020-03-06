@@ -20,7 +20,6 @@ export class LoginHomeComponent implements OnInit {
     this.submitted = true;
     this.loginService.signIn(username, password).then(() => {
       this.loginService.isAuthenticated$.subscribe(res => this.submitted = res);
-      console.log('logged');
     })
     .catch(err => {
       this.submitted = false;

@@ -51,7 +51,17 @@ export class LoggedUserService {
             duration: 2500
           });
         } else {
-          this.router.navigate(['/']);
+          let app: boolean;
+          this.userRef(res.user.uid).valueChanges().subscribe(data => {
+            app = data.approved;
+          if( app === true) { this.router.navigate(['/']); }
+          else {
+            this.snackbar.open('Account not activated by the admin', '' , {
+              duration: 2000
+            });
+            this.logout();
+          }
+          });
         }
       })
       .catch(err => {
