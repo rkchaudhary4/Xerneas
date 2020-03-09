@@ -117,7 +117,10 @@ export class LoggedUserService {
     this.afAuth.auth
       .sendPasswordResetEmail(email)
       .then(res => {
-        this.router.navigate(['/login']);
+        this.snackbar.open('Link sent to your e-mail to change password', '', {
+          duration: 2000
+        })
+        this.logout();
       })
       .catch(err => {
         this.snackbar.open(err.message, '', {
@@ -125,6 +128,32 @@ export class LoggedUserService {
         });
       });
   };
+
+  checkLevel = (lvl: string) => this.currentUser.pipe(
+    map((user: User) => user ? user.role === lvl: false)
+  );
+
+  approve = (uid) => {
+    this.userRef(uid).update({
+      approved: true
+    });
+  }
+
+  changeName(name: string) {
+    this.userRef(this.currentUser.getValue().uid).update({
+      displayName: name
+    }).then((res) => {
+      this.snackbar.open('Name changed successfully', '', {
+        duration: 1500
+      })
+    }
+    ).catch(err => {
+      this.snackbar.open(err.message, '', {
+        duration: 1500
+      })
+    });
+  }
+
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,

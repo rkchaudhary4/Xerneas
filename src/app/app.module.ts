@@ -16,6 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { LoadMaterialModule } from './material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { UpdateNameComponent } from './dashboard/profile/update-name/update-name.component';
 
 @NgModule({
   declarations: [
@@ -37,9 +39,13 @@ import { LoadMaterialModule } from './material.module';
     ReactiveFormsModule,
     FormsModule,
     DashboardModule,
-    LoadMaterialModule
+    LoadMaterialModule,
+    HttpClientModule
   ],
   providers: [SignUpComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[
+    UpdateNameComponent
+  ]
 })
 export class AppModule { }

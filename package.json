@@ -25,6 +25,7 @@
     "@angular/router": "~9.0.0",
     "eslint": "^6.8.0",
     "firebase": "^7.8.1",
+    "ngx-papaparse": "^4.0.4",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

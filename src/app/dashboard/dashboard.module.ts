@@ -5,17 +5,23 @@ import { DataComponent } from './data/data.component';
 import { DashboardComponent } from './dashboard.component';
 import { LoadMaterialModule } from '../material.module';
 import { PeopleComponent } from './people/people.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UpdateNameComponent } from './profile/update-name/update-name.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     DataComponent,
     PeopleComponent,
+    ProfileComponent,
+    UpdateNameComponent,
   ],
   imports: [
-  CommonModule,
+    CommonModule,
     DashboardRoutingModule,
-    LoadMaterialModule
+    LoadMaterialModule,
+    FormsModule
   ]
 })
 export class DashboardModule { }

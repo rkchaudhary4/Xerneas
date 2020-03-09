@@ -4,6 +4,7 @@ import { DataComponent } from './data/data.component';
 import { LocalUserGuard, LoggedInGuard } from '../auth.guard';
 import { DashboardComponent } from './dashboard.component';
 import { PeopleComponent } from './people/people.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,11 @@ const routes: Routes = [
       {
         path: 'data',
         component: DataComponent
-      }
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
     ]
   },
 ];

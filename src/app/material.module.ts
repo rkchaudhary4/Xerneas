@@ -10,6 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule} from '@angular/material/dialog';
 
 const modules = [
   MatFormFieldModule,
@@ -22,7 +23,8 @@ const modules = [
   MatListModule,
   MatSnackBarModule,
   FlexLayoutModule,
-  MatTableModule
+  MatTableModule,
+  MatDialogModule
 ];
 
 @NgModule({

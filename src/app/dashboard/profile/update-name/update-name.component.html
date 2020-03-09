@@ -1,0 +1,7 @@
+<div mat-dialog-title>Update your name</div>
+<form (ngSubmit)="onSubmit(name.value)">
+    <mat-form-field>
+        <input matInput type="text" id="name" #name placeholder="New Name" [value]="user? user.displayName: ''">
+    </mat-form-field>
+    <mat-dialog-actions><button mat-raised-button type="submit">Submit</button></mat-dialog-actions>
+</form>
