@@ -16,6 +16,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.logged.currentUser.subscribe(res => this.user=res);
+    if( this.user && !this.user.approved ){
+      this.logged.logout();
+    }
     if( this.mobile ) {
       this.isOpen = false;
     } else {

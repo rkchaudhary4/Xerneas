@@ -1,3 +1,7 @@
+<div *ngIf="admin">
+    <input mat-input type="file" (change)="upload($event.target.files)">
+</div>
+
 <div fxLayout="column">
     <div *ngFor="let student of data">
         {{student.Name}}

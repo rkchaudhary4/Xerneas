@@ -3,7 +3,7 @@
         <mat-card-title>Signup</mat-card-title>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center">
             <mat-form-field>
-                <input matInput type="text" formControlName="username" id="username" name="username" placeholder="E-Mail" #name>
+                <input matInput type="text" formControlName="username" id="username" name="username" placeholder="E-Mail" #name required>
                 <mat-error id="repeat-help" class="text-warning" *ngIf="!(form.controls.username.valid || form.controls.username.pristine)">
                     Please enter a valid e-mail ID
                 </mat-error>
@@ -17,14 +17,14 @@
                     <mat-error *ngIf="form.controls.passwords.get('password').errors?.minlength">Enter minimum 6 characters</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput type="password" class="form-control" formControlName="repeat" id="repeat" name="repeat" placeholder="Repeat Password">
+                    <input matInput type="password" class="form-control" formControlName="repeat" id="repeat" name="repeat" placeholder="Repeat Password" required>
                 </mat-form-field>
                 <span id="repeat-help" class="text-warning" *ngIf="form.controls.passwords.errors?.mismatch && !form.controls.passwords.pristine && (form.controls.passwords.value.repeat !== '')">
                 Passwords don't match
                 </span>
             </div>
             <mat-form-field>
-                <input matInput type="text" formControlName="name" id="name" name="name" placeholder="Name" #names>
+                <input matInput type="text" formControlName="name" id="name" name="name" placeholder="Name" #names required>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Role</mat-label>

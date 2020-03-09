@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Papa } from 'ngx-papaparse';
+import { Papa, ParseResult } from 'ngx-papaparse';
 import { HttpClient } from '@angular/common/http';
+import { LoggedUserService } from '../../services/logged-user.service';
+import { StudentDataService } from '../../services/student-data.service';
 
 @Component({
   selector: 'app-data',
@@ -9,25 +11,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DataComponent implements OnInit {
 
-  file;
   data;
+  admin;
 
-  constructor(private papa: Papa, private http: HttpClient) {
-    this.file = this.http.get('/assets/m.tech-25.csv', {responseType:'text'}).subscribe(res => {this.extractData(res)});
+  constructor(private papa: Papa, private http: HttpClient, private loginService: LoggedUserService, private $data: StudentDataService) {
+    this.loginService.checkLevel('Admin').subscribe(res => this.admin = res);
   }
 
   ngOnInit(): void {
+    this.$data.getData().then((res: ParseResult) => {
+      this.data = res.data;
+      console.log(res);
+    });
     }
 
-    extractData(res){
-      const data = res || '';
-      this.papa.parse(data, {
-        header: true,
-        skipEmptyLines: true,
-        complete: (result) => {
-          this.data = result.data;
-          // console.log(result);
-        }
-      });
+    upload(event: FileList){
+      const file = event.item(0);
+      this.$data.uploadData(file);
     }
 }
