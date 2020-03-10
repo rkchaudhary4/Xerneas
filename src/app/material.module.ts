@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule} from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const modules = [
   MatFormFieldModule,
@@ -24,7 +25,8 @@ const modules = [
   MatSnackBarModule,
   FlexLayoutModule,
   MatTableModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressSpinnerModule
 ];
 
 @NgModule({

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Papa, ParseResult } from 'ngx-papaparse';
-import { HttpClient } from '@angular/common/http';
+import { ParseResult } from 'ngx-papaparse';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-data',
@@ -13,20 +13,45 @@ export class DataComponent implements OnInit {
 
   data;
   admin;
+  percentage = -1;
+  snapshot: Observable<any> = of(null);
 
-  constructor(private papa: Papa, private http: HttpClient, private loginService: LoggedUserService, private $data: StudentDataService) {
+  constructor(private loginService: LoggedUserService, private $data: StudentDataService) {
     this.loginService.checkLevel('Admin').subscribe(res => this.admin = res);
+    this.percentage = -1;
+  }
+
+  isActive(snapshot){
+    return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+  }
+
+  pause(){
+    this.$data.pause();
+  }
+
+  resume(){
+    this.$data.resume();
+  }
+
+  cancel(){
+    this.$data.cancel();
+    this.snapshot = null;
   }
 
   ngOnInit(): void {
-    this.$data.getData().then((res: ParseResult) => {
-      this.data = res.data;
-      console.log(res);
-    });
+    this.$data.getData().subscribe(res => this.data = res);
     }
 
     upload(event: FileList){
       const file = event.item(0);
       this.$data.uploadData(file);
+      this.snapshot = this.$data.snapshot;
+      this.$data.percentage.subscribe(res => this.percentage = res);
+      this.$data.snapshot.subscribe(res => {
+        if (res.bytesTransferred === res.totalBytes ) {
+          this.snapshot = null;
+          this.$data.updateData();
+        }
+      })
     }
 }
