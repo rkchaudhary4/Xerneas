@@ -8,10 +8,12 @@ import {
   AngularFireUploadTask
 } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, of } from 'rxjs';
-import { finalize, tap } from 'rxjs/internal/operators';
+import { Observable } from 'rxjs';
+import { finalize, tap, switchMap } from 'rxjs/internal/operators';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
+import { User } from '../models';
+import { ManagerData } from '../models/data';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +27,9 @@ export class StudentDataService {
   public studentRef = (id: string): AngularFirestoreDocument<Student> =>
     this.afs.doc(`students/${id}`);
 
-  constructor(
-    private afs: AngularFirestore,
-    private storage: AngularFireStorage,
-    private snackbar: MatSnackBar,
-    private papa: Papa
-  ) {}
+  public dataRef(id: string) {
+    return this.afs.doc(`users/${id}/data/data`);
+  }
 
   uploadData(file: File) {
     if (file.type.split('/')[1] !== 'csv') {
@@ -105,4 +104,23 @@ export class StudentDataService {
           });
     })
   }
+
+  assignManager(student: string, manage: string) {
+    // this.studentRef(student).update({
+      // manager: manage
+    // });
+
+    const ref = this.dataRef(manage);
+    ref.get().subscribe(res => {
+      console.log(res.exists);
+    })
+    // ref.valueChanges().subscribe(res => console.log(res));
+  }
+
+  constructor(
+    private afs: AngularFirestore,
+    private storage: AngularFireStorage,
+    private snackbar: MatSnackBar,
+    private papa: Papa
+  ) {}
 }

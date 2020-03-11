@@ -9,7 +9,7 @@ export class Student {
     this.id = student.id;
     this.name = student.name;
     this.manager = '';
-    this.ta = [];
-    this.comments = [];
+    this.ta = student.ta;
+    this.comments = student.comments;
   }
 }

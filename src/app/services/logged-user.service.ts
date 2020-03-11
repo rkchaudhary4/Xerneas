@@ -134,6 +134,7 @@ export class LoggedUserService {
   );
 
   approve = (uid) => {
+    // this.router.navigate(['/dashboard/people']);
     this.userRef(uid).update({
       approved: true
     });
@@ -152,6 +153,10 @@ export class LoggedUserService {
         duration: 1500
       })
     });
+  }
+
+  getUsers() {
+    return this.afs.collection('users').valueChanges();
   }
 
   constructor(

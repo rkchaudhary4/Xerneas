@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ParseResult } from 'ngx-papaparse';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
 import { Observable, of } from 'rxjs';
@@ -19,6 +18,7 @@ export class DataComponent implements OnInit {
   constructor(private loginService: LoggedUserService, private $data: StudentDataService) {
     this.loginService.checkLevel('Admin').subscribe(res => this.admin = res);
     this.percentage = -1;
+    this.$data.assignManager('1', 'HqhzW9O5epY6CIGXWEmZEHWYKtR2');
   }
 
   isActive(snapshot){

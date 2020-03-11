@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoggedUserService } from '../../services/logged-user.service';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-people',
@@ -15,7 +14,6 @@ export class PeopleComponent implements OnInit {
   columnsToDisplay = ['displayName', 'role', 'email'];
   dataSource;
   constructor(
-    private afs: AngularFirestore,
     private loginService: LoggedUserService
   ) {
     this.loginService.currentUser.subscribe(res => {
@@ -29,10 +27,7 @@ export class PeopleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.afs
-    .collection('users')
-    .valueChanges()
-    .subscribe((val: Array<User>) => {
+    this.loginService.getUsers().subscribe((val: Array<User>) => {
       this.content = val;
     });
   }
