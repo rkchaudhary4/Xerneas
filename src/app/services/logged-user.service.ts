@@ -133,6 +133,10 @@ export class LoggedUserService {
     map((user: User) => user ? user.role === lvl: false)
   );
 
+  checkLevelById = (lvl: string, id: string) => this.userRef(id).valueChanges().pipe(
+    map((user: User) => user? user.role === lvl: false)
+  )
+
   approve = (uid) => {
     // this.router.navigate(['/dashboard/people']);
     this.userRef(uid).update({

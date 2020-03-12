@@ -1,16 +1,26 @@
 export class ManagerData {
-  public tas: Array<string>;
   public students: Array<string>;
+  public tas: Array<string>;
 
   constructor(manager){
-    this.tas = manager.tas,
     this.students = manager.students;
+    this.tas = manager.tas;
+  }
+}
+
+export class TaStudent {
+  public uid: string;
+  public comments: string;
+
+  constructor( student ) {
+    this.uid = student.uid,
+    this.comments = student.comments
   }
 }
 
 export class TaData {
   public manager: string
-  public students: Array<object>
+  public students: Array<TaStudent>
 
   constructor(ta){
     this.manager = ta.manager,

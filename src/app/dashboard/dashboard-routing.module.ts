@@ -5,6 +5,7 @@ import { LocalUserGuard, LoggedInGuard } from '../auth.guard';
 import { DashboardComponent } from './dashboard.component';
 import { PeopleComponent } from './people/people.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EditorComponent } from './editor/editor.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent
       },
+      {
+        path: 'editor/:id',
+        component: EditorComponent
+      }
     ]
   },
 ];

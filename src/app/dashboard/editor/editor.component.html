@@ -1,0 +1,16 @@
+<div class="wrapper" fxLayout="row">
+    <div *ngIf="lvl === 'Teaching Assistant (TA)'" class="csv" fxLayout="row wrap" fxLayoutGap="0.5vw">
+        <div *ngFor="let header of headers">
+            <strong>{{header}}</strong> : {{data[header]}}
+        </div>
+    </div>
+    <div class="csv" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
+        <form *ngIf="fb" [formGroup]="fb" (ngSubmit)="onSubmit()" #changeForm>
+            <mat-form-field *ngFor="let header of headers">
+                <input matInput type="text" [placeholder]="header" [formControlName]="header">
+            </mat-form-field>
+            <button type="submit" mat-raised-button>Submit</button>
+        </form>
+    </div>
+    <iframe [src]="url" width="50%" height="100%">This browser does not support PDFs. Please download the PDF to view it: Download PDF</iframe>
+</div>

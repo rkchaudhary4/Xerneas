@@ -7,7 +7,8 @@ import { LoadMaterialModule } from '../material.module';
 import { PeopleComponent } from './people/people.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdateNameComponent } from './profile/update-name/update-name.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditorComponent } from './editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -16,12 +17,14 @@ import { FormsModule } from '@angular/forms';
     PeopleComponent,
     ProfileComponent,
     UpdateNameComponent,
+    EditorComponent,
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     LoadMaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class DashboardModule { }

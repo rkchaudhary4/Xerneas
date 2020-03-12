@@ -14,11 +14,12 @@ export class DataComponent implements OnInit {
   admin;
   percentage = -1;
   snapshot: Observable<any> = of(null);
-
+ // 9mghlLnVGkbQQOEocE7D9TX0DGs2
+ // HqhzW9O5epY6CIGXWEmZEHWYKtR2
   constructor(private loginService: LoggedUserService, private $data: StudentDataService) {
     this.loginService.checkLevel('Admin').subscribe(res => this.admin = res);
     this.percentage = -1;
-    this.$data.assignManager('1', 'HqhzW9O5epY6CIGXWEmZEHWYKtR2');
+    this.$data.assignMtoT('HqhzW9O5epY6CIGXWEmZEHWYKtR2', '9mghlLnVGkbQQOEocE7D9TX0DGs2');
   }
 
   isActive(snapshot){
