@@ -13,17 +13,15 @@ export class PeopleComponent implements OnInit {
   admin;
   columnsToDisplay = ['displayName', 'role', 'email'];
   dataSource;
-  constructor(
-    private loginService: LoggedUserService
-  ) {
+  constructor(private loginService: LoggedUserService) {
     this.loginService.currentUser.subscribe(res => {
-      if(res){
+      if (res) {
         this.admin = res.role === 'Admin';
-        if( this. admin) {
+        if (this.admin) {
           this.columnsToDisplay.push('approved');
         }
       }
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -32,7 +30,11 @@ export class PeopleComponent implements OnInit {
     });
   }
 
-  approve(uid) {
-    this.loginService.approve(uid);
+  approve(uid, approved) {
+    if (approved) {
+      this.loginService.disapprove(uid);
+    } else {
+      this.loginService.approve(uid);
+    }
   }
 }

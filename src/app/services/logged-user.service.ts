@@ -143,6 +143,11 @@ export class LoggedUserService {
       approved: true
     });
   }
+  disapprove = (uid) => {
+    this.userRef(uid).update({
+      approved: false
+    });
+  }
 
   changeName(name: string) {
     this.userRef(this.currentUser.getValue().uid).update({

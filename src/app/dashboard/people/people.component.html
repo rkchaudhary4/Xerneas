@@ -13,7 +13,7 @@
     </ng-container>
     <ng-container matColumnDef="approved" *ngIf="admin">
         <th mat-header-cell *matHeaderCellDef>Approved</th>
-        <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="approve(element.uid)" [innerHTML]="element.approved ? 'Approved': 'Approve'" [disabled]="element.approved"></button></td>
+        <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="approve(element.uid, element.approved)" [innerHTML]="element.approved ? 'Disapprove': 'Approve'" [style.color]="element.approved ? 'red': 'black'"></button></td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
