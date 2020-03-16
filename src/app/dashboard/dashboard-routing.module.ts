@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DataComponent } from './data/data.component';
-import { LocalUserGuard, LoggedInGuard } from '../auth.guard';
+import { LocalUserGuard, LoggedInGuard, EditorGuard } from '../auth.guard';
 import { DashboardComponent } from './dashboard.component';
 import { PeopleComponent } from './people/people.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -31,7 +31,8 @@ const routes: Routes = [
       },
       {
         path: 'editor/:id',
-        component: EditorComponent
+        component: EditorComponent,
+        canActivate: [EditorGuard]
       }
     ]
   },

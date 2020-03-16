@@ -1,5 +1,6 @@
 <div *ngIf="admin">
     <input mat-input type="file" (change)="upload($event.target.files)">
+    <button mat-raised-button (click)="syncData()">Sync Data</button>
     <div *ngIf="snapshot | async as snap">
         <mat-progress-spinner mode="determinate" [value]="percentage"></mat-progress-spinner>
         <button mat-button (click)="isActive(snap)? pause(): resume()" [innerHTML]="isActive(snap)? 'Pause': 'Resume'"></button>
@@ -9,6 +10,6 @@
 
 <div fxLayout="column">
     <div *ngFor="let student of data">
-        {{student.name}}
+        {{student.id}}
     </div>
 </div>

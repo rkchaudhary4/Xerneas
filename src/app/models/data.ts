@@ -1,29 +1,26 @@
-export class ManagerData {
-  public students: Array<string>;
-  public tas: Array<string>;
-
-  constructor(manager){
-    this.students = manager.students;
-    this.tas = manager.tas;
-  }
-}
+import { firestore } from 'firebase/app';
+import Timestamp = firestore.Timestamp;
 
 export class TaStudent {
   public uid: string;
   public comments: string;
+  public fields: Array<string>;
+  public time: Timestamp;
 
   constructor( student ) {
     this.uid = student.uid,
-    this.comments = student.comments
+    this.comments = student.comments,
+    this.fields = student.fields,
+    this.time = student.time
   }
 }
 
-export class TaData {
-  public manager: string
-  public students: Array<TaStudent>
+export class TaManager {
+  public uid: string;
+  public name: string;
 
-  constructor(ta){
-    this.manager = ta.manager,
-    this.students = ta.students
+  constructor( manager) {
+    this.uid = manager.uid,
+    this.name = manager.displayName
   }
 }

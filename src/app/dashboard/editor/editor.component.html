@@ -5,8 +5,8 @@
         </div>
     </div>
     <div class="csv" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
-        <form *ngIf="fb" [formGroup]="fb" (ngSubmit)="onSubmit()" #changeForm>
-            <mat-form-field *ngFor="let header of headers">
+        <form *ngIf="fb" [formGroup]="fb" (ngSubmit)="onSubmit()" #changeForm fxLayoutGap="0.5vw" fxLayout="row wrap">
+            <mat-form-field *ngFor="let header of headers" [fxFlex]="data[header] ? ((data[header].toString().length + 3) < 25 ? '25': data[header].toString().length+3) : '25'">
                 <input matInput type="text" [placeholder]="header" [formControlName]="header">
             </mat-form-field>
             <button type="submit" mat-raised-button>Submit</button>

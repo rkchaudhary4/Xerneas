@@ -8,13 +8,15 @@ import {
   AngularFireUploadTask
 } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
-import { finalize, tap, first } from 'rxjs/internal/operators';
+import { Observable, from, of } from 'rxjs';
+import { finalize, tap, first, map} from 'rxjs/internal/operators';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
-import { ManagerData, TaData, TaStudent } from '../models/data';
+import { TaStudent, TaManager } from '../models/data';
 import { LoggedUserService } from './logged-user.service';
-import { Router } from '@angular/router';
+import { firestore } from 'firebase/app';
+import Timestamp = firestore.Timestamp;
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -28,12 +30,11 @@ export class StudentDataService {
   public studentRef = (id: string): AngularFirestoreDocument<Student> =>
     this.afs.doc(`students/${id}`);
 
-  public managerRef = (id: string): AngularFirestoreDocument<ManagerData> => {
-    return this.afs.doc(`users/${id}/data/data`);
-  };
 
-  public taRef = (id: string): AngularFirestoreDocument<TaData> =>
-    this.afs.doc(`users/${id}/data/data`);
+  public taRef = (id: string, studentId: string): AngularFirestoreDocument<TaStudent> =>
+    this.afs.doc(`users/${id}/data/${studentId}`);
+
+  public taManager = (id: string): AngularFirestoreDocument<TaManager> => this.afs.doc(`users/${id}/data/manager`);
 
   uploadData(file: File) {
     if (file.type.split('/')[1] !== 'csv') {
@@ -85,6 +86,8 @@ export class StudentDataService {
       .valueChanges();
   }
 
+
+
   updateData() {
     const path = `/data.csv`;
     this.storage
@@ -101,9 +104,10 @@ export class StudentDataService {
               this.studentRef(stu.id).set({
                 id: stu.id,
                 name: stu.Name,
+                comments: [],
+                fields: [],
                 manager: '',
-                ta: [],
-                comments: []
+                tas: []
               });
             });
             console.log('Data Uploaded');
@@ -112,93 +116,32 @@ export class StudentDataService {
       });
   }
 
-  assignMtoT(manage: string, ta: string) {
-    this.loginService.checkLevelById('Manager', manage).subscribe(isManager => {
-      if (!isManager) {
-        console.log('Not manager');
-        return;
-      } else {
-        this.loginService
-          .checkLevelById('Teaching Assistant (TA)', ta)
-          .subscribe(isTa => {
-            if (!isTa) {
-              console.log('Not TA');
-              return;
-            } else {
-              this.taRef(ta)
-                .get()
-                .subscribe(res => {
-                  if (!res.exists) {
-                    this.taRef(ta).set({
-                      manager: manage,
-                      students: []
-                    });
-                  } else {
-                    this.taRef(ta).update({
-                      manager: manage
-                    });
-                  }
-                });
-              this.managerRef(manage)
-                .get()
-                .subscribe(res => {
-                  if (!res.exists) {
-                    this.managerRef(manage).set({
-                      tas: [ta],
-                      students: []
-                    });
-                  } else {
-                    const ref = this.managerRef(manage)
-                      .valueChanges()
-                      .pipe(first());
-                    ref.subscribe(data => {
-                      this.managerRef(manage).update({
-                        tas: [...data.tas, ta]
-                      });
-                    });
-                  }
-                });
-            }
-          });
-      }
+  assignStoM(student: string, manage: string) {
+    this.studentRef(student).update({
+      manager: manage
     });
   }
 
-  assignStoM(manage: string, student: string) {
-    this.managerRef(manage).get().subscribe(res => {
-      if( !res.exists ) {
-        this.managerRef(manage).set({
-          students: [student],
-          tas: []
-        })
-      } else {
-        const ref = this.managerRef(manage).valueChanges().pipe(first());
-        ref.subscribe(data => {
-          this.managerRef(manage).update({
-            students: [...data.students, student]
-          })
-        })
-      }
+  assignStoTa(student: string, ta: string) {
+    this.taRef(ta, student).set({
+      uid: student,
+      comments: '',
+      fields: [],
+      time: Timestamp.now(),
+    })
+    this.studentRef(student).valueChanges().pipe(first()).subscribe((data: Student) => {
+      this.studentRef(student).update({
+        tas: [...data.tas, ta]
+      })
     })
   }
 
-  assignStoTa(ta: string, student: string) {
-    const stu = {uid: student, comments: ''};
-    const s = new TaStudent(stu)
-    this.taRef(ta).get().subscribe(res => {
-      if( !res.exists ) {
-        this.taRef(ta).set({
-          manager: '',
-          students: [s]
-        })
-      } else {
-        const ref = this.taRef(ta).valueChanges().pipe(first());
-        ref.subscribe(data => {
-          this.taRef(ta).update({
-            students: [...data.students, s]
-          })
-        })
-      }
+  assignTatoM(manager: string, ta: string) {
+    let Mname;
+    this.loginService.userRef(manager).valueChanges().pipe(first()).subscribe((res: User) => Mname = res.displayName);
+    this.taManager(ta).set({
+      uid: manager,
+      name: Mname
     })
   }
 
