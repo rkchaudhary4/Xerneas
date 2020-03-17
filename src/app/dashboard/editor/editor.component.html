@@ -1,16 +1,44 @@
-<div class="wrapper" fxLayout="row">
-    <div *ngIf="lvl === 'Teaching Assistant (TA)'" class="csv" fxLayout="row wrap" fxLayoutGap="0.5vw">
-        <div *ngFor="let header of headers">
-            <strong>{{header}}</strong> : {{data[header]}}
+<div class="wrapper" fxLayout="column">
+    <div class="top" fxLayout="row">
+        <div *ngIf="lvl === 'Teaching Assistant (TA)'" class="csv" fxLayout="row wrap" fxLayoutGap="0.5vw">
+            <div *ngFor="let header of headers" fxFlex=30 class="csvdata">
+                <strong>{{header}}</strong> : {{data[header]}}
+            </div>
+        </div>
+        <div class="csv" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
+            <form *ngIf="fb" [formGroup]="fb" (ngSubmit)="onSubmit()" #changeForm fxLayoutGap="0.5vw" fxLayout="row wrap">
+                <mat-form-field *ngFor="let header of headers" [fxFlex]="data[header] ? ((data[header].toString().length + 3) < 25 ? '25': data[header].toString().length+3) : '25'">
+                    <input matInput type="text" [placeholder]="header" [formControlName]="header">
+                </mat-form-field>
+                <button type="submit" mat-raised-button>Submit</button>
+            </form>
+        </div>
+        <iframe [src]="url" width="45%" height="100%">This browser does not support PDFs. Please download the PDF to view it: Download PDF</iframe>
+        <div class="studentlist" fxFlex="auto"></div>
+    </div>
+    <div class="bottom" fxLayout="row">
+        <div class="id">
+            <h1>Student ID</h1><br> {{id}}
+        </div>
+        <div class="fields">
+            <h3>Fields to correct</h3>
+            <form>
+                <mat-form-field>
+                    <input type="text" placeholder="Fields" matInput [formControl]="myFields" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" class="completer">
+                        <mat-option *ngFor="let option of availfields | async" (click)="add(option)" [value]="option">{{option}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+            <mat-chip-list>
+                <mat-chip *ngFor="let select of selected" [removable]="true" (removed)="delete(select)">{{select}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <div class="comment" fxFlex="auto">
+            <h1>Add comment</h1>
+            <textarea matInput placeholder="Comments"></textarea>
         </div>
     </div>
-    <div class="csv" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
-        <form *ngIf="fb" [formGroup]="fb" (ngSubmit)="onSubmit()" #changeForm fxLayoutGap="0.5vw" fxLayout="row wrap">
-            <mat-form-field *ngFor="let header of headers" [fxFlex]="data[header] ? ((data[header].toString().length + 3) < 25 ? '25': data[header].toString().length+3) : '25'">
-                <input matInput type="text" [placeholder]="header" [formControlName]="header">
-            </mat-form-field>
-            <button type="submit" mat-raised-button>Submit</button>
-        </form>
-    </div>
-    <iframe [src]="url" width="50%" height="100%">This browser does not support PDFs. Please download the PDF to view it: Download PDF</iframe>
 </div>

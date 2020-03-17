@@ -6,8 +6,9 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
-import { first } from 'rxjs/internal/operators';
+import { first, startWith, map } from 'rxjs/internal/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-editor',
@@ -15,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
+  myFields = new FormControl();
   id: number;
   data;
   headers;
@@ -22,6 +24,9 @@ export class EditorComponent implements OnInit {
   url: SafeUrl;
   fb: FormGroup;
   lvl;
+  fields: string[];
+  selected: string[] = [];
+  availfields: Observable<string[]>;
   constructor(
     private route: ActivatedRoute,
     private storage: AngularFireStorage,
@@ -55,6 +60,7 @@ export class EditorComponent implements OnInit {
             this.index = result.data.findIndex(e => e.id === this.id);
             this.headers = result.meta.fields;
             this.data = result.data[this.index];
+            this.fields = this.headers.map(x => x);
             const group: any = {};
             this.headers.forEach(field => {
               group[field] = new FormControl(this.data[field]);
@@ -63,6 +69,28 @@ export class EditorComponent implements OnInit {
           }
         });
       });
+      this.availfields = this.myFields.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+  }
+
+  private _filter(value: string): string[] {
+    const filtervalue = value.toLowerCase();
+    if( this.fields ) return this.fields.filter(option => option.toLowerCase().includes(filtervalue));
+    else return [];
+  }
+
+  add(option){
+    this.myFields.setValue('');
+    this.selected.push(option);
+    const Index = this.fields.indexOf(option);
+    if ( Index >= 0) this.fields.splice(Index, 1);
+  }
+
+  delete(select: string) {
+    this.selected = this.selected.filter(field => field !== select);
+    this.fields.push(select);
   }
 
   onSubmit() {

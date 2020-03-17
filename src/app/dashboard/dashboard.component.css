@@ -37,9 +37,9 @@
 
 .sidenav {
     margin-top: 60px;
-    padding-top: 10px;
+    /* padding-top: 10px; */
     height: calc(100vh - 60px);
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .mat-sidenav {

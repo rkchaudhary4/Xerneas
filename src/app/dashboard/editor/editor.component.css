@@ -1,8 +1,42 @@
-.csv {
-    width: 50%;
+.wrapper {
+    height: calc(100vh - 60px);
+    overflow-y: hidden;
 }
 
-.wrapper {
-    height: 100vh;
-    /* overflow: hidden !important; */
+.top {
+    height: 80%;
+    border-bottom: 1px solid black;
+}
+
+.csv {
+    width: 45%;
+    overflow-y: scroll;
+}
+
+.csvdata {
+    padding-bottom: 5px;
+}
+
+.studentlist {
+    overflow-y: scroll;
+}
+
+.id {
+    width: 10%;
+}
+
+.bottom {
+    height: 20%;
+}
+
+.bottom div {
+    border-right: 2px solid black;
+}
+
+.fields {
+    width: 45%;
+}
+
+.mat-autocomplete-panel {
+    max-height: 9vh !important;
 }
