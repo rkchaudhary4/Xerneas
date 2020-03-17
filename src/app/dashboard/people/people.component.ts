@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { LoggedUserService } from '../../services/logged-user.service';
 
 @Component({
@@ -26,7 +25,10 @@ export class PeopleComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginService.getUsers().subscribe((val: Array<User>) => {
-      this.content = val;
+      if( this.admin ) this.content = val;
+      else {
+        this.content = val.filter(user => user.approved);
+      }
     });
   }
 

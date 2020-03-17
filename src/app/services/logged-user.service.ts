@@ -7,8 +7,8 @@ import {
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/internal/operators';
-import { User } from '../models';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
