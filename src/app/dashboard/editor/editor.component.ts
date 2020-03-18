@@ -9,6 +9,9 @@ import { StudentDataService } from '../../services/student-data.service';
 import { first, startWith, map } from 'rxjs/internal/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs/internal/Observable';
+import { firestore } from 'firebase/app';
+import Timestamp = firestore.Timestamp;
+import { Student } from '../../models/student';
 
 @Component({
   selector: 'app-editor',
@@ -17,6 +20,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class EditorComponent implements OnInit {
   myFields = new FormControl();
+  uid;
   id: number;
   data;
   headers;
@@ -29,6 +33,8 @@ export class EditorComponent implements OnInit {
   availfields: Observable<string[]>;
   students = [];
   currentData;
+  comment: string;
+  comments: string[];
   constructor(
     private route: ActivatedRoute,
     private storage: AngularFireStorage,
@@ -42,7 +48,10 @@ export class EditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.login.currentUser.subscribe(res => {
-      if (res) this.lvl = res.role;
+      if (res) {
+        this.lvl = res.role;
+        this.uid = res.uid;
+      }
     });
     this.id = +this.route.snapshot.paramMap.get('id');
     const path = `/data.csv`;
@@ -64,14 +73,15 @@ export class EditorComponent implements OnInit {
       });
       this.login.getStudents().subscribe(res => {
         res.subscribe(data => {
-          console.log(data);
-          data.forEach(obj => this.students.push(obj));
+          this.students = data;
         });
       });
   }
 
   routeIt(id) {
+    this.selected = [];
     this.id = +id;
+    this.getData(this.id);
     this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
       '/assets/' + this.id + '.pdf'
     );
@@ -125,6 +135,7 @@ export class EditorComponent implements OnInit {
         complete: result => {
           const currentData = result.data;
           currentData[this.index] = this.fb.value;
+          this.data = currentData;
           const csv = new Blob([this.papa.unparse(currentData)], {
             type: 'text/csv;charset=utf-8;'
           });
@@ -141,5 +152,46 @@ export class EditorComponent implements OnInit {
         }
       });
     });
+  }
+
+  getData(id) {
+    if( this.lvl === 'Teaching Assistant (TA)') {
+      this.$data.taRef(this.uid, id).valueChanges().pipe(first()).subscribe(res => {
+        res.fields.forEach(obj => this.add(obj));
+        this.comment = res.comments;
+        document.getElementById('comment').innerHTML = this.comment;
+      })
+    }
+    if( this.lvl === 'Manager' || this.lvl === 'Admin') {
+      this.$data.studentRef(id).valueChanges().subscribe(res =>{
+        this.selected = res.fields;
+        this.comments = res.comments;
+      })
+    }
+  }
+
+  save(comment){
+    this.comment = comment
+    this.$data.taRef(this.uid, this.id.toString()).update({
+      comments: this.comment,
+      fields: this.selected,
+      time: Timestamp.now()
+    })
+  }
+
+  submit(comment) {
+    const studentRef = this.$data.studentRef(this.id.toString());
+    studentRef.valueChanges().pipe(
+      first()).subscribe((student: Student) => {
+        const fieldss = student.fields;
+        this.selected.forEach(obj => {
+          if( !(fieldss.includes(obj)) ) fieldss.push(obj);
+        })
+        studentRef.update({
+          comments: [...student.comments, comment],
+          fields: fieldss,
+        })
+        this.router.navigate(['/dashboard/data']);
+      })
   }
 }

@@ -28,7 +28,6 @@ export class StudentDataService {
   public studentRef = (id: string): AngularFirestoreDocument<Student> =>
     this.afs.doc(`students/${id}`);
 
-
   public taRef = (id: string, studentId: string): AngularFirestoreDocument<TaStudent> =>
     this.afs.doc(`users/${id}/data/${studentId}`);
 
@@ -123,6 +122,7 @@ export class StudentDataService {
       this.managerRef(manage, student).set({
         uid: student,
         name: sName,
+        submitted: false
       })
     });
     this.studentRef(student).update({

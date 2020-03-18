@@ -19,6 +19,7 @@ export class TaStudent {
 export class ManagerStudent {
   public uid: string;
   public name: string;
+  public submitted: boolean;
 }
 
 export class ManagerTa {

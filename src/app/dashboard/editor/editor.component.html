@@ -7,7 +7,7 @@
         </div>
         <div class="csv" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
             <form *ngIf="fb" [formGroup]="fb" (ngSubmit)="onSubmit()" #changeForm fxLayoutGap="0.5vw" fxLayout="row wrap">
-                <mat-form-field *ngFor="let header of headers" [fxFlex]="data[header] ? ((data[header].toString().length + 3) < 25 ? '25': data[header].toString().length+3) : '25'">
+                <mat-form-field *ngFor="let header of headers" [fxFlex]="currentData[header] ? ((currentData[header].toString().length + 3) < 25 ? '25': currentData[header].toString().length+3) : '25'">
                     <input matInput type="text" [placeholder]="header" [formControlName]="header">
                 </mat-form-field>
                 <button type="submit" mat-raised-button>Submit</button>
@@ -16,7 +16,7 @@
         <embed [src]="url" width="45%" height="100%" type="application/pdf">
         <div class="studentlist" fxFlex="auto">
             <mat-nav-list role="navigation">
-                <mat-list-item *ngFor="let student of students" [routerLink]="'../' + student.uid" (click)="routeIt(student.uid)">{{student.name}}</mat-list-item>
+                <mat-list-item *ngFor="let student of students" [routerLink]="'../' + student.uid" (click)="routeIt(student.uid)" [disabled]="id === +student.uid">{{student.name}}</mat-list-item>
             </mat-nav-list>
         </div>
     </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="fields">
             <h3>Fields to correct</h3>
-            <form>
+            <form *ngIf="lvl === 'Teaching Assistant (TA)'">
                 <mat-form-field>
                     <input type="text" placeholder="Fields" matInput [formControl]="myFields" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete" class="completer">
@@ -36,13 +36,21 @@
             </form>
             <mat-chip-list>
                 <mat-chip *ngFor="let select of selected" [removable]="true" (removed)="delete(select)">{{select}}
-                    <mat-icon matChipRemove>cancel</mat-icon>
+                    <mat-icon matChipRemove *ngIf="lvl === 'Teaching Assistant (TA)'">cancel</mat-icon>
                 </mat-chip>
             </mat-chip-list>
         </div>
-        <div class="comment" fxFlex="auto">
+        <div class="comment" fxFlex="auto" *ngIf="lvl === 'Teaching Assistant (TA)'">
             <h1>Add comment</h1>
-            <textarea matInput placeholder="Comments"></textarea>
+            <textarea matInput placeholder="Comments" #comment type="text" id="comment"></textarea>
+            <button mat-raised-button (click)="save(comment.value)">Save</button>
+            <button mat-raised-button (click)="submit(comment.value)">Submit</button>
+        </div>
+        <div class="comments" fxFlex="auto" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
+            <h3>Comments</h3>
+            <mat-list>
+                <mat-list-item *ngFor="let comment of comments">{{comment}}</mat-list-item>
+            </mat-list>
         </div>
     </div>
 </div>
