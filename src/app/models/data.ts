@@ -6,6 +6,7 @@ export class TaStudent {
   public comments: string;
   public fields: Array<string>;
   public time: Timestamp;
+  public name: string;
 
   constructor( student ) {
     this.uid = student.uid,
@@ -20,12 +21,6 @@ export class ManagerStudent {
   public name: string;
 }
 
-export class TaManager {
-  public uid: string;
-  public name: string;
-
-  constructor( manager) {
-    this.uid = manager.uid,
-    this.name = manager.displayName
-  }
+export class ManagerTa {
+  public uids: Array<string>
 }

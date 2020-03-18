@@ -9,14 +9,12 @@ import {
 } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { finalize, tap, first} from 'rxjs/internal/operators';
+import { finalize, tap, first, map} from 'rxjs/internal/operators';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
-import { TaStudent, TaManager, ManagerStudent } from '../models/data';
-import { LoggedUserService } from './logged-user.service';
+import { TaStudent, ManagerStudent, ManagerTa } from '../models/data';
 import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
-import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +35,8 @@ export class StudentDataService {
   public managerRef = (id: string, studentId: string): AngularFirestoreDocument<ManagerStudent> =>
     this.afs.doc(`users/${id}/data/${studentId}`);
 
-  public taManager = (id: string): AngularFirestoreDocument<TaManager> => this.afs.doc(`users/${id}/data/manager`);
+  public managerTa = (id: string): AngularFirestoreDocument<ManagerTa> =>
+    this.afs.doc(`users/${id}/tas/tas`);
 
   uploadData(file: File) {
     if (file.type.split('/')[1] !== 'csv') {
@@ -85,11 +84,9 @@ export class StudentDataService {
 
   getData() {
     return this.afs
-      .collection('students', ref => ref.orderBy('id'))
+      .collection('students', ref => ref.orderBy('uid'))
       .valueChanges();
   }
-
-
 
   updateData() {
     const path = `/data.csv`;
@@ -105,7 +102,7 @@ export class StudentDataService {
           complete: result => {
             result.data.forEach(stu => {
               this.studentRef(stu.id).set({
-                id: stu.id,
+                uid: stu.id,
                 name: stu.Name,
                 comments: [],
                 fields: [],
@@ -134,12 +131,16 @@ export class StudentDataService {
   }
 
   assignStoTa(student: string, ta: string) {
-    this.taRef(ta, student).set({
+    let sName;
+    this.studentRef(student).valueChanges().pipe(first()).subscribe(res => {
+      sName = res.name
+      this.taRef(ta, student).set({
       uid: student,
       comments: '',
       fields: [],
       time: Timestamp.now(),
-    })
+      name: sName
+    })})
     this.studentRef(student).valueChanges().pipe(first()).subscribe((data: Student) => {
       this.studentRef(student).update({
         tas: [...data.tas, ta]
@@ -148,21 +149,28 @@ export class StudentDataService {
   }
 
   assignTatoM(manager: string, ta: string) {
-    let Mname;
-    this.loginService.userRef(manager).valueChanges().pipe(first()).subscribe((res: User) => {
-      Mname = res.displayName;
-      this.taManager(ta).set({
-        uid: manager,
-        name: Mname
-      })
-    });
+    this.managerTa(manager).get().pipe(first()).subscribe(res => {
+      if( !res.exists) {
+        this.managerTa(manager).set({
+          uids: [ta]
+        })
+      } else {
+        this.managerTa(manager).valueChanges().pipe(
+          first(),
+          map(uid => {
+            this.managerTa(manager).update({
+              uids: [...uid.uids, ta]
+            })
+          })
+        )
+      }
+    })
   }
 
   constructor(
     private afs: AngularFirestore,
     private storage: AngularFireStorage,
     private snackbar: MatSnackBar,
-    private papa: Papa,
-    private loginService: LoggedUserService,
+    private papa: Papa
   ) {}
 }

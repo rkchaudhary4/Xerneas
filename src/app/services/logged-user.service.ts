@@ -37,7 +37,7 @@ export class LoggedUserService {
     return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
       this.snackbar.open('Verification E-mail has been sent to your mail', '', {
         duration: 2000
-      })
+      });
       this.logout();
     });
   }
@@ -52,16 +52,19 @@ export class LoggedUserService {
           });
         } else {
           let app: boolean;
-          this.userRef(res.user.uid).valueChanges().subscribe(data => {
-            app = data.approved;
-          if( app === true) { this.router.navigate(['/']); }
-          else {
-            this.snackbar.open('Account not activated by the admin', '' , {
-              duration: 2000
+          this.userRef(res.user.uid)
+            .valueChanges()
+            .subscribe(data => {
+              app = data.approved;
+              if (app === true) {
+                this.router.navigate(['/']);
+              } else {
+                this.snackbar.open('Account not activated by the admin', '', {
+                  duration: 2000
+                });
+                this.logout();
+              }
             });
-            this.logout();
-          }
-          });
         }
       })
       .catch(err => {
@@ -119,7 +122,7 @@ export class LoggedUserService {
       .then(res => {
         this.snackbar.open('Link sent to your e-mail to change password', '', {
           duration: 2000
-        })
+        });
         this.logout();
       })
       .catch(err => {
@@ -129,43 +132,63 @@ export class LoggedUserService {
       });
   };
 
-  checkLevel = (lvl: string) => this.currentUser.pipe(
-    map((user: User) => user ? user.role === lvl: false)
-  );
+  checkLevel = (lvl: string) =>
+    this.currentUser.pipe(
+      map((user: User) => (user ? user.role === lvl : false))
+    );
 
-  checkLevelById = (lvl: string, id: string) => this.userRef(id).valueChanges().pipe(
-    map((user: User) => user? user.role === lvl: false)
-  )
+  checkLevelById = (lvl: string, id: string) =>
+    this.userRef(id)
+      .valueChanges()
+      .pipe(map((user: User) => (user ? user.role === lvl : false)));
 
-  approve = (uid) => {
+  approve = uid => {
     // this.router.navigate(['/dashboard/people']);
     this.userRef(uid).update({
       approved: true
     });
-  }
-  disapprove = (uid) => {
+  };
+  disapprove = uid => {
     this.userRef(uid).update({
       approved: false
     });
-  }
+  };
 
   changeName(name: string) {
-    this.userRef(this.currentUser.getValue().uid).update({
-      displayName: name
-    }).then((res) => {
-      this.snackbar.open('Name changed successfully', '', {
-        duration: 1500
+    this.userRef(this.currentUser.getValue().uid)
+      .update({
+        displayName: name
       })
-    }
-    ).catch(err => {
-      this.snackbar.open(err.message, '', {
-        duration: 1500
+      .then(res => {
+        this.snackbar.open('Name changed successfully', '', {
+          duration: 1500
+        });
       })
-    });
+      .catch(err => {
+        this.snackbar.open(err.message, '', {
+          duration: 1500
+        });
+      });
   }
 
   getUsers() {
     return this.afs.collection('users').valueChanges();
+  }
+
+  getStudents() {
+    return this.currentUser.pipe(
+      map(user => {
+        if (user) {
+          if (user.role === 'Admin')
+            return this.afs.collection('students').valueChanges();
+          else {
+            return this.afs
+              .collection(`/users/${user.uid}/data`)
+              .valueChanges();
+          }
+        }
+      })
+    );
   }
 
   constructor(

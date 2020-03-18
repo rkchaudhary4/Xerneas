@@ -2,7 +2,7 @@
     <div class="top" fxLayout="row">
         <div *ngIf="lvl === 'Teaching Assistant (TA)'" class="csv" fxLayout="row wrap" fxLayoutGap="0.5vw">
             <div *ngFor="let header of headers" fxFlex=30 class="csvdata">
-                <strong>{{header}}</strong> : {{data[header]}}
+                <strong>{{header}}</strong> : {{currentData[header]}}
             </div>
         </div>
         <div class="csv" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
@@ -13,8 +13,12 @@
                 <button type="submit" mat-raised-button>Submit</button>
             </form>
         </div>
-        <iframe [src]="url" width="45%" height="100%">This browser does not support PDFs. Please download the PDF to view it: Download PDF</iframe>
-        <div class="studentlist" fxFlex="auto"></div>
+        <embed [src]="url" width="45%" height="100%" type="application/pdf">
+        <div class="studentlist" fxFlex="auto">
+            <mat-nav-list role="navigation">
+                <mat-list-item *ngFor="let student of students" [routerLink]="'../' + student.uid" (click)="routeIt(student.uid)">{{student.name}}</mat-list-item>
+            </mat-nav-list>
+        </div>
     </div>
     <div class="bottom" fxLayout="row">
         <div class="id">

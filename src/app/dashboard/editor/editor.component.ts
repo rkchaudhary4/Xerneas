@@ -27,6 +27,8 @@ export class EditorComponent implements OnInit {
   fields: string[];
   selected: string[] = [];
   availfields: Observable<string[]>;
+  students = [];
+  currentData;
   constructor(
     private route: ActivatedRoute,
     private storage: AngularFireStorage,
@@ -43,9 +45,6 @@ export class EditorComponent implements OnInit {
       if (res) this.lvl = res.role;
     });
     this.id = +this.route.snapshot.paramMap.get('id');
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
-      '/assets/' + this.id + '.pdf'
-    );
     const path = `/data.csv`;
     this.storage
       .ref(path)
@@ -57,35 +56,53 @@ export class EditorComponent implements OnInit {
           skipEmptyLines: true,
           dynamicTyping: true,
           complete: result => {
-            this.index = result.data.findIndex(e => e.id === this.id);
             this.headers = result.meta.fields;
-            this.data = result.data[this.index];
-            this.fields = this.headers.map(x => x);
-            const group: any = {};
-            this.headers.forEach(field => {
-              group[field] = new FormControl(this.data[field]);
-            });
-            this.fb = new FormGroup(group);
+            this.data = result.data;
+            this.routeIt(this.id);
           }
         });
       });
-      this.availfields = this.myFields.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
+      this.login.getStudents().subscribe(res => {
+        res.subscribe(data => {
+          console.log(data);
+          data.forEach(obj => this.students.push(obj));
+        });
+      });
+  }
+
+  routeIt(id) {
+    this.id = +id;
+    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
+      '/assets/' + this.id + '.pdf'
+    );
+    this.index = this.data.findIndex(e => e.id === this.id);
+    this.currentData = this.data[this.index];
+    this.fields = this.headers.map(x => x);
+    const group: any = {};
+    this.headers.forEach(field => {
+      group[field] = new FormControl(this.currentData[field]);
+    });
+    this.fb = new FormGroup(group);
+    this.availfields = this.myFields.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
   private _filter(value: string): string[] {
     const filtervalue = value.toLowerCase();
-    if( this.fields ) return this.fields.filter(option => option.toLowerCase().includes(filtervalue));
+    if (this.fields)
+      return this.fields.filter(option =>
+        option.toLowerCase().includes(filtervalue)
+      );
     else return [];
   }
 
-  add(option){
+  add(option) {
     this.myFields.setValue('');
     this.selected.push(option);
     const Index = this.fields.indexOf(option);
-    if ( Index >= 0) this.fields.splice(Index, 1);
+    if (Index >= 0) this.fields.splice(Index, 1);
   }
 
   delete(select: string) {
@@ -95,7 +112,10 @@ export class EditorComponent implements OnInit {
 
   onSubmit() {
     const path = `/data.csv`;
-    const ref = this.storage.ref(path).getDownloadURL().pipe(first());
+    const ref = this.storage
+      .ref(path)
+      .getDownloadURL()
+      .pipe(first());
     ref.subscribe(res => {
       this.papa.parse(res, {
         download: true,
@@ -108,18 +128,18 @@ export class EditorComponent implements OnInit {
           const csv = new Blob([this.papa.unparse(currentData)], {
             type: 'text/csv;charset=utf-8;'
           });
-          const file = new File([csv], 'data.csv', {type: 'text/csv'});
+          const file = new File([csv], 'data.csv', { type: 'text/csv' });
           this.$data.uploadData(file);
           this.$data.snapshot.subscribe(task => {
-            if ( task.bytesTransferred === task.totalBytes ) {
+            if (task.bytesTransferred === task.totalBytes) {
               this.snackbar.open('File uploaded successfully', '', {
                 duration: 2000
               });
               this.router.navigate(['/dashboard/data']);
             }
-          })
+          });
         }
-      })
-    })
+      });
+    });
   }
 }

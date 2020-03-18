@@ -1,5 +1,5 @@
 export class Student {
-  public id: number;
+  public uid: number;
   public name: string;
   public comments: Array<string>;
   public fields: Array<string>;
@@ -7,7 +7,7 @@ export class Student {
   public tas: Array<string>
 
   constructor(student){
-    this.id = student.id;
+    this.uid = student.id;
     this.name = student.name;
     this.comments = student.comments;
     this.fields = student.fields;

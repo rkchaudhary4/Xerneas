@@ -73,6 +73,10 @@ export class EditorGuard implements CanActivate {
       .valueChanges()
       .pipe(
         map(res => {
+          if( !res ) {
+            this.router.navigate(['/dashboard/data']);
+            return false;
+          }
           if (this.role === 'Admin') return true;
           if (this.role === 'Manager') {
             if (res.manager === this.uid) return true;
