@@ -15,6 +15,11 @@ export class TaStudent {
   }
 }
 
+export class ManagerStudent {
+  public uid: string;
+  public name: string;
+}
+
 export class TaManager {
   public uid: string;
   public name: string;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { LoggedUserService } from '../services/logged-user.service';
 
 @Component({
@@ -11,11 +11,15 @@ export class DashboardComponent implements OnInit {
   isOpen: boolean;
   mobile = window.screen.width < 720;
   links = ['home', 'people', 'data', 'profile'];
+  loaded = true;
 
   constructor(private logged: LoggedUserService) { }
 
   ngOnInit(): void {
-    this.logged.currentUser.subscribe(res => this.user=res);
+    this.logged.currentUser.subscribe(res => {
+      this.user=res;
+      if( this.user ) this.loaded = false;
+    });
     if( this.user && !this.user.approved ){
       this.logged.logout();
     }

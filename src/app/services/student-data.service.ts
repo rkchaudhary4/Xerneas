@@ -8,11 +8,11 @@ import {
   AngularFireUploadTask
 } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, from, of } from 'rxjs';
-import { finalize, tap, first, map} from 'rxjs/internal/operators';
+import { Observable } from 'rxjs';
+import { finalize, tap, first} from 'rxjs/internal/operators';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
-import { TaStudent, TaManager } from '../models/data';
+import { TaStudent, TaManager, ManagerStudent } from '../models/data';
 import { LoggedUserService } from './logged-user.service';
 import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
@@ -32,6 +32,9 @@ export class StudentDataService {
 
 
   public taRef = (id: string, studentId: string): AngularFirestoreDocument<TaStudent> =>
+    this.afs.doc(`users/${id}/data/${studentId}`);
+
+  public managerRef = (id: string, studentId: string): AngularFirestoreDocument<ManagerStudent> =>
     this.afs.doc(`users/${id}/data/${studentId}`);
 
   public taManager = (id: string): AngularFirestoreDocument<TaManager> => this.afs.doc(`users/${id}/data/manager`);
@@ -117,6 +120,14 @@ export class StudentDataService {
   }
 
   assignStoM(student: string, manage: string) {
+    let sName;
+    this.studentRef(student).valueChanges().pipe(first()).subscribe(res => {
+      sName = res.name;
+      this.managerRef(manage, student).set({
+        uid: student,
+        name: sName,
+      })
+    });
     this.studentRef(student).update({
       manager: manage
     });
@@ -138,11 +149,13 @@ export class StudentDataService {
 
   assignTatoM(manager: string, ta: string) {
     let Mname;
-    this.loginService.userRef(manager).valueChanges().pipe(first()).subscribe((res: User) => Mname = res.displayName);
-    this.taManager(ta).set({
-      uid: manager,
-      name: Mname
-    })
+    this.loginService.userRef(manager).valueChanges().pipe(first()).subscribe((res: User) => {
+      Mname = res.displayName;
+      this.taManager(ta).set({
+        uid: manager,
+        name: Mname
+      })
+    });
   }
 
   constructor(
