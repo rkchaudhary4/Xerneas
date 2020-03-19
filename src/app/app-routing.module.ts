@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { userRoutes } from './login/routes';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LocalUserGuard, LoggedInGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -14,6 +12,11 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: './dashboard/dashboard.module#DashboardModule',
   },
+  {
+    path: 'assets/*',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

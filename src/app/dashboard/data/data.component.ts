@@ -40,7 +40,11 @@ export class DataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.$data.getData().subscribe(res => this.data = res);
+    this.loginService.getStudents().subscribe(res => {
+      res.subscribe(students => {
+        this.data = students;
+      });
+    });
     }
 
     upload(event: FileList){

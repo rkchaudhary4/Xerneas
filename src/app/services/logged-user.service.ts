@@ -176,15 +176,17 @@ export class LoggedUserService {
   }
 
   getStudents() {
-    return this.currentUser.pipe(
+    return this.$logged.pipe(
       map(user => {
         if (user) {
           if (user.role === 'Admin')
             return this.afs.collection('students').valueChanges();
-          else {
+          else if(user.role === 'Manager') {
             return this.afs
-              .collection(`/users/${user.uid}/data`)
+              .collection(`students`, ref => ref.where('manager', '==', user.uid))
               .valueChanges();
+          } else {
+            return this.afs.collection(`users/${user.uid}/data`).valueChanges();
           }
         }
       })
