@@ -13,7 +13,7 @@
                 <button type="submit" mat-raised-button>Submit</button>
             </form>
         </div>
-        <embed [src]="url" width="45%" height="100%" type="application/pdf">
+        <iframe [src]="url" width="45%" height="100%"></iframe>
         <div class="studentlist" fxFlex="auto">
             <mat-nav-list role="navigation">
                 <mat-list-item *ngFor="let student of students" [routerLink]="'../' + student.uid" (click)="routeIt(student.uid)" [disabled]="id === +student.uid">{{student.name}}</mat-list-item>

@@ -83,7 +83,7 @@ export class EditorComponent implements OnInit {
     this.id = +id;
     this.getData(this.id);
     this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
-      '/assets/' + this.id + '.pdf'
+      'https://docs.google.com/viewer?embedded=true&url=https://xerneas-6d18e.firebaseapp.com/assets/' + this.id + '.pdf'
     );
     this.index = this.data.findIndex(e => e.id === this.id);
     this.currentData = this.data[this.index];
