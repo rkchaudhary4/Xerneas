@@ -186,7 +186,7 @@ export class LoggedUserService {
               .collection(`students`, ref => ref.where('manager', '==', user.uid))
               .valueChanges();
           } else {
-            return this.afs.collection(`users/${user.uid}/data`).valueChanges();
+            return this.afs.collection(`users/${user.uid}/data`, ref => ref.orderBy('time', 'desc')).valueChanges();
           }
         }
       })
