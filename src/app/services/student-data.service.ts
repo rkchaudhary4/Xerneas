@@ -12,9 +12,7 @@ import { Observable } from 'rxjs';
 import { finalize, tap, first, map} from 'rxjs/internal/operators';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
-import { TaStudent, ManagerStudent, ManagerTa } from '../models/data';
-import { firestore } from 'firebase/app';
-import Timestamp = firestore.Timestamp;
+import { TaStudent, ManagerStudent } from '../models/data';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +31,6 @@ export class StudentDataService {
 
   public managerRef = (id: string, studentId: string): AngularFirestoreDocument<ManagerStudent> =>
     this.afs.doc(`users/${id}/data/${studentId}`);
-
-  public managerTa = (id: string): AngularFirestoreDocument<ManagerTa> =>
-    this.afs.doc(`users/${id}/tas/tas`);
 
   uploadData(file: File) {
     if (file.type.split('/')[1] !== 'csv') {
@@ -113,58 +108,6 @@ export class StudentDataService {
           }
         });
       });
-  }
-
-  assignStoM(student: string, manage: string) {
-    let sName;
-    this.studentRef(student).valueChanges().pipe(first()).subscribe(res => {
-      sName = res.name;
-      this.managerRef(manage, student).set({
-        uid: student,
-        name: sName,
-        submitted: false
-      })
-    });
-    this.studentRef(student).update({
-      manager: manage
-    });
-  }
-
-  assignStoTa(student: string, ta: string) {
-    let sName;
-    this.studentRef(student).valueChanges().pipe(first()).subscribe(res => {
-      sName = res.name
-      this.taRef(ta, student).set({
-      uid: student,
-      comments: '',
-      fields: [],
-      time: Timestamp.now(),
-      name: sName
-    })})
-    this.studentRef(student).valueChanges().pipe(first()).subscribe((data: Student) => {
-      this.studentRef(student).update({
-        tas: [...data.tas, ta]
-      })
-    })
-  }
-
-  assignTatoM(manager: string, ta: string) {
-    this.managerTa(manager).get().pipe(first()).subscribe(res => {
-      if( !res.exists) {
-        this.managerTa(manager).set({
-          uids: [ta]
-        })
-      } else {
-        this.managerTa(manager).valueChanges().pipe(
-          first(),
-          map(uid => {
-            this.managerTa(manager).update({
-              uids: [...uid.uids, ta]
-            })
-          })
-        )
-      }
-    })
   }
 
   constructor(

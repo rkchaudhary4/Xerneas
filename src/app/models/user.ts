@@ -3,7 +3,7 @@ export interface IUser {
   displayName: string;
   email: string | null;
   role: string;
-  approved: boolean
+  approved: boolean;
 }
 
 export class User implements IUser {
@@ -12,6 +12,7 @@ export class User implements IUser {
   public displayName: string;
   public email: string ;
   public approved: boolean;
+  public manager?: string;
 
   constructor(localUser) {
     this.role = localUser.role;
@@ -19,5 +20,6 @@ export class User implements IUser {
     this.displayName = localUser.displayName;
     this.email = localUser.email;
     this.approved = localUser.approved;
+    this.manager = localUser.manager;
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { LoggedUserService } from '../../services/logged-user.service';
+import { ManageService } from '../../services/manage.service';
 
 @Component({
   selector: 'app-people',
@@ -12,7 +13,7 @@ export class PeopleComponent implements OnInit {
   admin;
   columnsToDisplay = ['displayName', 'role', 'email'];
   dataSource;
-  constructor(private loginService: LoggedUserService) {
+  constructor(private loginService: LoggedUserService, private manage: ManageService) {
     this.loginService.currentUser.subscribe(res => {
       if (res) {
         this.admin = res.role === 'Admin';

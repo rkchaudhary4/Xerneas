@@ -143,7 +143,6 @@ export class LoggedUserService {
       .pipe(map((user: User) => (user ? user.role === lvl : false)));
 
   approve = uid => {
-    // this.router.navigate(['/dashboard/people']);
     this.userRef(uid).update({
       approved: true
     });
@@ -181,12 +180,18 @@ export class LoggedUserService {
         if (user) {
           if (user.role === 'Admin')
             return this.afs.collection('students').valueChanges();
-          else if(user.role === 'Manager') {
+          else if (user.role === 'Manager') {
             return this.afs
-              .collection(`students`, ref => ref.where('manager', '==', user.uid))
+              .collection(`students`, ref =>
+                ref.where('manager', '==', user.uid)
+              )
               .valueChanges();
           } else {
-            return this.afs.collection(`users/${user.uid}/data`, ref => ref.orderBy('time', 'desc')).valueChanges();
+            return this.afs
+              .collection(`users/${user.uid}/data`, ref =>
+                ref.orderBy('time', 'desc')
+              )
+              .valueChanges();
           }
         }
       })

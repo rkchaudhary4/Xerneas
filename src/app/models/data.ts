@@ -21,7 +21,3 @@ export class ManagerStudent {
   public name: string;
   public submitted: boolean;
 }
-
-export class ManagerTa {
-  public uids: Array<string>
-}
