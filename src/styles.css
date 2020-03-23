@@ -5,6 +5,11 @@
     src: url('/assets/fonts/Europhonic.otf');
 }
 
+@font-face {
+    font-family: 'raleway';
+    src: url('/assets/fonts/Raleway-Regular.ttf');
+}
+
 html,
 body {
     height: 100%;
@@ -13,8 +18,12 @@ body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: #e9e9e9;
+    font-family: 'raleway' !important;
+    background-color: #e6dede;
+}
+
+mat-sidenav-content {
+    background-color: #e6dede;
 }
 
 .mat-autocomplete-panel {

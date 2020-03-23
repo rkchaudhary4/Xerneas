@@ -46,7 +46,7 @@
 
 .menuFive {
     width: 35px;
-    height: 20px;
+    height: 26px;
     margin: 10px 10px;
     margin-left: 1vw;
     position: relative;
@@ -61,7 +61,6 @@
     transition: .3s cubic-bezier(.8, .5, .2, 1.4);
     width: 100%;
     height: 4px;
-    /* transition-duration: 500ms; */
 }
 
 .menuFive span:nth-child(1) {
@@ -70,7 +69,7 @@
 }
 
 .menuFive span:nth-child(2) {
-    top: 8px;
+    top: 11px;
     left: 0px;
 }
 
@@ -87,12 +86,12 @@
 
 .isOpen span:nth-child(2) {
     transform: rotate(495deg);
-    top: 13px;
+    top: 11px;
 }
 
 .isOpen span:nth-child(3) {
     transform: rotate(45deg);
-    top: 13px;
+    top: 11px;
 }
 
 .loader {
@@ -109,11 +108,23 @@
     width: 30vw;
 }
 
+.name {
+    font-size: 25px;
+}
+
+.link {
+    text-align: left;
+    padding-left: 1.5vw !important;
+}
+
 @media only screen and (max-width: 720px) {
     .side {
         width: 50%;
     }
     .loader img {
         width: 60vw;
+    }
+    .link {
+        padding-left: 3vw !important;
     }
 }

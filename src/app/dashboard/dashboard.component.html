@@ -3,12 +3,12 @@
         Xerneas
     </div>
     <div class="left" fxLayout="row" fxLayoutAlign="start center">
-        <div class="menuFive  " (click)="sidenav.toggle();" [class.isOpen]="isOpen">
+        <div class="menuFive" [class.isOpen]="isOpen" (click)="sidenav.toggle();">
             <span></span>
             <span></span>
             <span></span>
         </div>
-        <span *ngIf="user && !mobile">{{ user.displayName }}</span>
+        <span *ngIf="user && !mobile" class="name">{{ user.displayName }}</span>
     </div>
     <div class="right" fxLayout="row" fxLayoutAlign="end center">
         <button mat-raised-button (click)="logOut()"><span *ngIf="!mobile">LogOut </span><mat-icon>logout</mat-icon></button>
@@ -18,7 +18,7 @@
 <mat-sidenav-container class="sidenav">
     <mat-sidenav role="navigation" [(opened)]="isOpen" [mode]="mobile ? 'over':'side'" class="side" #sidenav>
         <mat-nav-list fxLayout="column">
-            <a mat-list-item *ngFor="let link of links" (click)="toggle()" [innerHTML]="link" [routerLink]="'./' + link"></a>
+            <a class="link" mat-list-item *ngFor="let link of links" (click)="toggle();" [innerHTML]="link" [routerLink]="'./' + link" fxLayout="column" fxLayoutAlign="center start"></a>
         </mat-nav-list>
     </mat-sidenav>
     <router-outlet></router-outlet>
