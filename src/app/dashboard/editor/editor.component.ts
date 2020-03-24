@@ -82,9 +82,8 @@ export class EditorComponent implements OnInit {
     this.selected = [];
     this.id = +id;
     this.getData(this.id);
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://docs.google.com/viewer?embedded=true&url=https://xerneas-6d18e.firebaseapp.com/assets/' + this.id + '.pdf'
-    );
+    const path = this.id + '.pdf';
+    this.storage.ref(`/pdfs/${path}`).getDownloadURL().subscribe(res => this.url = res);
     this.index = this.data.findIndex(e => e.id === this.id);
     this.currentData = this.data[this.index];
     this.fields = this.headers.map(x => x);

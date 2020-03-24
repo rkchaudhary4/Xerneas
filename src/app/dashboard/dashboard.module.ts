@@ -10,6 +10,7 @@ import { UpdateNameComponent } from './profile/update-name/update-name.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from './editor/editor.component';
 import { ProfilePictureComponent } from './profile/profile-picture/profile-picture.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProfilePictureComponent } from './profile/profile-picture/profile-pictu
     DashboardRoutingModule,
     LoadMaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxExtendedPdfViewerModule
   ],
   entryComponents: [ProfilePictureComponent]
 })

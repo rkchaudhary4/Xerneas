@@ -124,6 +124,10 @@
     padding-left: 1.5vw !important;
 }
 
+.out {
+    background-color: white;
+}
+
 @media only screen and (max-width: 720px) {
     .side {
         width: 50%;

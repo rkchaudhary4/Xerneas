@@ -40,3 +40,8 @@
 .mat-autocomplete-panel {
     max-height: 9vh !important;
 }
+
+.viewer {
+    height: 100%;
+    width: 45%;
+}

@@ -12,7 +12,7 @@
         <span *ngIf="user && !mobile" class="name">{{ user.displayName }}</span>
     </div>
     <div class="right" fxLayout="row" fxLayoutAlign="end center">
-        <button mat-raised-button (click)="logOut()"><span *ngIf="!mobile">LogOut </span><mat-icon>logout</mat-icon></button>
+        <button mat-button (click)="logOut()" class="out"><span *ngIf="!mobile">LogOut </span><mat-icon>logout</mat-icon></button>
     </div>
 </div>
 
