@@ -1,8 +1,9 @@
 export interface IUser {
   uid: string;
   displayName: string;
-  email: string | null;
+  email: string;
   role: string;
+  dpUrl: string | null;
   approved: boolean;
 }
 
@@ -13,6 +14,7 @@ export class User implements IUser {
   public email: string ;
   public approved: boolean;
   public manager?: string;
+  public dpUrl: string | null;
 
   constructor(localUser) {
     this.role = localUser.role;

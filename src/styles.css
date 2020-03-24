@@ -16,6 +16,16 @@ body {
     overflow: hidden;
 }
 
+.mat-list-item,
+.mat-cell,
+.mat-header-cell {
+    font-family: raleway !important;
+}
+
+mat-icon {
+    font-family: Roboto;
+}
+
 body {
     margin: 0;
     font-family: 'raleway' !important;
@@ -24,6 +34,10 @@ body {
 
 mat-sidenav-content {
     background-color: #e6dede;
+}
+
+.mat-card {
+    font-family: raleway;
 }
 
 .mat-autocomplete-panel {

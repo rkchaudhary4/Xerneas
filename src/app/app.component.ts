@@ -1,22 +1,16 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { LoggedUserService } from './services/logged-user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   title = 'Xerneas';
   loaded = true;
-  constructor(db: AngularFirestore) {
+  constructor(db: AngularFirestore, private login: LoggedUserService) {
     console.log('Hi hackers!!');
-  }
-
-  ngAfterViewInit(): void {
-    const self = this;
-    window.addEventListener('load', (ev) =>
-      self.loaded = false
-    )
   }
 }

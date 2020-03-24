@@ -1,5 +1,6 @@
 <div *ngIf="admin">
-    <input mat-input type="file" (change)="upload($event.target.files)">
+    <label for="upload-data">Upload CSV</label>
+    <input type="file" (change)="upload($event.target.files)" style="display: none;" id="upload-data">
     <button mat-raised-button (click)="syncData()">Sync Data</button>
     <div *ngIf="snapshot | async as snap">
         <mat-progress-spinner mode="determinate" [value]="percentage"></mat-progress-spinner>

@@ -8,6 +8,7 @@
             <span></span>
             <span></span>
         </div>
+        <img *ngIf="user" [src]=" user?.dpUrl ? user?.dpUrl : '/assets/default-user.png'" class="dp">
         <span *ngIf="user && !mobile" class="name">{{ user.displayName }}</span>
     </div>
     <div class="right" fxLayout="row" fxLayoutAlign="end center">

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateNameComponent } from './update-name/update-name.component';
 import { LoggedUserService } from '../../services/logged-user.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private loginService: LoggedUserService, private snackbar: MatSnackBar) { }
+  constructor(private dialog: MatDialog, private loginService: LoggedUserService) { }
 
   ngOnInit(): void {
   }
@@ -24,7 +24,11 @@ export class ProfileComponent implements OnInit {
 
   open(){
     this.dialog.open( UpdateNameComponent, {
+    });
+  }
 
+  openPic(){
+    this.dialog.open(ProfilePictureComponent, {
     });
   }
 

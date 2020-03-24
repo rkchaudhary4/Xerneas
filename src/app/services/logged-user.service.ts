@@ -99,7 +99,8 @@ export class LoggedUserService {
           role: roles,
           displayName: name,
           email: user.email,
-          approved: false
+          approved: false,
+          dpUrl: null
         });
       })
       .catch(err => {
@@ -171,7 +172,7 @@ export class LoggedUserService {
   }
 
   getUsers() {
-    return this.afs.collection('users').valueChanges();
+    return this.afs.collection('users', ref => ref.orderBy('role')).valueChanges();
   }
 
   getStudents() {

@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-title>Upload the file</mat-card-title>
+    <br>
+    <mat-card-content>
+        <input type="file" (change)="upload($event.target.files)" id="upload">
+        <div *ngIf="snapshot | async as snap">
+            {{percentage | async}}
+            <mat-progress-bar [value]="percentage | async"></mat-progress-bar>
+            <button (click)="task.pause()" class="button is-warning" [disabled]="!isActive(snap)">Pause</button>
+            <button (click)="task.cancel()" class="button is-danger" [disabled]="!isActive(snap)">Cancel</button>
+            <button (click)="task.resume()" class="button is-info" [disabled]="!(snap?.state === 'paused')">Resume</button>
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        File must be less than 1 MB
+    </mat-card-footer>
+</mat-card>

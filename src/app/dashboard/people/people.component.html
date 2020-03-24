@@ -1,8 +1,13 @@
 <div class="wrapper" fxLayout="row">
-    <table mat-table #table [dataSource]="content" class="mat-elevation-z8 content">
+    <table mat-table #table [dataSource]="content" class="mat-elevation-z8 content" fxFlex="auto">
         <ng-container matColumnDef="displayName">
             <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.displayName }}</td>
+            <td mat-cell *matCellDef="let element">
+                <div class="firstCol" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+                    <img [src]="element.dpUrl ? element.dpUrl : '/assets/default-user.png'" class="dp" />
+                    <div>{{ element.displayName }}</div>
+                </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef>E-mail ID</th>

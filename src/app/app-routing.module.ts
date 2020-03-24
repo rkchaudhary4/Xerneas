@@ -11,17 +11,19 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: './dashboard/dashboard.module#DashboardModule',
-  },
-  {
-    path: 'assets/*',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),
-RouterModule.forChild(userRoutes)],
+RouterModule.forChild(userRoutes),
+RouterModule.forChild([
+  {
+    path: '**',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  }
+])],
 exports: [RouterModule]
 })
 export class AppRoutingModule {

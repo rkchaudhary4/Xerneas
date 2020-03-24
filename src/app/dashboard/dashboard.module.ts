@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UpdateNameComponent } from './profile/update-name/update-name.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from './editor/editor.component';
+import { ProfilePictureComponent } from './profile/profile-picture/profile-picture.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { EditorComponent } from './editor/editor.component';
     ProfileComponent,
     UpdateNameComponent,
     EditorComponent,
+    ProfilePictureComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { EditorComponent } from './editor/editor.component';
     LoadMaterialModule,
     FormsModule,
     ReactiveFormsModule
-  ]
+  ],
+  entryComponents: [ProfilePictureComponent]
 })
 export class DashboardModule { }
