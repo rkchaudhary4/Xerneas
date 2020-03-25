@@ -1,6 +1,5 @@
 .wrapper {
     height: 100%;
-    /* overflow-y: hidden; */
 }
 
 .top {
@@ -44,4 +43,16 @@
 .viewer {
     height: 100%;
     width: 45%;
+    overflow-x: hidden;
+}
+
+canvas {
+    max-width: 100%;
+}
+
+@media only screen and (max-width: 720px) {
+    .wrapper {
+        height: 100%;
+        width: 100%;
+    }
 }

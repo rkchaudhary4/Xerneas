@@ -1,6 +1,10 @@
 # Xerneas
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.2.
+The project Xerneas is a web-application with the objective of data-management. It eases the tasks of the admin, managers and TAs . The main aim of this software is to provide a solution for an organisation to resolve the inconsistencies occuring in  large scale data management .
+
+## Technology Stack
+
+This project uses Angular 9.0.2 as the framework for frontend and firebase for the backend. Angular Material UI has been used for the frontend. Firebase Authentication, Firestore and Storage has been used. Backend is written in typescript.
 
 ## Development server
 
