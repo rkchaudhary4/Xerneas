@@ -81,7 +81,7 @@ export class EditorComponent implements OnInit {
   routeIt(id) {
     this.selected = [];
     this.id = +id;
-    this.getData(this.id);
+    // this.getData(this.id);
     const path = this.id + '.pdf';
     this.storage.ref(`/pdfs/${path}`).getDownloadURL().subscribe(res => this.url = res);
     this.index = this.data.findIndex(e => e.id === this.id);
@@ -153,44 +153,44 @@ export class EditorComponent implements OnInit {
     });
   }
 
-  getData(id) {
-    if( this.lvl === 'Teaching Assistant (TA)') {
-      this.$data.taRef(this.uid, id).valueChanges().pipe(first()).subscribe(res => {
-        res.fields.forEach(obj => this.add(obj));
-        this.comment = res.comments;
-        document.getElementById('comment').innerHTML = this.comment;
-      })
-    }
-    if( this.lvl === 'Manager' || this.lvl === 'Admin') {
-      this.$data.studentRef(id).valueChanges().subscribe(res =>{
-        this.selected = res.fields;
-        this.comments = res.comments;
-      })
-    }
-  }
+  // getData(id) {
+    // if( this.lvl === 'Teaching Assistant (TA)') {
+      // this.$data.taRef(this.uid, id).valueChanges().pipe(first()).subscribe(res => {
+        // res.fields.forEach(obj => this.add(obj));
+        // this.comment = res.comments;
+        // document.getElementById('comment').innerHTML = this.comment;
+      // })
+    // }
+    // if( this.lvl === 'Manager' || this.lvl === 'Admin') {
+      // this.$data.studentRef(id).valueChanges().subscribe(res =>{
+        // this.selected = res.fields;
+        // this.comments = res.comments;
+      // })
+    // }
+  // }
 
-  save(comment){
-    this.comment = comment
-    this.$data.taRef(this.uid, this.id.toString()).update({
-      comments: this.comment,
-      fields: this.selected,
-      time: Timestamp.now()
-    })
-  }
+  // save(comment){
+    // this.comment = comment
+    // this.$data.taRef(this.uid, this.id.toString()).update({
+      // comments: this.comment,
+      // fields: this.selected,
+      // time: Timestamp.now()
+    // })
+  // }
 
-  submit(comment) {
-    const studentRef = this.$data.studentRef(this.id.toString());
-    studentRef.valueChanges().pipe(
-      first()).subscribe((student: Student) => {
-        const fieldss = student.fields;
-        this.selected.forEach(obj => {
-          if( !(fieldss.includes(obj)) ) fieldss.push(obj);
-        })
-        studentRef.update({
-          comments: [...student.comments, comment],
-          fields: fieldss,
-        })
-        this.router.navigate(['/dashboard/data']);
-      })
-  }
+  // submit(comment) {
+    // const studentRef = this.$data.studentRef(this.id.toString());
+    // studentRef.valueChanges().pipe(
+      // first()).subscribe((student: Student) => {
+        // const fieldss = student.fields;
+        // this.selected.forEach(obj => {
+          // if( !(fieldss.includes(obj)) ) fieldss.push(obj);
+        // })
+        // studentRef.update({
+          // comments: [...student.comments, comment],
+          // fields: fieldss,
+        // })
+        // this.router.navigate(['/dashboard/data']);
+      // })
+  // }
 }

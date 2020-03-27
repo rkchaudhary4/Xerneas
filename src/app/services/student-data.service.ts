@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
-import { TaStudent, ManagerStudent } from '../models/data';
+import { TaStudent } from '../models/data';
 
 @Injectable({
   providedIn: 'root'
@@ -28,15 +28,6 @@ export class StudentDataService {
   public taRef = (id: string, studentId: string): AngularFirestoreDocument<TaStudent> =>
     this.afs.doc(`users/${id}/data/${studentId}`);
 
-  public managerRef = (id: string, studentId: string): AngularFirestoreDocument<ManagerStudent> =>
-    this.afs.doc(`users/${id}/data/${studentId}`);
-
-  getData() {
-    return this.afs
-      .collection('students', ref => ref.orderBy('uid'))
-      .valueChanges();
-  }
-
   updateData() {
     const path = `/data.csv`;
     this.storage
@@ -52,14 +43,11 @@ export class StudentDataService {
             result.data.forEach(stu => {
               this.studentRef(stu.id).set({
                 uid: stu.id,
-                name: stu.Name,
                 comments: [],
-                fields: [],
                 manager: '',
                 tas: []
               });
             });
-            console.log('Data Uploaded');
           }
         });
       });

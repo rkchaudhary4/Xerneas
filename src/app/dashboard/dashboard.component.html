@@ -8,7 +8,7 @@
             <span></span>
             <span></span>
         </div>
-        <img *ngIf="user" [src]=" user?.dpUrl ? user?.dpUrl : '/assets/default-user.png'" class="dp">
+        <img *ngIf="user" [src]=" user?.dpUrl ? user?.dpUrl : '/assets/default-user.png'" class="dp" alt="DP">
         <span *ngIf="user && !mobile" class="name">{{ user.displayName }}</span>
     </div>
     <div class="right" fxLayout="row" fxLayoutAlign="end center">
@@ -19,7 +19,7 @@
 <mat-sidenav-container class="sidenav">
     <mat-sidenav role="navigation" [(opened)]="isOpen" [mode]="mobile ? 'over':'side'" class="side" #sidenav>
         <mat-nav-list fxLayout="column">
-            <a class="link" mat-list-item *ngFor="let link of links" (click)="toggle(false);" [innerHTML]="link" [routerLink]="'./' + link" fxLayout="column" fxLayoutAlign="center start"></a>
+            <a class="link" mat-list-item *ngFor="let link of links" (click)="toggle(false);" [innerHTML]="link" [routerLink]="'./' + link" fxLayout="column" fxLayoutAlign="center start" [disabled]="route === link"></a>
         </mat-nav-list>
     </mat-sidenav>
     <router-outlet></router-outlet>
@@ -27,7 +27,6 @@
 <div class="loader" *ngIf="loaded" fxLayout="row" fxLayoutAlign="center center">
     <img src="/assets/logo.png">
 </div>
-<!-- <app-upload-wrapper class="uploader" (exist)="showUploader($event)"></app-upload-wrapper> -->
 <mat-card class="uploader" *ngIf="files.length">
     <mat-card-header class="uploader_head" fxLayout="row" fxLayoutAlign="space-between center">
         <mat-card-title class="title" *ngIf="files.length - completed !== 0">Uploading {{files.length - completed}} files</mat-card-title>

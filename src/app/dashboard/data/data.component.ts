@@ -15,9 +15,6 @@ export class DataComponent implements OnInit {
   admin;
   snapshot: Observable<any> = of(null);
   isHovering: boolean;
-  // 9mghlLnVGkbQQOEocE7D9TX0DGs2
-  // HqhzW9O5epY6CIGXWEmZEHWYKtR2
-  // lZ5Qy3FRv1dV9vr8bXdU06ptAmt2 (TA)
   constructor(
     private loginService: LoggedUserService,
     private $data: StudentDataService,

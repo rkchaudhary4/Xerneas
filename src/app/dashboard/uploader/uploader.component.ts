@@ -17,7 +17,6 @@ import { StudentDataService } from '../../services/student-data.service';
 export class UploaderComponent implements OnInit {
   @Input() file: File;
   @Input() path: string;
-  @Input() id?: string;
   @Output() done = new EventEmitter<boolean>(false);
   complete = false;
 
@@ -42,28 +41,11 @@ export class UploaderComponent implements OnInit {
           this.done.emit(true);
           this.complete = true;
           this.snapshot = null;
-          if (this.file.type.split('/')[0] === 'image') {
-            this.snackbar.open('File Uploaded Successfuly', '', {
-              duration: 2000
-            });
-          }
           if (this.file.type.split('/')[1] === 'csv') {
             this.$data.updateData();
           }
         }
       }),
-      finalize(() => {
-        if (this.file.type.split('/')[0] === 'image') {
-          this.storage
-            .ref(this.path)
-            .getDownloadURL()
-            .subscribe(res => {
-              this.login.userRef(this.id).update({
-                dpUrl: res
-              });
-            });
-        }
-      })
     );
   }
 
