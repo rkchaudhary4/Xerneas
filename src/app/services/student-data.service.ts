@@ -9,7 +9,7 @@ import {
 } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { finalize, tap, first, map} from 'rxjs/internal/operators';
+import { finalize, tap } from 'rxjs/internal/operators';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
 import { TaStudent, ManagerStudent } from '../models/data';

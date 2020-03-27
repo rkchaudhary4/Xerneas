@@ -30,7 +30,7 @@ export class ProfilePictureComponent implements OnInit {
 
   upload(event: FileList) {
     const file = event.item(0);
-    if (file.type.split('/')[0] !== 'image') {
+    if (file.type.split('/')[0] !== 'image' || file.type.split('/')[1] ==='gif') {
       this.snackbar.open('Please upload a valid image', '', {
         duration: 2000
       });

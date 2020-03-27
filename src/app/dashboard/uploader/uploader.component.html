@@ -1,0 +1,11 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start center">
+    <div class="name" [innerHTML]="name"></div>
+    <div fxFlex="grow"></div>
+    <div *ngIf="snapshot | async  as snap" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center center">
+        <mat-icon class="button" (click)="isActive(snap)? task.pause(): task.resume()" [innerHTML]="isActive(snap)? 'pause': 'play_arrow'"></mat-icon>
+        <mat-icon class="button" (click)="cancel(); ">cancel</mat-icon>
+        <mat-progress-spinner mode="determinate" [value]="percentage | async" diameter="30"></mat-progress-spinner>
+    </div>
+    <mat-icon class="button check" *ngIf="complete && !cancelled">check</mat-icon>
+    <div *ngIf="cancelled">Cancelled</div>
+</div>

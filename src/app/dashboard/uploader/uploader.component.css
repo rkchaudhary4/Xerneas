@@ -1,0 +1,27 @@
+.wrapper {
+    padding: 8px;
+    height: 50px;
+    overflow: hidden;
+    width: 362px;
+    border-bottom: solid #eeeeee;
+    background-color: white;
+}
+
+.button {
+    background-color: white;
+    cursor: pointer;
+    border-radius: 25%;
+    padding-right: 5px;
+}
+
+.button:hover {
+    background-color: whitesmoke;
+}
+
+.check {
+    cursor: default;
+}
+
+.check:hover {
+    background-color: white;
+}

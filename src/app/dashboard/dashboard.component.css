@@ -128,6 +128,36 @@
     background-color: white;
 }
 
+.uploader {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 99999;
+    padding: 0;
+    max-height: 323px;
+    overflow-y: auto;
+}
+
+.uploader_head {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #323232;
+    color: white;
+    height: 52px;
+    font-size: 14px;
+    line-height: normal;
+}
+
+.title {
+    margin: 0 !important;
+}
+
+.disable {
+    cursor: default !important;
+    color: black;
+}
+
 @media only screen and (max-width: 720px) {
     .side {
         width: 50%;

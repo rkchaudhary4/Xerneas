@@ -1,12 +1,7 @@
 <div *ngIf="admin">
     <label for="upload-data">Upload CSV</label>
-    <input type="file" (change)="upload($event.target.files)" style="display: none;" id="upload-data">
+    <input type="file" (change)="uploadCSV($event.target.files)" style="display: none;" id="upload-data">
     <button mat-raised-button (click)="syncData()">Sync Data</button>
-    <div *ngIf="snapshot | async as snap">
-        <mat-progress-spinner mode="determinate" [value]="percentage"></mat-progress-spinner>
-        <button mat-button (click)="isActive(snap)? pause(): resume()" [innerHTML]="isActive(snap)? 'Pause': 'Resume'"></button>
-        <button mat-button (click)="cancel()" [disabled]="!isActive(snap)">Cancel</button>
-    </div>
 </div>
 
 <div fxLayout="column">
@@ -14,3 +9,8 @@
         {{student.uid}}
     </div>
 </div>
+<!-- <div fxLayout="row" *ngIf="files.length"> -->
+<!-- <div *ngFor="let file of files"> -->
+<!-- <app-uploader [file]="file.file" [path]="file.path"></app-uploader> -->
+<!-- </div> -->
+<!-- </div> -->

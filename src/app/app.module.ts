@@ -27,7 +27,7 @@ import { UpdateNameComponent } from './dashboard/profile/update-name/update-name
     ResetPasswordComponent,
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,

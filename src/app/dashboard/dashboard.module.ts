@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from './editor/editor.component';
 import { ProfilePictureComponent } from './profile/profile-picture/profile-picture.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { DropzoneDirective } from '../directives/dropzone.directive';
+import { UploaderComponent } from './uploader/uploader.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,11 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     UpdateNameComponent,
     EditorComponent,
     ProfilePictureComponent,
+    UploaderComponent,
+    DropzoneDirective
   ],
   imports: [
-    CommonModule,
+  CommonModule,
     DashboardRoutingModule,
     LoadMaterialModule,
     FormsModule,
