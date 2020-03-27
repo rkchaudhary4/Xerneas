@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap, finalize } from 'rxjs/internal/operators';
 import { LoggedUserService } from '../../services/logged-user.service';
+import { StudentDataService } from '../../services/student-data.service';
 
 @Component({
   selector: 'app-uploader',
@@ -38,10 +39,16 @@ export class UploaderComponent implements OnInit {
     this.snapshot = this.task.snapshotChanges().pipe(
       tap(snap => {
         if (snap.bytesTransferred === snap.totalBytes) {
+          this.done.emit(true);
+          this.complete = true;
+          this.snapshot = null;
           if (this.file.type.split('/')[0] === 'image') {
             this.snackbar.open('File Uploaded Successfuly', '', {
               duration: 2000
             });
+          }
+          if (this.file.type.split('/')[1] === 'csv') {
+            this.$data.updateData();
           }
         }
       }),
@@ -56,15 +63,14 @@ export class UploaderComponent implements OnInit {
               });
             });
         }
-        this.snapshot = null;
-        this.done.emit(true);
-        this.complete = true;
       })
     );
   }
 
   cancel() {
     this.task.cancel();
+    this.snapshot = null;
+    this.done.emit(true);
     this.cancelled = true;
   }
 
@@ -75,6 +81,7 @@ export class UploaderComponent implements OnInit {
   constructor(
     private storage: AngularFireStorage,
     private snackbar: MatSnackBar,
-    private login: LoggedUserService
+    private login: LoggedUserService,
+    private $data: StudentDataService
   ) {}
 }

@@ -1,7 +1,15 @@
 <div *ngIf="admin">
     <label for="upload-data">Upload CSV</label>
     <input type="file" (change)="uploadCSV($event.target.files)" style="display: none;" id="upload-data">
-    <button mat-raised-button (click)="syncData()">Sync Data</button>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>Upload PDFs</mat-expansion-panel-header>
+        <div class="dropzone" appDropzone (hovered)="toggleHover($event)" (dropped)="uploadPDF($event)" [class.hovering]="isHovering">
+            <h3>Drop PDFs here</h3>
+            <h1>Or</h1>
+            <!-- <input type="file" (change)="uploadPDF($event.target.files)" style="display: none;" id="upload-pdf" multiple> -->
+            <!-- <label for="upload-pdf"><h3>Choose files</h3></label> -->
+        </div>
+    </mat-expansion-panel>
 </div>
 
 <div fxLayout="column">
@@ -9,8 +17,3 @@
         {{student.uid}}
     </div>
 </div>
-<!-- <div fxLayout="row" *ngIf="files.length"> -->
-<!-- <div *ngFor="let file of files"> -->
-<!-- <app-uploader [file]="file.file" [path]="file.path"></app-uploader> -->
-<!-- </div> -->
-<!-- </div> -->

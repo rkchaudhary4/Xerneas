@@ -9,7 +9,6 @@ import {
 } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { finalize, tap } from 'rxjs/internal/operators';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
 import { TaStudent, ManagerStudent } from '../models/data';
@@ -31,50 +30,6 @@ export class StudentDataService {
 
   public managerRef = (id: string, studentId: string): AngularFirestoreDocument<ManagerStudent> =>
     this.afs.doc(`users/${id}/data/${studentId}`);
-
-  uploadData(file: File) {
-    if (file.type.split('/')[1] !== 'csv') {
-      console.log(file.type);
-      this.snackbar.open('Please upload a CSV file', '', {
-        duration: 2000
-      });
-      return;
-    }
-    const path = `/data.csv`;
-
-    this.task = this.storage.upload(path, file);
-    this.percentage = this.task.percentageChanges();
-    this.snapshot = this.task.snapshotChanges().pipe(
-      tap(snap => {
-        if (snap.bytesTransferred === snap.totalBytes) {
-          this.snackbar.open('File Uploaded Successfuly', '', {
-            duration: 2000
-          });
-        }
-      }),
-      finalize(() => {
-        this.downloadURL = this.storage.ref(path).getDownloadURL();
-      })
-    );
-  }
-
-  pause() {
-    if (this.task) {
-      this.task.pause();
-    }
-  }
-
-  cancel() {
-    if (this.task) {
-      this.task.cancel();
-    }
-  }
-
-  resume() {
-    if (this.task) {
-      this.task.resume();
-    }
-  }
 
   getData() {
     return this.afs

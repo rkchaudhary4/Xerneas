@@ -13,8 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class DataComponent implements OnInit {
   data;
   admin;
-  percentage = -1;
   snapshot: Observable<any> = of(null);
+  isHovering: boolean;
   // 9mghlLnVGkbQQOEocE7D9TX0DGs2
   // HqhzW9O5epY6CIGXWEmZEHWYKtR2
   // lZ5Qy3FRv1dV9vr8bXdU06ptAmt2 (TA)
@@ -25,7 +25,6 @@ export class DataComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {
     this.loginService.checkLevel('Admin').subscribe(res => (this.admin = res));
-    this.percentage = -1;
   }
 
   ngOnInit(): void {
@@ -34,6 +33,10 @@ export class DataComponent implements OnInit {
         this.data = students;
       });
     });
+  }
+
+  toggleHover(event: boolean) {
+    this.isHovering = event;
   }
 
   uploadCSV(event: FileList) {
@@ -50,7 +53,12 @@ export class DataComponent implements OnInit {
     }
   }
 
-  syncData() {
-    this.$data.updateData();
+  uploadPDF(files: FileList) {
+    for (let i = 0; i < files.length; i++) {
+      if (files.item(i).type.split('/')[1] === 'pdf') {
+        const path = `/pdfs/${files.item(i).name}`;
+        this.dash.upload(files.item(i), path);
+      }
+    }
   }
 }

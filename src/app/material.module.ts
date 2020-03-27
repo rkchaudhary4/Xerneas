@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const modules = [
   MatFormFieldModule,
@@ -32,7 +33,8 @@ const modules = [
   MatProgressSpinnerModule,
   MatAutocompleteModule,
   MatChipsModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatExpansionModule
 ];
 
 @NgModule({

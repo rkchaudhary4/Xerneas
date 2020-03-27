@@ -139,7 +139,7 @@ export class EditorComponent implements OnInit {
             type: 'text/csv;charset=utf-8;'
           });
           const file = new File([csv], 'data.csv', { type: 'text/csv' });
-          this.$data.uploadData(file);
+          // this.$data.uploadData(file);
           this.$data.snapshot.subscribe(task => {
             if (task.bytesTransferred === task.totalBytes) {
               this.snackbar.open('File uploaded successfully', '', {
