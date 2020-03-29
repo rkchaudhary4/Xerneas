@@ -22,14 +22,7 @@
 
 .bottom {
     height: 20%;
-}
-
-.bottom div {
-    border-right: 2px solid black;
-}
-
-.fields {
-    width: 45%;
+    overflow-y: auto;
 }
 
 .mat-autocomplete-panel {
@@ -44,6 +37,12 @@
 
 canvas {
     max-width: 100%;
+}
+
+.add {
+    position: fixed;
+    bottom: 2px;
+    right: 2px;
 }
 
 @media only screen and (max-width: 720px) {

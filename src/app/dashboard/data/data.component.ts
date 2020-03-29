@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user.service';
-import { StudentDataService } from '../../services/student-data.service';
-import { Observable, of } from 'rxjs';
 import { DashboardComponent } from '../dashboard.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ManageService } from '../../services/manage.service';
 
 @Component({
   selector: 'app-data',
@@ -13,15 +12,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class DataComponent implements OnInit {
   data;
   admin;
-  snapshot: Observable<any> = of(null);
   isHovering: boolean;
+  // lZ5Qy3FRv1dV9vr8bXdU06ptAmt2 (TA)
   constructor(
     private loginService: LoggedUserService,
-    private $data: StudentDataService,
+    private manage: ManageService,
     private dash: DashboardComponent,
     private snackbar: MatSnackBar
   ) {
     this.loginService.checkLevel('Admin').subscribe(res => (this.admin = res));
+    // this.manage.assignStoTa('2', 'lZ5Qy3FRv1dV9vr8bXdU06ptAmt2');
   }
 
   ngOnInit(): void {

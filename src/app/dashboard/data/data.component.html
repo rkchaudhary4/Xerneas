@@ -13,6 +13,9 @@
 </div>
 
 <div fxLayout="column">
+    <div *ngIf="data && data.length <= 0">
+        Koi kaam nahi hai, maze kar bhai
+    </div>
     <div *ngFor="let student of data">
         {{student.uid}}
     </div>

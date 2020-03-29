@@ -1,14 +1,14 @@
 <div class="wrapper" fxLayout="column">
     <div class="top" fxLayout="row">
         <div *ngIf="lvl === 'Teaching Assistant (TA)'" class="csv" fxLayout="row wrap" fxLayoutGap="0.5vw">
-            <div *ngFor="let header of headers" fxFlex=30 class="csvdata">
-                <strong>{{header}}</strong> : {{currentData[header]}}
+            <div *ngFor="let header of headers" fxFlex="30" class="csvdata">
+                <strong>{{ header }}</strong> : {{ currentData[header] }}
             </div>
         </div>
         <div class="csv" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
             <form *ngIf="fb" [formGroup]="fb" (ngSubmit)="onSubmit()" #changeForm fxLayoutGap="0.5vw" fxLayout="row wrap">
-                <mat-form-field *ngFor="let header of headers" [fxFlex]="currentData[header] ? ((currentData[header].toString().length + 3) < 25 ? '25': currentData[header].toString().length+3) : '25'">
-                    <input matInput type="text" [placeholder]="header" [formControlName]="header">
+                <mat-form-field *ngFor="let header of headers" [fxFlex]="currentData[header] ? currentData[header].toString().length + 3 < 25 ? '25' : currentData[header].toString().length + 3: '25'">
+                    <input matInput type="text" [placeholder]="header" [formControlName]="header" />
                 </mat-form-field>
                 <button type="submit" mat-raised-button>Submit</button>
             </form>
@@ -16,38 +16,35 @@
         <ngx-extended-pdf-viewer class="viewer" [src]="url" useBrowserLocale="true" [showDownloadButton]="false" [showBookmarkButton]="false" [showOpenFileButton]="false" [showPrintButton]="false" [showPresentationModeButton]="false"></ngx-extended-pdf-viewer>
         <div class="studentlist" fxFlex="auto">
             <mat-nav-list role="navigation">
-                <mat-list-item *ngFor="let student of students" [routerLink]="'../' + student.uid" (click)="routeIt(student.uid)" [disabled]="id === +student.uid">{{student.uid}}</mat-list-item>
+                <mat-list-item *ngFor="let student of students" [routerLink]="'../' + student.uid" (click)="routeIt(student.uid)" [disabled]="id === +student.uid">{{ student.uid }}</mat-list-item>
             </mat-nav-list>
         </div>
     </div>
-    <div class="bottom" fxLayout="row">
-        <div class="fields">
-            <h3>Fields to correct</h3>
-            <form *ngIf="lvl === 'Teaching Assistant (TA)'">
+    <div class="bottom" fxLayout="column">
+        <h3>Fields to correct</h3>
+        <ng-container *ngIf="lvl === 'Teaching Assistant (TA)' && loaded">
+            <div *ngFor="let comments of taComment; let i = index" fxLayout="row" fxLayoutGap="0.5vw" fxLayoutAlign="start center">
                 <mat-form-field>
-                    <input type="text" placeholder="Fields" matInput [formControl]="myFields" [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete" class="completer">
-                        <mat-option *ngFor="let option of availfields | async" (click)="add(option)" [value]="option">{{option}}</mat-option>
-                    </mat-autocomplete>
+                    <input matInput type="text" [(ngModel)]="comments.field" placeholder="Field" (ngModelChange)="filter(i)" [matAutocomplete]="auto" (focus)="filter(i)" />
                 </mat-form-field>
-            </form>
-            <mat-chip-list>
-                <mat-chip *ngFor="let select of selected" [removable]="true" (removed)="delete(select)">{{select}}
-                    <mat-icon matChipRemove *ngIf="lvl === 'Teaching Assistant (TA)'">cancel</mat-icon>
-                </mat-chip>
-            </mat-chip-list>
-        </div>
-        <div class="comment" fxFlex="auto" *ngIf="lvl === 'Teaching Assistant (TA)'">
-            <h1>Add comment</h1>
-            <textarea matInput placeholder="Comments" #comment type="text" id="comment"></textarea>
-            <button mat-raised-button (click)="save(comment.value)">Save</button>
-            <button mat-raised-button (click)="submit(comment.value)">Submit</button>
-        </div>
-        <div class="comments" fxFlex="auto" *ngIf="lvl === 'Manager' || lvl === 'Admin'">
-            <h3>Comments</h3>
-            <mat-list>
-                <mat-list-item *ngFor="let comment of comments">{{comment}}</mat-list-item>
-            </mat-list>
-        </div>
+                <mat-form-field fxFlex="auto">
+                    <input matInput type="text" [(ngModel)]="comments.comment" placeholder="Comment" />
+                </mat-form-field>
+                <button mat-icon-button (click)="remove(i)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+                <mat-autocomplete #auto="matAutocomplete" class="completer">
+                    <mat-option *ngFor="let option of availfields" (click)="add(option)" [value]="option">{{ option }}</mat-option>
+                </mat-autocomplete>
+            </div>
+            <button (click)="save()" mat-button>Save</button>
+            <button mat-button (click)="submit()">Submit</button>
+            <button mat-raised-button color="primary" (click)="addRow()" class="add">
+        Add Row
+      </button>
+        </ng-container>
+        <ng-container *ngIf="(lvl === 'Admin' || lvl === 'Manager') && loaded">
+            Haan, Main admin hoon
+        </ng-container>
     </div>
 </div>

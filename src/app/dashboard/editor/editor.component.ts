@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Papa } from 'ngx-papaparse';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
-import { first, startWith, map } from 'rxjs/internal/operators';
+import { first } from 'rxjs/internal/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs/internal/Observable';
 import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
 import { Student } from '../../models/student';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editor',
@@ -19,7 +18,8 @@ import { Student } from '../../models/student';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-  myFields = new FormControl();
+  loaded = false;
+  name: string;
   uid;
   id: number;
   data;
@@ -29,28 +29,39 @@ export class EditorComponent implements OnInit {
   fb: FormGroup;
   lvl;
   fields: string[];
-  selected: string[] = [];
-  availfields: Observable<string[]>;
+  availfields: string[];
   students = [];
   currentData;
-  comment: string;
-  comments: string[];
+  taComment: { field: string; comment: string }[];
+  comments: { field: string; comment: string; ta: string }[];
+
   constructor(
     private route: ActivatedRoute,
     private storage: AngularFireStorage,
     private papa: Papa,
-    private sanitizer: DomSanitizer,
     private login: LoggedUserService,
     private $data: StudentDataService,
     private snackbar: MatSnackBar,
     private router: Router
-  ) {}
+  ) {
+    this.loaded = false;
+  }
+
+  remove(i: number) {
+    this.fields.push(this.taComment[i].field);
+    this.taComment.splice(i, 1);
+  }
+
+  addRow() {
+    this.taComment.push({ field: '', comment: '' });
+  }
 
   ngOnInit(): void {
     this.login.currentUser.subscribe(res => {
       if (res) {
         this.lvl = res.role;
         this.uid = res.uid;
+        this.name = res.displayName;
       }
     });
     this.id = +this.route.snapshot.paramMap.get('id');
@@ -71,31 +82,35 @@ export class EditorComponent implements OnInit {
           }
         });
       });
-      this.login.getStudents().subscribe(res => {
-        res.subscribe(data => {
-          this.students = data;
-        });
+    this.login.getStudents().subscribe(res => {
+      res.subscribe(data => {
+        this.students = data;
       });
+    });
   }
 
   routeIt(id) {
-    this.selected = [];
     this.id = +id;
-    // this.getData(this.id);
+    this.getData(this.id);
     const path = this.id + '.pdf';
-    this.storage.ref(`/pdfs/${path}`).getDownloadURL().subscribe(res => this.url = res);
+    this.storage
+      .ref(`/pdfs/${path}`)
+      .getDownloadURL()
+      .subscribe(res => (this.url = res));
     this.index = this.data.findIndex(e => e.id === this.id);
     this.currentData = this.data[this.index];
     this.fields = this.headers.map(x => x);
-    const group: any = {};
-    this.headers.forEach(field => {
-      group[field] = new FormControl(this.currentData[field]);
-    });
-    this.fb = new FormGroup(group);
-    this.availfields = this.myFields.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
+    if (this.lvl === 'Manager' || this.lvl === 'Admin') {
+      const group: any = {};
+      this.headers.forEach(field => {
+        group[field] = new FormControl(this.currentData[field]);
+      });
+      this.fb = new FormGroup(group);
+    }
+  }
+
+  filter(i) {
+    this.availfields = this._filter(this.taComment[i].field);
   }
 
   private _filter(value: string): string[] {
@@ -108,15 +123,8 @@ export class EditorComponent implements OnInit {
   }
 
   add(option) {
-    this.myFields.setValue('');
-    this.selected.push(option);
     const Index = this.fields.indexOf(option);
     if (Index >= 0) this.fields.splice(Index, 1);
-  }
-
-  delete(select: string) {
-    this.selected = this.selected.filter(field => field !== select);
-    this.fields.push(select);
   }
 
   onSubmit() {
@@ -153,44 +161,51 @@ export class EditorComponent implements OnInit {
     });
   }
 
-  // getData(id) {
-    // if( this.lvl === 'Teaching Assistant (TA)') {
-      // this.$data.taRef(this.uid, id).valueChanges().pipe(first()).subscribe(res => {
-        // res.fields.forEach(obj => this.add(obj));
-        // this.comment = res.comments;
-        // document.getElementById('comment').innerHTML = this.comment;
-      // })
-    // }
-    // if( this.lvl === 'Manager' || this.lvl === 'Admin') {
-      // this.$data.studentRef(id).valueChanges().subscribe(res =>{
-        // this.selected = res.fields;
-        // this.comments = res.comments;
-      // })
-    // }
-  // }
+  getData(id) {
+    if (this.lvl === 'Teaching Assistant (TA)') {
+      this.$data
+        .taRef(this.uid, id)
+        .valueChanges()
+        .pipe(first())
+        .subscribe(res => {
+          this.taComment = res.comments;
+          if (res.comments.length === 0) {
+            this.taComment.push({ field: '', comment: '' });
+          }
+          this.taComment.forEach(key => {
+            const i = this.fields.indexOf(key.field);
+            if (i >= 0) this.fields.splice(i, 1);
+          });
+          this.loaded = true;
+        });
+    }
+    if (this.lvl === 'Manager' || this.lvl === 'Admin') {
+      this.$data
+        .studentRef(id)
+        .valueChanges()
+        .subscribe(res => {
+          this.comments = res.comments;
+          this.loaded = true;
+        });
+    }
+  }
 
-  // save(comment){
-    // this.comment = comment
-    // this.$data.taRef(this.uid, this.id.toString()).update({
-      // comments: this.comment,
-      // fields: this.selected,
-      // time: Timestamp.now()
-    // })
-  // }
+  save() {
+    this.$data.taRef(this.uid, this.id.toString()).update({
+      comments: this.taComment,
+      time: Timestamp.now()
+    });
+  }
 
-  // submit(comment) {
-    // const studentRef = this.$data.studentRef(this.id.toString());
-    // studentRef.valueChanges().pipe(
-      // first()).subscribe((student: Student) => {
-        // const fieldss = student.fields;
-        // this.selected.forEach(obj => {
-          // if( !(fieldss.includes(obj)) ) fieldss.push(obj);
-        // })
-        // studentRef.update({
-          // comments: [...student.comments, comment],
-          // fields: fieldss,
-        // })
+  submit() {
+    const studentRef = this.$data.studentRef(this.id.toString());
+    studentRef
+      .valueChanges()
+      .pipe(first())
+      .subscribe((student: Student) => {
+        const submitted = this.taComment.map(res => ({...res, ta: this.name}));
+        console.log(submitted);
         // this.router.navigate(['/dashboard/data']);
-      // })
-  // }
+      });
+  }
 }
