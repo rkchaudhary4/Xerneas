@@ -204,8 +204,12 @@ export class EditorComponent implements OnInit {
       .pipe(first())
       .subscribe((student: Student) => {
         const submitted = this.taComment.map(res => ({...res, ta: this.name}));
-        console.log(submitted);
-        // this.router.navigate(['/dashboard/data']);
+        studentRef.update({
+          comments: student.comments.concat(submitted),
+          tas: [ ...student.tas.filter(ta => ta !== this.uid)]
+        })
+        this.$data.taRef(this.uid, this.id.toString()).delete();
+        this.router.navigate(['/dashboard/data']);
       });
   }
 }

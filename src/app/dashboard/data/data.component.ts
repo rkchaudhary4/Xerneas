@@ -21,7 +21,6 @@ export class DataComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {
     this.loginService.checkLevel('Admin').subscribe(res => (this.admin = res));
-    // this.manage.assignStoTa('2', 'lZ5Qy3FRv1dV9vr8bXdU06ptAmt2');
   }
 
   ngOnInit(): void {
