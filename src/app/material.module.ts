@@ -13,8 +13,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule} from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 const modules = [
@@ -32,8 +30,6 @@ const modules = [
   MatDialogModule,
   MatProgressSpinnerModule,
   MatAutocompleteModule,
-  MatChipsModule,
-  MatProgressBarModule,
   MatExpansionModule
 ];
 
