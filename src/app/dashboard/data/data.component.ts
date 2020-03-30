@@ -29,6 +29,9 @@ export class DataComponent implements OnInit {
         this.data = students;
       });
     });
+    // this.manage.assignStoTa('2', 'lZ5Qy3FRv1dV9vr8bXdU06ptAmt2');
+    // this.manage.assignStoTa('1', 'aIEWNL4pePctDXU2o9OpAcraBiw1');
+    // this.manage.assignStoTa('3', '9mghlLnVGkbQQOEocE7D9TX0DGs2');
   }
 
   toggleHover(event: boolean) {
