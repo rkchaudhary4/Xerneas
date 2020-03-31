@@ -45,6 +45,18 @@ canvas {
     right: 2px;
 }
 
+.comments {
+    width: 100%;
+}
+
+.table {
+    width: inherit;
+}
+
+.comment {
+    width: 70%;
+}
+
 @media only screen and (max-width: 720px) {
     .wrapper {
         height: 100%;

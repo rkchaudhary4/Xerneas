@@ -5,7 +5,7 @@ import { Papa } from 'ngx-papaparse';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
-import { first } from 'rxjs/internal/operators';
+import { first, tap, finalize } from 'rxjs/internal/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
@@ -20,6 +20,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
+  keys;
   loaded = false;
   name: string;
   uid;
@@ -35,7 +36,7 @@ export class EditorComponent implements OnInit {
   students = [];
   currentData;
   taComment: { field: string; comment: string }[];
-  comments: { field: string; comment: string; ta: string }[];
+  comments: {};
 
   constructor(
     private route: ActivatedRoute,
@@ -155,15 +156,11 @@ export class EditorComponent implements OnInit {
                 type: 'text/csv;charset=utf-8;'
               });
               const file = new File([csv], 'data.csv', { type: 'text/csv' });
-              // this.$data.uploadData(file);
-              this.$data.snapshot.subscribe(task => {
-                if (task.bytesTransferred === task.totalBytes) {
-                  this.snackbar.open('File uploaded successfully', '', {
-                    duration: 2000
-                  });
+              this.storage.upload(path, file).snapshotChanges().pipe(
+                finalize(() => {
                   this.router.navigate(['/dashboard/data']);
-                }
-              });
+                })
+              ).subscribe();
             }
           });
         });
@@ -194,8 +191,13 @@ export class EditorComponent implements OnInit {
         .studentRef(id)
         .valueChanges()
         .subscribe(res => {
-          this.comments = res.comments;
+          this.comments = res.comments.reduce((objectsByKeyValue, obj) => {
+            const value = obj.field;
+            objectsByKeyValue[value]= (objectsByKeyValue[value] || []).concat(obj);
+            return objectsByKeyValue;
+          }, {});
           this.loaded = true;
+          this.keys = Object.keys(this.comments);
         });
     }
   }
