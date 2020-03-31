@@ -11,6 +11,8 @@ import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
 import { Student } from '../../models/student';
 import { SafeUrl } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-editor',
@@ -42,7 +44,8 @@ export class EditorComponent implements OnInit {
     private login: LoggedUserService,
     private $data: StudentDataService,
     private snackbar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.loaded = false;
   }
@@ -128,36 +131,43 @@ export class EditorComponent implements OnInit {
   }
 
   onSubmit() {
-    const path = `/data.csv`;
-    const ref = this.storage
-      .ref(path)
-      .getDownloadURL()
-      .pipe(first());
-    ref.subscribe(res => {
-      this.papa.parse(res, {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
-        dynamicTyping: true,
-        complete: result => {
-          const currentData = result.data;
-          currentData[this.index] = this.fb.value;
-          this.data = currentData;
-          const csv = new Blob([this.papa.unparse(currentData)], {
-            type: 'text/csv;charset=utf-8;'
-          });
-          const file = new File([csv], 'data.csv', { type: 'text/csv' });
-          // this.$data.uploadData(file);
-          this.$data.snapshot.subscribe(task => {
-            if (task.bytesTransferred === task.totalBytes) {
-              this.snackbar.open('File uploaded successfully', '', {
-                duration: 2000
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: 'Are you sure? This will change the csv file'
+    });
+    dialogRef.afterClosed().subscribe((flag: boolean) => {
+      if (flag) {
+        const path = `/data.csv`;
+        const ref = this.storage
+          .ref(path)
+          .getDownloadURL()
+          .pipe(first());
+        ref.subscribe(res => {
+          this.papa.parse(res, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            dynamicTyping: true,
+            complete: result => {
+              const currentData = result.data;
+              currentData[this.index] = this.fb.value;
+              this.data = currentData;
+              const csv = new Blob([this.papa.unparse(currentData)], {
+                type: 'text/csv;charset=utf-8;'
               });
-              this.router.navigate(['/dashboard/data']);
+              const file = new File([csv], 'data.csv', { type: 'text/csv' });
+              // this.$data.uploadData(file);
+              this.$data.snapshot.subscribe(task => {
+                if (task.bytesTransferred === task.totalBytes) {
+                  this.snackbar.open('File uploaded successfully', '', {
+                    duration: 2000
+                  });
+                  this.router.navigate(['/dashboard/data']);
+                }
+              });
             }
           });
-        }
-      });
+        });
+      }
     });
   }
 
@@ -198,18 +208,29 @@ export class EditorComponent implements OnInit {
   }
 
   submit() {
-    const studentRef = this.$data.studentRef(this.id.toString());
-    studentRef
-      .valueChanges()
-      .pipe(first())
-      .subscribe((student: Student) => {
-        const submitted = this.taComment.map(res => ({...res, ta: this.name}));
-        studentRef.update({
-          comments: student.comments.concat(submitted),
-          tas: [ ...student.tas.filter(ta => ta !== this.uid)]
-        })
-        this.$data.taRef(this.uid, this.id.toString()).delete();
-        this.router.navigate(['/dashboard/data']);
-      });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data:
+        'Are you sure? You will not be able to open this again after submitting'
+    });
+    dialogRef.afterClosed().subscribe((flag: boolean) => {
+      if (flag) {
+        const studentRef = this.$data.studentRef(this.id.toString());
+        studentRef
+          .valueChanges()
+          .pipe(first())
+          .subscribe((student: Student) => {
+            const submitted = this.taComment.map(res => ({
+              ...res,
+              ta: this.name
+            }));
+            studentRef.update({
+              comments: student.comments.concat(submitted),
+              tas: [...student.tas.filter(ta => ta !== this.uid)]
+            });
+            this.$data.taRef(this.uid, this.id.toString()).delete();
+            this.router.navigate(['/dashboard/data']);
+          });
+      }
+    });
   }
 }

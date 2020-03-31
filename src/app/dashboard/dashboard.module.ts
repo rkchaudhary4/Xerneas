@@ -13,6 +13,7 @@ import { ProfilePictureComponent } from './profile/profile-picture/profile-pictu
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DropzoneDirective } from '../directives/dropzone.directive';
 import { UploaderComponent } from './uploader/uploader.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UploaderComponent } from './uploader/uploader.component';
     EditorComponent,
     ProfilePictureComponent,
     UploaderComponent,
-    DropzoneDirective
+    DropzoneDirective,
+    ConfirmDialogComponent
   ],
   imports: [
   CommonModule,
@@ -34,6 +36,6 @@ import { UploaderComponent } from './uploader/uploader.component';
     ReactiveFormsModule,
     NgxExtendedPdfViewerModule
   ],
-  entryComponents: [ProfilePictureComponent]
+  entryComponents: [ProfilePictureComponent, ConfirmDialogComponent]
 })
 export class DashboardModule { }
