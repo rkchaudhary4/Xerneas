@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { DashboardComponent } from '../dashboard.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManageService } from '../../services/manage.service';
+import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-data',
@@ -10,28 +13,43 @@ import { ManageService } from '../../services/manage.service';
   styleUrls: ['./data.component.css']
 })
 export class DataComponent implements OnInit {
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   data;
-  admin;
+  role;
+  isThere = false;
+  loading = true;
   isHovering: boolean;
   // lZ5Qy3FRv1dV9vr8bXdU06ptAmt2 (TA)
   constructor(
     private loginService: LoggedUserService,
     private manage: ManageService,
     private dash: DashboardComponent,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router: Router,
+    private ChangeDetector: ChangeDetectorRef
   ) {
-    this.loginService.checkLevel('Admin').subscribe(res => (this.admin = res));
+    this.loginService.$logged.subscribe(res => (this.role = res.role));
   }
 
   ngOnInit(): void {
     this.loginService.getStudents().subscribe(res => {
       res.subscribe(students => {
-        this.data = students;
+        console.log(students);
+        this.data = new MatTableDataSource(students);
+        if (students.length > 0) {
+          this.isThere = true;
+          this.loading = false;
+          this.ChangeDetector.detectChanges();
+          this.data.paginator = this.paginator;
+        } else {
+          console.log('Changed');
+          this.isThere = false;
+          console.log(this.isThere);
+          this.loading = false;
+          this.ChangeDetector.detectChanges();
+        }
       });
     });
-    // this.manage.assignStoTa('2', 'lZ5Qy3FRv1dV9vr8bXdU06ptAmt2');
-    // this.manage.assignStoTa('1', 'aIEWNL4pePctDXU2o9OpAcraBiw1');
-    // this.manage.assignStoTa('3', '9mghlLnVGkbQQOEocE7D9TX0DGs2');
   }
 
   toggleHover(event: boolean) {
@@ -50,6 +68,10 @@ export class DataComponent implements OnInit {
         this.dash.upload(event.item(0), paths);
       }
     }
+  }
+
+  openEditor() {
+    this.router.navigate(['/dashboard/editor/' + this.data.data[0].uid]);
   }
 
   uploadPDF(files: FileList) {
