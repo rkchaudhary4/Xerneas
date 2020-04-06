@@ -29,7 +29,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ConfirmDialogComponent
   ],
   imports: [
-  CommonModule,
+    CommonModule,
     DashboardRoutingModule,
     LoadMaterialModule,
     FormsModule,
@@ -38,4 +38,4 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
   ],
   entryComponents: [ProfilePictureComponent, ConfirmDialogComponent]
 })
-export class DashboardModule { }
+export class DashboardModule {}

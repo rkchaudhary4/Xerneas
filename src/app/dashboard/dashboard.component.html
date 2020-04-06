@@ -17,7 +17,7 @@
 </div>
 
 <mat-sidenav-container class="sidenav">
-    <mat-sidenav role="navigation" [(opened)]="isOpen" [mode]="mobile ? 'over':'side'" class="side" #sidenav>
+    <mat-sidenav [(opened)]="isOpen" [mode]="mobile ? 'over':'side'" class="side" #sidenav>
         <mat-nav-list fxLayout="column">
             <a class="link" mat-list-item *ngFor="let link of links" (click)="toggle(false);" [innerHTML]="link" [routerLink]="'./' + link" fxLayout="column" fxLayoutAlign="center start" [disabled]="route === link"></a>
         </mat-nav-list>

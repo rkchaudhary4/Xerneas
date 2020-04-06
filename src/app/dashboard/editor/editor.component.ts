@@ -5,8 +5,7 @@ import { Papa } from 'ngx-papaparse';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
-import { first, tap, finalize } from 'rxjs/internal/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { first, finalize } from 'rxjs/internal/operators';
 import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
 import { Student } from '../../models/student';
@@ -44,7 +43,6 @@ export class EditorComponent implements OnInit {
     private papa: Papa,
     private login: LoggedUserService,
     private $data: StudentDataService,
-    private snackbar: MatSnackBar,
     private router: Router,
     private dialog: MatDialog
   ) {

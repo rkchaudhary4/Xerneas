@@ -13,6 +13,10 @@
     height: 100%;
 }
 
+.disabled{
+    background-color: red;
+}
+
 .center {
     position: absolute;
     top: 0;

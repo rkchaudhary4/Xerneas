@@ -124,7 +124,6 @@ export class LoggedUserService {
         this.snackbar.open('Link sent to your e-mail to change password', '', {
           duration: 2000
         });
-        this.logout();
       })
       .catch(err => {
         this.snackbar.open(err.message, '', {
@@ -198,7 +197,7 @@ export class LoggedUserService {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
   ) {
     this.init();
   }

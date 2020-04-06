@@ -10,26 +10,24 @@ import { ProfilePictureComponent } from './profile-picture/profile-picture.compo
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  constructor(
+    private dialog: MatDialog,
+    private loginService: LoggedUserService
+  ) {}
 
-  constructor(private dialog: MatDialog, private loginService: LoggedUserService) { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
-  changePass(){
+  changePass() {
     this.loginService.currentUser.subscribe(res => {
       this.loginService.resetPassword(res.email);
-    })
-  }
-
-  open(){
-    this.dialog.open( UpdateNameComponent, {
     });
   }
 
-  openPic(){
-    this.dialog.open(ProfilePictureComponent, {
-    });
+  open() {
+    this.dialog.open(UpdateNameComponent, {});
   }
 
+  openPic() {
+    this.dialog.open(ProfilePictureComponent, {});
+  }
 }

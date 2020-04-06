@@ -34,7 +34,6 @@ export class DataComponent implements OnInit {
   ngOnInit(): void {
     this.loginService.getStudents().subscribe(res => {
       res.subscribe(students => {
-        console.log(students);
         this.data = new MatTableDataSource(students);
         if (students.length > 0) {
           this.isThere = true;
