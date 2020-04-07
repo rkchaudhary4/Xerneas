@@ -41,9 +41,7 @@ export class DataComponent implements OnInit {
           this.ChangeDetector.detectChanges();
           this.data.paginator = this.paginator;
         } else {
-          console.log('Changed');
           this.isThere = false;
-          console.log(this.isThere);
           this.loading = false;
           this.ChangeDetector.detectChanges();
         }

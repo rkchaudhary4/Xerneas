@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth  } from '@angular/fire/auth';
 import {
   AngularFirestore,
   AngularFirestoreDocument
@@ -22,19 +22,19 @@ export class LoggedUserService {
     this.afs.doc(`users/${id}`);
   init = (): void => {
     this.currentUser = new BehaviorSubject<User>(null);
-    this.isAuthenticated$ = this.afAuth.authState.pipe(map(res => !!res));
-    this.$logged = this.afAuth.authState.pipe(
+    this.isAuthenticated$ = this.auth.authState.pipe(map(res => !!res));
+    this.$logged = this.auth.authState.pipe(
       switchMap(user =>
         user ? this.userRef(user.uid).valueChanges() : of(null)
       ),
-      catchError(err => {
+      catchError(() => {
         return of(null);
       })
     );
     this.$logged.subscribe(users => this.currentUser.next(users));
   };
-  SendEmailVerification() {
-    return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
+  async SendEmailVerification() {
+    return (await this.auth.currentUser).sendEmailVerification().then(() => {
       this.snackbar.open('Verification E-mail has been sent to your mail', '', {
         duration: 2000
       });
@@ -42,7 +42,7 @@ export class LoggedUserService {
     });
   }
   signIn = (username: string, pass: string): Promise<any> =>
-    this.afAuth.auth
+    this.auth
       .signInWithEmailAndPassword(username, pass)
       .then(res => {
         if (res.user.emailVerified !== true) {
@@ -78,7 +78,7 @@ export class LoggedUserService {
     name: string,
     roles: string
   ): Promise<void> =>
-    this.afAuth.auth
+    this.auth
       .createUserWithEmailAndPassword(username, pass)
       .then(res => {
         const user = res.user;
@@ -109,7 +109,7 @@ export class LoggedUserService {
         });
       });
   logout = (): Promise<void | boolean> =>
-    this.afAuth.auth
+    this.auth
       .signOut()
       .then(() => {
         this.router.navigate(['/login']);
@@ -118,9 +118,9 @@ export class LoggedUserService {
         console.log(err);
       });
   resetPassword = (email: string) => {
-    this.afAuth.auth
+    this.auth
       .sendPasswordResetEmail(email)
-      .then(res => {
+      .then(() => {
         this.snackbar.open('Link sent to your e-mail to change password', '', {
           duration: 2000
         });
@@ -153,7 +153,7 @@ export class LoggedUserService {
       .update({
         displayName: name
       })
-      .then(res => {
+      .then(() => {
         this.snackbar.open('Name changed successfully', '', {
           duration: 1500
         });
@@ -194,7 +194,7 @@ export class LoggedUserService {
   }
 
   constructor(
-    private afAuth: AngularFireAuth,
+    public auth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
     private snackbar: MatSnackBar,
