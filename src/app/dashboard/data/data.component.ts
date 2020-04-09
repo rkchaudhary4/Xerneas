@@ -19,6 +19,7 @@ export class DataComponent implements OnInit {
   isThere = false;
   loading = true;
   isHovering: boolean;
+  input;
   // lZ5Qy3FRv1dV9vr8bXdU06ptAmt2 (TA)
   constructor(
     private loginService: LoggedUserService,
@@ -26,26 +27,14 @@ export class DataComponent implements OnInit {
     private dash: DashboardComponent,
     private snackbar: MatSnackBar,
     private router: Router,
-    private ChangeDetector: ChangeDetectorRef
+    private ChangeDetector: ChangeDetectorRef,
   ) {
     this.loginService.$logged.subscribe(res => (this.role = res.role));
   }
 
   ngOnInit(): void {
     this.loginService.getStudents().subscribe(res => {
-      res.subscribe(students => {
-        this.data = new MatTableDataSource(students);
-        if (students.length > 0) {
-          this.isThere = true;
-          this.loading = false;
-          this.ChangeDetector.detectChanges();
-          this.data.paginator = this.paginator;
-        } else {
-          this.isThere = false;
-          this.loading = false;
-          this.ChangeDetector.detectChanges();
-        }
-      });
+      this.input  = res;
     });
   }
 

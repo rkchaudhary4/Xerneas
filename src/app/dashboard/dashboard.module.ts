@@ -14,6 +14,10 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DropzoneDirective } from '../directives/dropzone.directive';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MatTableComponent } from './mat-table/mat-table.component';
+import { AdminDataComponent } from './data/admin-data/admin-data.component';
+import { TaDataComponent } from './data/ta-data/ta-data.component';
+import { ManagerDataComponent } from './data/manager-data/manager-data.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ProfilePictureComponent,
     UploaderComponent,
     DropzoneDirective,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    MatTableComponent,
+    AdminDataComponent,
+    TaDataComponent,
+    ManagerDataComponent,
   ],
   imports: [
     CommonModule,
