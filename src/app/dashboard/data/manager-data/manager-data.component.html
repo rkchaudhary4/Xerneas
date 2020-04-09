@@ -1,1 +1,6 @@
-<p>manager-data works!</p>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>Students</mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+        <app-mat-table [data]="data" [columnsToDisplay]="columnsToDisplay" [fields]="fields"></app-mat-table>
+    </ng-template>
+</mat-expansion-panel>

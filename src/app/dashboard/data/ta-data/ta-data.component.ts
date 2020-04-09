@@ -7,24 +7,34 @@ import { Router } from '@angular/router';
   selector: 'app-ta-data',
   templateUrl: './ta-data.component.html',
   styleUrls: ['./ta-data.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class TaDataComponent implements OnInit {
   @Input() matData;
   data;
+  loaded;
   columnsToDisplay = ['Id', 'Last Edited'];
   fields = ['uid', 'edited'];
-  constructor(private date: DatePipe, private router: Router) { }
+  constructor(private date: DatePipe, private router: Router) {}
 
   ngOnInit(): void {
-    this.matData.subscribe(students => {
-      students.map(student => student.edited = this.date.transform(student.time.toDate(), 'medium'));
-      this.data = new MatTableDataSource(students);
-    })
+    this.loaded = false;
+    this.matData.subscribe((students) => {
+      if (students.length) {
+        students.map(
+          (student) =>
+            (student.edited = this.date.transform(
+              student.time.toDate(),
+              'medium'
+            ))
+        );
+        this.data = new MatTableDataSource(students);
+      }
+      this.loaded = true;
+    });
   }
 
-  openEditor(){
+  openEditor() {
     this.router.navigate(['/dashboard/editor/' + this.data.data[0].uid]);
   }
-
 }

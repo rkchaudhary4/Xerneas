@@ -1,26 +1,7 @@
-<div *ngIf="role === 'Admin'">
-    <label for="upload-data">Upload CSV</label>
-    <input type="file" (change)="uploadCSV($event.target.files)" style="display: none;" id="upload-data" />
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>Upload PDFs</mat-expansion-panel-header>
-        <div class="dropzone" appDropzone (hovered)="toggleHover($event)" (dropped)="uploadPDF($event)" [class.hovering]="isHovering">
-            <h3>Drop PDFs here</h3>
-            <h1>Or</h1>
-        </div>
-        <input type="file" (change)="uploadPDF($event.target.files)" style="display: none;" id="upload-pdf" multiple />
-        <label for="upload-pdf"><h3>Choose files</h3></label>
-    </mat-expansion-panel>
-</div>
 <div *ngIf="input">
     <div [ngSwitch]="role">
-        <ng-container *ngSwitchCase="'Admin'">
-            <app-admin-data></app-admin-data>
-        </ng-container>
-        <ng-container *ngSwitchCase="'Manager'">
-            <app-manager-data></app-manager-data>
-        </ng-container>
-        <ng-container *ngSwitchCase="'Teaching Assistant (TA)'">
-            <app-ta-data [matData]="input"></app-ta-data>
-        </ng-container>
+        <app-admin-data *ngSwitchCase="'Admin'" (csv)="uploadCSV($event)" (pdf)="uploadPDF($event)"></app-admin-data>
+        <app-manager-data *ngSwitchCase="'Manager'" [matData]="input"></app-manager-data>
+        <app-ta-data *ngSwitchCase="'Teaching Assistant (TA)'" [matData]="input"></app-ta-data>
     </div>
 </div>

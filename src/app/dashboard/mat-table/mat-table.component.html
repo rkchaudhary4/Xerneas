@@ -1,4 +1,4 @@
-<table *ngIf="data" mat-table #table [dataSource]="data" class="mat-elevation-z8">
+<table *ngIf="data" mat-table #table [dataSource]="data">
     <ng-container *ngFor=" let field of columnsToDisplay" [matColumnDef]="field">
         <th mat-header-cell *matHeaderCellDef>{{field}}</th>
         <td mat-cell *matCellDef="let element">

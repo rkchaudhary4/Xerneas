@@ -1,11 +1,7 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { DashboardComponent } from '../dashboard.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ManageService } from '../../services/manage.service';
-import { Router } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-data',
@@ -13,21 +9,13 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./data.component.css']
 })
 export class DataComponent implements OnInit {
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  data;
   role;
-  isThere = false;
-  loading = true;
-  isHovering: boolean;
   input;
   // lZ5Qy3FRv1dV9vr8bXdU06ptAmt2 (TA)
   constructor(
     private loginService: LoggedUserService,
-    private manage: ManageService,
     private dash: DashboardComponent,
     private snackbar: MatSnackBar,
-    private router: Router,
-    private ChangeDetector: ChangeDetectorRef,
   ) {
     this.loginService.$logged.subscribe(res => (this.role = res.role));
   }
@@ -36,10 +24,6 @@ export class DataComponent implements OnInit {
     this.loginService.getStudents().subscribe(res => {
       this.input  = res;
     });
-  }
-
-  toggleHover(event: boolean) {
-    this.isHovering = event;
   }
 
   uploadCSV(event: FileList) {
@@ -54,10 +38,6 @@ export class DataComponent implements OnInit {
         this.dash.upload(event.item(0), paths);
       }
     }
-  }
-
-  openEditor() {
-    this.router.navigate(['/dashboard/editor/' + this.data.data[0].uid]);
   }
 
   uploadPDF(files: FileList) {

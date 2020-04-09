@@ -1,1 +1,13 @@
-<p>admin-data works!</p>
+<label for="upload-data">Upload CSV</label>
+<input type="file" (change)="uploadCSV($event.target.files)" style="display: none;" id="upload-data" />
+<mat-expansion-panel>
+    <mat-expansion-panel-header>Upload PDFs</mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+        <div class="dropzone" appDropzone (hovered)="toggleHover($event)" (dropped)="uploadPDF($event)" [class.hovering]="isHovering">
+            <h3>Drop PDFs here</h3>
+            <h1>Or</h1>
+        </div>
+        <input type="file" (change)="uploadPDF($event.target.files)" style="display: none;" id="upload-pdf" multiple />
+        <label for="upload-pdf"><h3>Choose files</h3></label>
+    </ng-template>
+</mat-expansion-panel>

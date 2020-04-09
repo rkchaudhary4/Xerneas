@@ -1,2 +1,9 @@
-<button (click)="openEditor()" mat-raised-button color="primary" class="opener">Open Editor</button>
-<app-mat-table [data]="data" [columnsToDisplay]="columnsToDisplay" [fields]="fields"></app-mat-table>
+<div *ngIf="data && loaded">
+    <button (click)="openEditor()" mat-raised-button color="primary" class="opener">
+    Open Editor
+  </button>
+    <app-mat-table [data]="data" [columnsToDisplay]="columnsToDisplay" [fields]="fields"></app-mat-table>
+</div>
+<div *ngIf="!data && loaded">
+    Koi kaam nahi hai, maze kar bhai
+</div>
