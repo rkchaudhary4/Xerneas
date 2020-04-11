@@ -5,7 +5,7 @@ import {
 } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { tap, finalize } from 'rxjs/internal/operators';
+import { tap } from 'rxjs/internal/operators';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
 

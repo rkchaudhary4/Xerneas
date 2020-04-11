@@ -38,7 +38,6 @@ export class StudentDataService {
           download: true,
           header: true,
           skipEmptyLines: true,
-          dynamicTyping: true,
           complete: result => {
             result.data.forEach(stu => {
               this.studentRef(stu.id).set({

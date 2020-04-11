@@ -23,7 +23,7 @@ export class EditorComponent implements OnInit {
   loaded = false;
   name: string;
   uid;
-  id: number;
+  id;
   data;
   headers;
   index: number;
@@ -66,7 +66,7 @@ export class EditorComponent implements OnInit {
         this.name = res.displayName;
       }
     });
-    this.id = +this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id');
     const path = `/data.csv`;
     this.storage
       .ref(path)
@@ -76,7 +76,6 @@ export class EditorComponent implements OnInit {
           download: true,
           header: true,
           skipEmptyLines: true,
-          dynamicTyping: true,
           complete: result => {
             this.headers = result.meta.fields;
             this.data = result.data;
@@ -92,7 +91,7 @@ export class EditorComponent implements OnInit {
   }
 
   routeIt(id) {
-    this.id = +id;
+    this.id = id;
     this.getData(this.id);
     const path = this.id + '.pdf';
     this.storage

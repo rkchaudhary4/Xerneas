@@ -16,7 +16,7 @@
         <ngx-extended-pdf-viewer class="viewer" [src]="url" useBrowserLocale="true" [showDownloadButton]="false" [showBookmarkButton]="false" [showOpenFileButton]="false" [showPrintButton]="false" [showPresentationModeButton]="false"></ngx-extended-pdf-viewer>
         <div class="studentlist" fxFlex="auto">
             <mat-nav-list role="navigation">
-                <mat-list-item *ngFor="let student of students" [routerLink]="'../' + student.uid" (click)="routeIt(student.uid)" [disabled]="id === +student.uid">
+                <mat-list-item *ngFor="let student of students" [routerLink]="'../' + student.uid" (click)="routeIt(student.uid)" [disabled]="id === student.uid">
                     {{ student.uid }}
                 </mat-list-item>
             </mat-nav-list>

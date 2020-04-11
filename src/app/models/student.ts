@@ -1,5 +1,5 @@
 export class Student {
-  public uid: number;
+  public uid: string;
   public comments: {field: string, ta: string, comment: string}[];
   public manager: string;
   public tas: Array<string>
