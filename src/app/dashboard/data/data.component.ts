@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { DashboardComponent } from '../dashboard.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ManageService } from '../../services/manage.service';
 
 @Component({
   selector: 'app-data',
@@ -16,6 +17,7 @@ export class DataComponent implements OnInit {
     private loginService: LoggedUserService,
     private dash: DashboardComponent,
     private snackbar: MatSnackBar,
+    private manage: ManageService
   ) {
     this.loginService.$logged.subscribe(res => (this.role = res.role));
   }
