@@ -1,0 +1,11 @@
+.comments {
+    width: 100%;
+}
+
+.table {
+    width: inherit;
+}
+
+.comment {
+    width: 70%;
+}

@@ -1,0 +1,19 @@
+<div *ngFor="let comments of taComment; let i = index" fxLayout="row" fxLayoutGap="0.5vw" fxLayoutAlign="start center">
+    <mat-form-field>
+        <input matInput type="text" [(ngModel)]="comments.field" placeholder="Field" (ngModelChange)="filter(i)" [matAutocomplete]="auto" (focus)="filter(i)" />
+    </mat-form-field>
+    <mat-form-field fxFlex="auto">
+        <input matInput type="text" [(ngModel)]="comments.comment" placeholder="Comment" />
+    </mat-form-field>
+    <button mat-icon-button (click)="remove(i)">
+<mat-icon>cancel</mat-icon>
+</button>
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of availfields" (click)="add(option)" [value]="option">{{ option }}</mat-option>
+    </mat-autocomplete>
+</div>
+<button (click)="save()" mat-button>Save</button>
+<button mat-button (click)="submit()">Submit</button>
+<button mat-raised-button color="primary" (click)="addRow()" class="add">
+Add Row
+</button>

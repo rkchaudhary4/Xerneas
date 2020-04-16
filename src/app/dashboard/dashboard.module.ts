@@ -18,6 +18,8 @@ import { MatTableComponent } from './mat-table/mat-table.component';
 import { AdminDataComponent } from './data/admin-data/admin-data.component';
 import { TaDataComponent } from './data/ta-data/ta-data.component';
 import { ManagerDataComponent } from './data/manager-data/manager-data.component';
+import { TaEditorComponent } from './editor/ta-editor/ta-editor.component';
+import { ManagerEditorComponent } from './editor/manager-editor/manager-editor.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { ManagerDataComponent } from './data/manager-data/manager-data.component
     AdminDataComponent,
     TaDataComponent,
     ManagerDataComponent,
+    TaEditorComponent,
+    ManagerEditorComponent,
   ],
   imports: [
     CommonModule,

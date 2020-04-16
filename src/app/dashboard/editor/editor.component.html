@@ -24,39 +24,7 @@
     </div>
     <div class="bottom" fxLayout="column">
         <h3>Fields to correct</h3>
-        <ng-container *ngIf="lvl === 'Teaching Assistant (TA)' && loaded">
-            <div *ngFor="let comments of taComment; let i = index" fxLayout="row" fxLayoutGap="0.5vw" fxLayoutAlign="start center">
-                <mat-form-field>
-                    <input matInput type="text" [(ngModel)]="comments.field" placeholder="Field" (ngModelChange)="filter(i)" [matAutocomplete]="auto" (focus)="filter(i)" />
-                </mat-form-field>
-                <mat-form-field fxFlex="auto">
-                    <input matInput type="text" [(ngModel)]="comments.comment" placeholder="Comment" />
-                </mat-form-field>
-                <button mat-icon-button (click)="remove(i)">
-          <mat-icon>cancel</mat-icon>
-        </button>
-                <mat-autocomplete #auto="matAutocomplete" class="completer">
-                    <mat-option *ngFor="let option of availfields" (click)="add(option)" [value]="option">{{ option }}</mat-option>
-                </mat-autocomplete>
-            </div>
-            <button (click)="save()" mat-button>Save</button>
-            <button mat-button (click)="submit()">Submit</button>
-            <button mat-raised-button color="primary" (click)="addRow()" class="add">
-        Add Row
-      </button>
-        </ng-container>
-        <ng-container *ngIf="(lvl === 'Admin' || lvl === 'Manager') && loaded">
-            <div fxLayout="column" class="comments">
-                <div *ngFor="let key of keys" class="table" fxLayout="row" fxLayoutAlign="start center">
-                    <div fxFlex="10">{{ key }}</div>
-                    <div fxLayout="column" fxFlex="90">
-                        <div *ngFor="let comment of comments[key]" fxLayout="row">
-                            <div class="comment">{{ comment.comment }}</div>
-                            {{ comment.ta }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
+        <app-ta-editor *ngIf="lvl === 'Teaching Assistant (TA)' && loaded" [id]="id" [uid]="uid" [fields]="fields"></app-ta-editor>
+        <app-manager-editor *ngIf="(lvl === 'Admin' || lvl === 'Manager') && loaded" [id]="id"></app-manager-editor>
     </div>
 </div>

@@ -1,0 +1,11 @@
+<div fxLayout="column" class="comments">
+    <div *ngFor="let key of keys" class="table" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="10">{{ key }}</div>
+        <div fxLayout="column" fxFlex="90">
+            <div *ngFor="let comment of comments[key]" fxLayout="row">
+                <div class="comment">{{ comment.comment }}</div>
+                {{ getName(comment.ta)}}
+            </div>
+        </div>
+    </div>
+</div>

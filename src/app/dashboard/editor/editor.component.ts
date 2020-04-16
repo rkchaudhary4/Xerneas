@@ -6,9 +6,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
 import { first, finalize } from 'rxjs/internal/operators';
-import { firestore } from 'firebase/app';
-import Timestamp = firestore.Timestamp;
-import { Student } from '../../models/student';
+
 import { SafeUrl } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -19,9 +17,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-  keys;
   loaded = false;
-  name: string;
   uid;
   id;
   data;
@@ -31,11 +27,8 @@ export class EditorComponent implements OnInit {
   fb: FormGroup;
   lvl;
   fields: string[];
-  availfields: string[];
   students = [];
   currentData;
-  taComment: { field: string; comment: string }[];
-  comments: {};
 
   constructor(
     private route: ActivatedRoute,
@@ -49,21 +42,11 @@ export class EditorComponent implements OnInit {
     this.loaded = false;
   }
 
-  remove(i: number) {
-    this.fields.push(this.taComment[i].field);
-    this.taComment.splice(i, 1);
-  }
-
-  addRow() {
-    this.taComment.push({ field: '', comment: '' });
-  }
-
   ngOnInit(): void {
     this.login.currentUser.subscribe(res => {
       if (res) {
         this.lvl = res.role;
         this.uid = res.uid;
-        this.name = res.displayName;
       }
     });
     this.id = this.route.snapshot.paramMap.get('id');
@@ -92,7 +75,6 @@ export class EditorComponent implements OnInit {
 
   routeIt(id) {
     this.id = id;
-    this.getData(this.id);
     const path = this.id + '.pdf';
     this.storage
       .ref(`/pdfs/${path}`)
@@ -101,6 +83,7 @@ export class EditorComponent implements OnInit {
     this.index = this.data.findIndex(e => e.id === this.id);
     this.currentData = this.data[this.index];
     this.fields = this.headers.map(x => x);
+    this.loaded = true;
     if (this.lvl === 'Manager' || this.lvl === 'Admin') {
       const group: any = {};
       this.headers.forEach(field => {
@@ -110,23 +93,6 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  filter(i) {
-    this.availfields = this._filter(this.taComment[i].field);
-  }
-
-  private _filter(value: string): string[] {
-    const filtervalue = value.toLowerCase();
-    if (this.fields)
-      return this.fields.filter(option =>
-        option.toLowerCase().includes(filtervalue)
-      );
-    else return [];
-  }
-
-  add(option) {
-    const Index = this.fields.indexOf(option);
-    if (Index >= 0) this.fields.splice(Index, 1);
-  }
 
   onSubmit() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -161,74 +127,6 @@ export class EditorComponent implements OnInit {
             }
           });
         });
-      }
-    });
-  }
-
-  getData(id) {
-    if (this.lvl === 'Teaching Assistant (TA)') {
-      this.$data
-        .taRef(this.uid, id)
-        .valueChanges()
-        .pipe(first())
-        .subscribe(res => {
-          this.taComment = res.comments;
-          if (res.comments.length === 0) {
-            this.taComment.push({ field: '', comment: '' });
-          }
-          this.taComment.forEach(key => {
-            const i = this.fields.indexOf(key.field);
-            if (i >= 0) this.fields.splice(i, 1);
-          });
-          this.loaded = true;
-        });
-    }
-    if (this.lvl === 'Manager' || this.lvl === 'Admin') {
-      this.$data
-        .studentRef(id)
-        .valueChanges()
-        .subscribe(res => {
-          this.comments = res.comments.reduce((objectsByKeyValue, obj) => {
-            const value = obj.field;
-            objectsByKeyValue[value]= (objectsByKeyValue[value] || []).concat(obj);
-            return objectsByKeyValue;
-          }, {});
-          this.loaded = true;
-          this.keys = Object.keys(this.comments);
-        });
-    }
-  }
-
-  save() {
-    this.$data.taRef(this.uid, this.id.toString()).update({
-      comments: this.taComment,
-      time: Timestamp.now()
-    });
-  }
-
-  submit() {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data:
-        'Are you sure? You will not be able to open this again after submitting'
-    });
-    dialogRef.afterClosed().subscribe((flag: boolean) => {
-      if (flag) {
-        const studentRef = this.$data.studentRef(this.id.toString());
-        studentRef
-          .valueChanges()
-          .pipe(first())
-          .subscribe((student: Student) => {
-            const submitted = this.taComment.map(res => ({
-              ...res,
-              ta: this.name
-            }));
-            studentRef.update({
-              comments: student.comments.concat(submitted),
-              tas: [...student.tas.filter(ta => ta !== this.uid)]
-            });
-            this.$data.taRef(this.uid, this.id.toString()).delete();
-            this.router.navigate(['/dashboard/data']);
-          });
       }
     });
   }
