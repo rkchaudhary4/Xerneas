@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { Funcs } from '../../../funcs';
 
 @Component({
   selector: 'app-manager-csv',
@@ -11,21 +10,18 @@ export class ManagerCsvComponent implements OnInit {
   @Input() currentData;
   @Input() headers;
   @Output() data = new EventEmitter<object>();
-  constructor(private dialog: MatDialog) { }
+  constructor(private funcs: Funcs) { }
 
   ngOnInit(): void {
   }
 
   submit(){
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: 'Are you sure? This will change the csv file'
-    });
-    dialogRef.afterClosed().subscribe((flag: boolean) => {
+    this.funcs.confirmDialog('Are you sure? This will change the csv file').subscribe((flag: boolean) => {
       if (flag) {
+        this.funcs.openWaitingBar();
         console.log('df',  this.currentData);
         this.data.emit(this.currentData);
       }
     })
   }
-
 }

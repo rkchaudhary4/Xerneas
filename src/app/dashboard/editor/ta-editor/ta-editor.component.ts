@@ -1,12 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { StudentDataService } from 'src/app/services/student-data.service';
 import { first } from 'rxjs/internal/operators';
-import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { Student } from 'src/app/models/student';
 import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Funcs } from '../../../funcs';
 
 @Component({
   selector: 'app-ta-editor',
@@ -23,8 +22,8 @@ export class TaEditorComponent implements OnInit {
   taComment: { field: string; comment: string }[];
   constructor(
     private $data: StudentDataService,
-    private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private funcs: Funcs
   ) {}
 
   ngOnInit(): void {
@@ -76,22 +75,43 @@ export class TaEditorComponent implements OnInit {
   }
 
   save() {
-    this.$data.taRef(this.uid, this.id.toString()).update({
-      comments: this.taComment,
-      time: Timestamp.now(),
-    });
+    this.$data
+      .taRef(this.uid, this.id.toString())
+      .update({
+        comments: this.taComment,
+        time: Timestamp.now(),
+      })
+      .then(() => {
+        this.funcs.handleMessages('Data Saved');
+      });
   }
 
   submit() {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data:
-        'Are you sure? You will not be able to open this again after submitting',
-    });
-    dialogRef.afterClosed().subscribe((flag: boolean) => {
-      if (flag) {
-        this.$data.taRef(this.uid, this.id.toString()).delete();
-        this.router.navigate(['/dashboard/data']);
-      }
-    });
+    this.funcs
+      .confirmDialog(
+        'Are you sure? You will not be able to open this again after submitting'
+      )
+      .subscribe((flag: boolean) => {
+        if (flag) {
+          this.funcs.openWaitingBar();
+          const studentRef = this.$data.studentRef(this.id);
+          studentRef
+            .valueChanges()
+            .pipe(first())
+            .subscribe((student: Student) => {
+              const submitted = this.taComment.map((res) => ({
+                ...res,
+                ta: this.uid,
+              }));
+              studentRef.update({
+                comments: student.comments.concat(submitted),
+              }).then(() => {
+                this.funcs.closeBar();
+                this.$data.taRef(this.uid, this.id.toString()).delete();
+                this.router.navigate(['/dashboard/data']);
+              });
+            });
+        }
+      });
   }
 }

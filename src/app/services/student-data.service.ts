@@ -7,7 +7,6 @@ import {
   AngularFireStorage,
   AngularFireUploadTask
 } from '@angular/fire/storage';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';
@@ -55,7 +54,6 @@ export class StudentDataService {
   constructor(
     private afs: AngularFirestore,
     private storage: AngularFireStorage,
-    private snackbar: MatSnackBar,
     private papa: Papa
   ) {}
 }

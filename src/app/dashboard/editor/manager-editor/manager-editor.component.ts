@@ -35,6 +35,7 @@ export class ManagerEditorComponent implements OnInit {
           return objectsByKeyValue;
         }, {});
         this.keys = Object.keys(this.comments);
+        console.log(this.comments);
       });
   }
 

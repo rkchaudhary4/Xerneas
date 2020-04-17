@@ -18,6 +18,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { LoadMaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UpdateNameComponent } from './dashboard/profile/update-name/update-name.component';
+import { WaitingBarComponent } from './waiting-bar/waiting-bar.component';
+import { Funcs } from './funcs';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { UpdateNameComponent } from './dashboard/profile/update-name/update-name
     LoginHomeComponent,
     SignUpComponent,
     ResetPasswordComponent,
+    WaitingBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,10 +45,11 @@ import { UpdateNameComponent } from './dashboard/profile/update-name/update-name
     LoadMaterialModule,
     HttpClientModule
   ],
-  providers: [SignUpComponent],
+  providers: [SignUpComponent, Funcs],
   bootstrap: [AppComponent],
   entryComponents:[
-    UpdateNameComponent
+    UpdateNameComponent,
+    WaitingBarComponent
   ]
 })
 export class AppModule { }

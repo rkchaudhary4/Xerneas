@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Papa } from 'ngx-papaparse';
-import { FormGroup, FormControl } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
 import { first, finalize } from 'rxjs/internal/operators';
-
 import { SafeUrl } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { Funcs } from '../../funcs';
 
 @Component({
   selector: 'app-editor',
@@ -36,7 +33,7 @@ export class EditorComponent implements OnInit {
     private login: LoggedUserService,
     private $data: StudentDataService,
     private router: Router,
-    private dialog: MatDialog
+    private funcs: Funcs,
   ) {
     this.loaded = false;
   }
@@ -108,6 +105,7 @@ export class EditorComponent implements OnInit {
               const file = new File([csv], 'data.csv', { type: 'text/csv' });
               this.storage.upload(path, file).snapshotChanges().pipe(
                 finalize(() => {
+                  this.funcs.closeBar();
                   this.router.navigate(['/dashboard/data']);
                 })
               ).subscribe();

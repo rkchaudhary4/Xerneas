@@ -1,11 +1,11 @@
-<mat-card>
-    <mat-card-title>Upload the file</mat-card-title>
-    <br>
-    <mat-card-content>
-        <input type="file" (change)="upload($event.target.files)" id="upload">
-        <app-uploader *ngIf="path" [file]="file" [path]="path" (done)="complete($event)"></app-uploader>
-    </mat-card-content>
-    <mat-card-footer>
-        File must be less than 1 MB
-    </mat-card-footer>
-</mat-card>
+<mat-card-title>Upload the file</mat-card-title>
+<br />
+<br />
+<mat-card-content>
+    <input type="file" (change)="upload($event.target.files)" id="upload" />
+    <app-uploader *ngIf="path" [file]="file" [path]="path" (done)="complete($event)"></app-uploader>
+</mat-card-content>
+<br /><br />
+<mat-card-footer>
+    File must be less than 1 MB
+</mat-card-footer>

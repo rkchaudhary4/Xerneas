@@ -3,7 +3,7 @@ import { LoggedUserService } from '../../services/logged-user.service';
 import { DashboardComponent } from '../dashboard.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManageService } from '../../services/manage.service';
-
+import { Funcs } from '../../funcs';
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',
@@ -17,7 +17,8 @@ export class DataComponent implements OnInit {
     private loginService: LoggedUserService,
     private dash: DashboardComponent,
     private snackbar: MatSnackBar,
-    private manage: ManageService
+    private manage: ManageService,
+    private funcs: Funcs,
   ) {
     this.loginService.$logged.subscribe(res => (this.role = res.role));
   }
@@ -31,9 +32,7 @@ export class DataComponent implements OnInit {
   uploadCSV(event: FileList) {
     if (this.loginService.currentUser.getValue().role === 'Admin') {
       if (event.item(0).type.split('/')[1] !== 'csv') {
-        this.snackbar.open('Please upload a CSV file', '', {
-          duration: 2000
-        });
+        this.funcs.handleMessages('Please upload a CSV file');
         return;
       } else {
         const paths = `/data.csv`;

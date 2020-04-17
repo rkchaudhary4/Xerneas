@@ -7,9 +7,8 @@ import {
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/internal/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/models/user';
-
+import { Funcs } from '../funcs';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,9 +34,7 @@ export class LoggedUserService {
   };
   async SendEmailVerification() {
     return (await this.auth.currentUser).sendEmailVerification().then(() => {
-      this.snackbar.open('Verification E-mail has been sent to your mail', '', {
-        duration: 2000
-      });
+      this.funcs.handleMessages('Verification E-mail has been sent to your mail');
       this.logout();
     });
   }
@@ -45,11 +42,10 @@ export class LoggedUserService {
     this.auth
       .signInWithEmailAndPassword(username, pass)
       .then(res => {
+      this.funcs.closeBar();
         if (res.user.emailVerified !== true) {
           this.logout();
-          this.snackbar.open('Your E-mail address is not verified', '', {
-            duration: 2500
-          });
+          this.funcs.handleMessages('Your E-mail address is not verified');
         } else {
           let app: boolean;
           this.userRef(res.user.uid)
@@ -59,18 +55,15 @@ export class LoggedUserService {
               if (app === true) {
                 this.router.navigate(['/']);
               } else {
-                this.snackbar.open('Account not activated by the admin', '', {
-                  duration: 2000
-                });
+                this.funcs.handleMessages('Account not activated by the admin');
                 this.logout();
               }
             });
         }
       })
       .catch(err => {
-        this.snackbar.open(err.message, '', {
-          duration: 2000
-        });
+        this.funcs.closeBar();
+        this.funcs.handleMessages(err.message);
       });
   signup = (
     username: string,
@@ -88,11 +81,10 @@ export class LoggedUserService {
           })
           .then(() => {
             this.SendEmailVerification();
+            this.funcs.closeBar();
           })
           .catch(err => {
-            this.snackbar.open(err.message, '', {
-              duration: 2000
-            });
+            this.funcs.handleMessages(err.message);
           });
         this.userRef(user.uid).set({
           uid: user.uid,
@@ -104,9 +96,8 @@ export class LoggedUserService {
         });
       })
       .catch(err => {
-        this.snackbar.open(err.message, '', {
-          duration: 2000
-        });
+        this.funcs.closeBar();
+        this.funcs.handleMessages(err.message);
       });
   logout = (): Promise<void | boolean> =>
     this.auth
@@ -121,14 +112,10 @@ export class LoggedUserService {
     this.auth
       .sendPasswordResetEmail(email)
       .then(() => {
-        this.snackbar.open('Link sent to your e-mail to change password', '', {
-          duration: 2000
-        });
+        this.funcs.handleMessages('Link sent to your e-mail to change password');
       })
       .catch(err => {
-        this.snackbar.open(err.message, '', {
-          duration: 2000
-        });
+        this.funcs.handleMessages('Link sent to your e-mail to change password');
       });
   };
 
@@ -154,14 +141,10 @@ export class LoggedUserService {
         displayName: name
       })
       .then(() => {
-        this.snackbar.open('Name changed successfully', '', {
-          duration: 1500
-        });
+        this.funcs.handleMessages('Name changed successfully');
       })
       .catch(err => {
-        this.snackbar.open(err.message, '', {
-          duration: 1500
-        });
+        this.funcs.handleMessages(err.message);
       });
   }
 
@@ -197,7 +180,7 @@ export class LoggedUserService {
     public auth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
-    private snackbar: MatSnackBar,
+    private funcs: Funcs,
   ) {
     this.init();
   }

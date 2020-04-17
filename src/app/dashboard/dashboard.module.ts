@@ -22,6 +22,7 @@ import { TaEditorComponent } from './editor/ta-editor/ta-editor.component';
 import { ManagerEditorComponent } from './editor/manager-editor/manager-editor.component';
 import { TaCsvComponent } from './editor/ta-csv/ta-csv.component';
 import { ManagerCsvComponent } from './editor/manager-csv/manager-csv.component';
+import { Funcs } from '../funcs';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ManagerCsvComponent } from './editor/manager-csv/manager-csv.component'
     ReactiveFormsModule,
     NgxExtendedPdfViewerModule
   ],
-  entryComponents: [ProfilePictureComponent, ConfirmDialogComponent]
+  entryComponents: [ProfilePictureComponent, ConfirmDialogComponent],
+  providers: [Funcs]
 })
 export class DashboardModule {}
