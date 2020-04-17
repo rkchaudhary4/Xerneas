@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   AngularFirestoreDocument,
   AngularFirestore,
-} from "@angular/fire/firestore";
-import { Student } from "../models/student";
-import { TaStudent } from "../models/data";
-import { first } from "rxjs/internal/operators";
-import { firestore } from "firebase/app";
+} from '@angular/fire/firestore';
+import { Student } from '../models/student';
+import { TaStudent } from '../models/data';
+import { first } from 'rxjs/internal/operators';
+import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ManageService {
   public studentRef = (id: string): AngularFirestoreDocument<Student> =>

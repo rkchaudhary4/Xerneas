@@ -24,7 +24,6 @@ export class EditorComponent implements OnInit {
   headers;
   index: number;
   url: SafeUrl;
-  fb: FormGroup;
   lvl;
   fields: string[];
   students = [];
@@ -84,22 +83,10 @@ export class EditorComponent implements OnInit {
     this.currentData = this.data[this.index];
     this.fields = this.headers.map(x => x);
     this.loaded = true;
-    if (this.lvl === 'Manager' || this.lvl === 'Admin') {
-      const group: any = {};
-      this.headers.forEach(field => {
-        group[field] = new FormControl(this.currentData[field]);
-      });
-      this.fb = new FormGroup(group);
-    }
   }
 
 
-  onSubmit() {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: 'Are you sure? This will change the csv file'
-    });
-    dialogRef.afterClosed().subscribe((flag: boolean) => {
-      if (flag) {
+  onSubmit(newData) {
         const path = `/data.csv`;
         const ref = this.storage
           .ref(path)
@@ -113,7 +100,7 @@ export class EditorComponent implements OnInit {
             dynamicTyping: true,
             complete: result => {
               const currentData = result.data;
-              currentData[this.index] = this.fb.value;
+              currentData[this.index] = newData;
               this.data = currentData;
               const csv = new Blob([this.papa.unparse(currentData)], {
                 type: 'text/csv;charset=utf-8;'
@@ -128,6 +115,4 @@ export class EditorComponent implements OnInit {
           });
         });
       }
-    });
-  }
 }

@@ -20,6 +20,8 @@ import { TaDataComponent } from './data/ta-data/ta-data.component';
 import { ManagerDataComponent } from './data/manager-data/manager-data.component';
 import { TaEditorComponent } from './editor/ta-editor/ta-editor.component';
 import { ManagerEditorComponent } from './editor/manager-editor/manager-editor.component';
+import { TaCsvComponent } from './editor/ta-csv/ta-csv.component';
+import { ManagerCsvComponent } from './editor/manager-csv/manager-csv.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { ManagerEditorComponent } from './editor/manager-editor/manager-editor.c
     ManagerDataComponent,
     TaEditorComponent,
     ManagerEditorComponent,
+    TaCsvComponent,
+    ManagerCsvComponent,
   ],
   imports: [
     CommonModule,

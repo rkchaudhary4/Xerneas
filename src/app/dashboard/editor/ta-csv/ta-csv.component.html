@@ -1,0 +1,5 @@
+<div fxLayout="row wrap" fxLayoutGap="0.5vw">
+    <div *ngFor="let header of headers" fxFlex="30" class="csvdata">
+        <strong>{{ header }}</strong> : {{ currentData[header] }}
+    </div>
+</div>

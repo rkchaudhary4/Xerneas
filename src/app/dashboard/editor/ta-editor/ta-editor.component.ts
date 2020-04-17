@@ -89,22 +89,8 @@ export class TaEditorComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((flag: boolean) => {
       if (flag) {
-        const studentRef = this.$data.studentRef(this.id.toString());
-        studentRef
-          .valueChanges()
-          .pipe(first())
-          .subscribe((student: Student) => {
-            const submitted = this.taComment.map((res) => ({
-              ...res,
-              ta: this.uid,
-            }));
-            studentRef.update({
-              comments: student.comments.concat(submitted),
-              tas: [...student.tas.filter((ta) => ta !== this.uid)],
-            });
-            this.$data.taRef(this.uid, this.id.toString()).delete();
-            this.router.navigate(['/dashboard/data']);
-          });
+        this.$data.taRef(this.uid, this.id.toString()).delete();
+        this.router.navigate(['/dashboard/data']);
       }
     });
   }

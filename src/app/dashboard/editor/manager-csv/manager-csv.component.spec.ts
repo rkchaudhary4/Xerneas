@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManagerDataComponent } from './manager-data.component';
+import { ManagerCsvComponent } from './manager-csv.component';
 
-describe('ManagerDataComponent', () => {
-  let component: ManagerDataComponent;
-  let fixture: ComponentFixture<ManagerDataComponent>;
+describe('ManagerCsvComponent', () => {
+  let component: ManagerCsvComponent;
+  let fixture: ComponentFixture<ManagerCsvComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManagerDataComponent ]
+      declarations: [ ManagerCsvComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManagerDataComponent);
+    fixture = TestBed.createComponent(ManagerCsvComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

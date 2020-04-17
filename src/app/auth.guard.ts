@@ -6,7 +6,7 @@ import { map } from 'rxjs/internal/operators';
 import { StudentDataService } from './services/student-data.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalUserGuard implements CanActivate {
   constructor(
@@ -16,7 +16,7 @@ export class LocalUserGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.localUserService.isAuthenticated$.pipe(
-      map(res => {
+      map((res) => {
         if (!res) {
           this.router.navigate(['/login']);
         }
@@ -27,7 +27,7 @@ export class LocalUserGuard implements CanActivate {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoggedInGuard implements CanActivate {
   constructor(
@@ -37,7 +37,7 @@ export class LoggedInGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.localUserService.$logged.pipe(
-      map(res => {
+      map((res) => {
         if (res) {
           this.router.navigate(['/']);
         }
@@ -48,7 +48,7 @@ export class LoggedInGuard implements CanActivate {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EditorGuard implements CanActivate {
   uid: string;
@@ -58,7 +58,7 @@ export class EditorGuard implements CanActivate {
     private student: StudentDataService,
     private router: Router
   ) {
-    this.LocalUserService.$logged.subscribe(res => {
+    this.LocalUserService.$logged.subscribe((res) => {
       if (res) {
         this.uid = res.uid;
         this.role = res.role;
@@ -72,8 +72,8 @@ export class EditorGuard implements CanActivate {
       .studentRef(id)
       .valueChanges()
       .pipe(
-        map(res => {
-          if( !res ) {
+        map((res) => {
+          if (!res) {
             this.router.navigate(['/dashboard/data']);
             return false;
           }
@@ -86,8 +86,13 @@ export class EditorGuard implements CanActivate {
             }
           }
           if (this.role === 'Teaching Assistant (TA)') {
-            if (res.tas.includes(this.uid)) return true;
-            else {
+            if (res.tas.includes(this.uid)) {
+              const i = res.comments.findIndex((e) => e.ta === this.uid);
+              if (i > -1) {
+                this.router.navigate(['/dashboard/data']);
+                return false;
+              } else return true;
+            } else {
               this.router.navigate(['/dashboard/data']);
               return false;
             }

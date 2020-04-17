@@ -1,0 +1,6 @@
+<div fxLayoutGap="0.5vw" fxLayout="row wrap">
+    <mat-form-field *ngFor="let header of headers" type="text" [fxFlex]="currentData[header].length < 25 ? '30' : (currentData[header].length + 3).toString()">
+        <input matInput type="text" [placeholder]="header" [(ngModel)]="currentData[header]" />
+    </mat-form-field>
+</div>
+<button mat-raised-button (click)="submit()">Submit</button>

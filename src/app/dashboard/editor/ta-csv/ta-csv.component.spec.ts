@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaDataComponent } from './ta-data.component';
+import { TaCsvComponent } from './ta-csv.component';
 
-describe('TaDataComponent', () => {
-  let component: TaDataComponent;
-  let fixture: ComponentFixture<TaDataComponent>;
+describe('TaCsvComponent', () => {
+  let component: TaCsvComponent;
+  let fixture: ComponentFixture<TaCsvComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaDataComponent ]
+      declarations: [ TaCsvComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaDataComponent);
+    fixture = TestBed.createComponent(TaCsvComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
