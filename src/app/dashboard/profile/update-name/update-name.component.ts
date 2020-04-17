@@ -3,7 +3,7 @@ import { LoggedUserService } from '../../../services/logged-user.service';
 import { User } from 'src/app/models/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { Funcs } from '../../../funcs';
+import { Funcs } from 'src/app/utility/funcs';
 @Component({
   selector: 'app-update-name',
   templateUrl: './update-name.component.html',

@@ -3,7 +3,7 @@ import { LoggedUserService } from '../../services/logged-user.service';
 import { DashboardComponent } from '../dashboard.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManageService } from '../../services/manage.service';
-import { Funcs } from '../../funcs';
+import { Funcs } from 'src/app/utility/funcs';
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',

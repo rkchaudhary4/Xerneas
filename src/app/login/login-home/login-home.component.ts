@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user.service';
-import { Funcs } from '../../funcs';
+import { Funcs } from 'src/app/utility/funcs';
 @Component({
   selector: 'app-login-home',
   templateUrl: './login-home.component.html',

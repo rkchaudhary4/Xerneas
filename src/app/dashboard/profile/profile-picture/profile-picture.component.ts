@@ -5,7 +5,7 @@ import {
 import { LoggedUserService } from '../../../services/logged-user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { Funcs } from '../../../funcs';
+import { Funcs } from 'src/app/utility/funcs';
 @Component({
   templateUrl: './profile-picture.component.html',
   styleUrls: ['./profile-picture.component.css']

@@ -12,19 +12,23 @@ export class ManagerDataComponent implements OnInit {
   @Input() matData;
   preData;
   data;
-  columnsToDisplay = ['id', 'TAs'];
-  fields = ['uid', 'name'];
+  columnsToDisplay = ['id', 'TAs', 'completedBy'];
+  fields = ['uid', 'name', 'completedBy'];
   constructor(private afs: AngularFirestore) {}
 
   ngOnInit(): void {
     this.matData.subscribe((students) => {
       this.preData = students.map((student, index) => {
+        let completed =0;
         student.names = [];
         student.tas.forEach((ta, innerIndex) => {
+          if( student.comments.findIndex(e => e.ta === ta) > -1)completed++;
           this.afs.doc(`users/${ta}`).valueChanges().subscribe((res: User) => {
             this.updateNames(res.displayName, index, innerIndex);
           });
         })
+        student.completedBy = completed;
+        // if( completed === student.tas.length) ;
         return student;
       })
     });

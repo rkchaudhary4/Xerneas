@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Funcs } from '../../../funcs';
+import { Funcs } from 'src/app/utility/funcs';
 
 @Component({
   selector: 'app-manager-csv',

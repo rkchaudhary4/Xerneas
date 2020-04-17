@@ -5,7 +5,7 @@ import { Student } from 'src/app/models/student';
 import { firestore } from 'firebase/app';
 import Timestamp = firestore.Timestamp;
 import { Router } from '@angular/router';
-import { Funcs } from '../../../funcs';
+import { Funcs } from 'src/app/utility/funcs';
 
 @Component({
   selector: 'app-ta-editor',

@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { Router } from '@angular/router';
-import { Funcs } from '../../funcs';
+import { Funcs } from 'src/app/utility/funcs';
 
 @Component({
   selector: 'app-sign-up',

@@ -6,7 +6,7 @@ import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
 import { first, finalize } from 'rxjs/internal/operators';
 import { SafeUrl } from '@angular/platform-browser';
-import { Funcs } from '../../funcs';
+import { Funcs } from 'src/app/utility/funcs';
 
 @Component({
   selector: 'app-editor',

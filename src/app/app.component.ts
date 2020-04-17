@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { LoggedUserService } from './services/logged-user.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { WaitingBarComponent } from './waiting-bar/waiting-bar.component';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +8,7 @@ import { WaitingBarComponent } from './waiting-bar/waiting-bar.component';
 export class AppComponent {
   title = 'Xerneas';
   loaded = true;
-  d: MatDialogRef<WaitingBarComponent, any>;
-  constructor(db: AngularFirestore, private login: LoggedUserService, private dialog: MatDialog) {
+  constructor() {
     console.log('Hi hackers!!');
-  }
-  close() {
-    this.d.close();
   }
 }

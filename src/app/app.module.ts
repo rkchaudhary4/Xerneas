@@ -18,8 +18,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { LoadMaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UpdateNameComponent } from './dashboard/profile/update-name/update-name.component';
-import { WaitingBarComponent } from './waiting-bar/waiting-bar.component';
-import { Funcs } from './funcs';
+import { WaitingBarComponent } from './utility/waiting-bar/waiting-bar.component';
+import { Funcs } from './utility/funcs';
 
 @NgModule({
   declarations: [
