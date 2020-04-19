@@ -12,6 +12,7 @@ import { Funcs } from 'src/app/utility/funcs';
 export class DataComponent implements OnInit {
   role;
   input;
+  uid;
   // lZ5Qy3FRv1dV9vr8bXdU06ptAmt2 (TA)
   constructor(
     private loginService: LoggedUserService,
@@ -20,7 +21,10 @@ export class DataComponent implements OnInit {
     private manage: ManageService,
     private funcs: Funcs,
   ) {
-    this.loginService.$logged.subscribe(res => (this.role = res.role));
+    this.loginService.$logged.subscribe(res => {
+      this.role = res.role;
+      this.uid = res.uid;
+    });
   }
 
   ngOnInit(): void {

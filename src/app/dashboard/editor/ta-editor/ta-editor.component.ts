@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { StudentDataService } from 'src/app/services/student-data.service';
 import { first } from 'rxjs/internal/operators';
 import { Student } from 'src/app/models/student';
@@ -12,7 +12,7 @@ import { Funcs } from 'src/app/utility/funcs';
   templateUrl: './ta-editor.component.html',
   styleUrls: ['./ta-editor.component.css'],
 })
-export class TaEditorComponent implements OnInit {
+export class TaEditorComponent implements OnInit, OnChanges {
   @Input() id: string;
   @Input() uid: string;
   @Input() fields: string[];
@@ -27,6 +27,10 @@ export class TaEditorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getData(this.id);
+  }
+
+  ngOnChanges() {
     this.getData(this.id);
   }
 

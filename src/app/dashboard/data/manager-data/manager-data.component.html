@@ -1,9 +1,25 @@
-<mat-expansion-panel>
+<mat-expansion-panel (opened)="getStudents()">
     <mat-expansion-panel-header>
         <mat-panel-title>Students</mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+        <button mat-raised-button color="primary" (click)="openEditor()">Open Editor</button>
+        <div *ngIf="!preData">Loading....</div>
         <div *ngIf="preData && preData.length == 0 ">Koi kaam nahi hai maze kar bhai</div>
         <app-mat-table *ngIf="preData && preData.length > 0" [data]="data" [columnsToDisplay]="columnsToDisplay" [fields]="fields"></app-mat-table>
+    </ng-template>
+</mat-expansion-panel>
+
+<mat-expansion-panel (opened)="getTas()">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Assign TAs</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+        <mat-list>
+            <mat-list-item *ngFor="let ta of managerTAs; last as last">
+                {{ta.displayName}}
+                <mat-divider *ngIf="!last"></mat-divider>
+            </mat-list-item>
+        </mat-list>
     </ng-template>
 </mat-expansion-panel>

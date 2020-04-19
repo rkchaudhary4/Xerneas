@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { StudentDataService } from 'src/app/services/student-data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from 'src/app/models/user';
@@ -8,7 +8,7 @@ import { User } from 'src/app/models/user';
   templateUrl: './manager-editor.component.html',
   styleUrls: ['./manager-editor.component.css'],
 })
-export class ManagerEditorComponent implements OnInit {
+export class ManagerEditorComponent implements OnInit, OnChanges {
   @Input() id: string;
   names = new Map();
   comments: {};
@@ -19,6 +19,10 @@ export class ManagerEditorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getData(this.id);
+  }
+
+  ngOnChanges() {
     this.getData(this.id);
   }
 
@@ -35,7 +39,6 @@ export class ManagerEditorComponent implements OnInit {
           return objectsByKeyValue;
         }, {});
         this.keys = Object.keys(this.comments);
-        console.log(this.comments);
       });
   }
 

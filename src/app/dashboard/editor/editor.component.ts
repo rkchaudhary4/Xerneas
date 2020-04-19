@@ -39,6 +39,7 @@ export class EditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.funcs.openWaitingBar();
     this.login.currentUser.subscribe(res => {
       if (res) {
         this.lvl = res.role;
@@ -80,6 +81,7 @@ export class EditorComponent implements OnInit {
     this.currentData = this.data[this.index];
     this.fields = this.headers.map(x => x);
     this.loaded = true;
+    this.funcs.closeBar();
   }
 
 
