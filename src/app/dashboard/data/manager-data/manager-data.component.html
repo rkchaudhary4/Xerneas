@@ -1,11 +1,15 @@
-<mat-expansion-panel (opened)="getStudents()">
+<mat-expansion-panel>
     <mat-expansion-panel-header>
         <mat-panel-title>Students</mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
-        <button mat-raised-button color="primary" (click)="openEditor()">Open Editor</button>
+        <button mat-raised-button color="primary" (click)="openEditor()">
+      Open Editor
+    </button>
         <div *ngIf="!preData">Loading....</div>
-        <div *ngIf="preData && preData.length == 0 ">Koi kaam nahi hai maze kar bhai</div>
+        <div *ngIf="preData && preData.length == 0">
+            Koi kaam nahi hai maze kar bhai
+        </div>
         <app-mat-table *ngIf="preData && preData.length > 0" [data]="data" [columnsToDisplay]="columnsToDisplay" [fields]="fields"></app-mat-table>
     </ng-template>
 </mat-expansion-panel>
@@ -15,11 +19,35 @@
         <mat-panel-title>Assign TAs</mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
-        <mat-list>
-            <mat-list-item *ngFor="let ta of managerTAs; last as last">
-                {{ta.displayName}}
-                <mat-divider *ngIf="!last"></mat-divider>
-            </mat-list-item>
-        </mat-list>
+        <div *ngIf="!managerTAs">Loading...</div>
+        <mat-tab-group *ngIf="managerTAs" mat-stretch-tabs>
+            <mat-tab label="Automatic">
+                <ng-template matTabContent>
+                    <button mat-button (click)="assignAutomatically()">Automatic</button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Manual">
+                <ng-template matTabContent>
+                    <mat-list>
+                        <mat-list-item>
+                            <div fxLayout="row" fxLayoutAlign="space-between center" class="row_wrapper">
+                                <div><strong>TA</strong></div>
+                                <div style="left: 50%; position: absolute"><strong>No. of Students</strong></div>
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item *ngFor="let ta of managerTAs; last as last; let i = index">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" class="row_wrapper">
+                                <div>{{ ta.displayName }}</div>
+                                <div>
+                                    <input matInput type="number" [(ngModel)]="nos[i]">
+                                </div>
+                            </div>
+                            <mat-divider *ngIf="!last"></mat-divider>
+                        </mat-list-item>
+                    </mat-list>
+                    <button mat-raised-button (click)="assignManually()">Assign</button>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
     </ng-template>
 </mat-expansion-panel>

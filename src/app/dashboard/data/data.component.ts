@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { DashboardComponent } from '../dashboard.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ManageService } from '../../services/manage.service';
 import { Funcs } from 'src/app/utility/funcs';
 @Component({
   selector: 'app-data',
@@ -17,8 +15,6 @@ export class DataComponent implements OnInit {
   constructor(
     private loginService: LoggedUserService,
     private dash: DashboardComponent,
-    private snackbar: MatSnackBar,
-    private manage: ManageService,
     private funcs: Funcs,
   ) {
     this.loginService.$logged.subscribe(res => {

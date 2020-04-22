@@ -17,6 +17,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule} from '@angular/material/divider';
+import {MatTabsModule} from '@angular/material/tabs';
 
 const modules = [
   MatFormFieldModule,
@@ -36,7 +37,8 @@ const modules = [
   MatExpansionModule,
   MatPaginatorModule,
   MatProgressBarModule,
-  MatDividerModule
+  MatDividerModule,
+  MatTabsModule
 ];
 
 @NgModule({
