@@ -1,3 +1,7 @@
 .row_wrapper {
-    width: 60%;
+    width: 100%;
+}
+
+.name {
+    width: 50%;
 }
