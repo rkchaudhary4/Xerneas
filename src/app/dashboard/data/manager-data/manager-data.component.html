@@ -20,7 +20,8 @@
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
         <div *ngIf="!managerTAs">Loading...</div>
-        <mat-tab-group *ngIf="managerTAs" mat-stretch-tabs>
+        <div *ngIf="managerTAs && managerTAs.length <=0">Koi TA nahi hai tere pass gareeb aadmi</div>
+        <mat-tab-group *ngIf="managerTAs && managerTAs.length > 0" mat-stretch-tabs>
             <mat-tab label="Automatic">
                 <ng-template matTabContent>
                     <button mat-button (click)="assignAutomatically()">Automatic</button>
@@ -39,7 +40,7 @@
                             <div fxLayout="row" fxLayoutAlign="space-between center" class="row_wrapper">
                                 <div>{{ ta.displayName }}</div>
                                 <div>
-                                    <input matInput type="number" [(ngModel)]="nos[i]">
+                                    <input type="number" [(ngModel)]="nos[i]">
                                 </div>
                             </div>
                             <mat-divider *ngIf="!last"></mat-divider>

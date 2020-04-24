@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
 import { ManageService } from 'src/app/services/manage.service';
+import { Funcs } from 'src/app/utility/funcs';
 @Component({
   selector: 'app-manager-data',
   templateUrl: './manager-data.component.html',
@@ -22,11 +23,21 @@ export class ManagerDataComponent implements OnInit {
   constructor(
     private afs: AngularFirestore,
     private router: Router,
-    private manage: ManageService
+    private manage: ManageService,
+    private funcs: Funcs
   ) {}
 
   ngOnInit(): void {
     this.getStudents();
+    for(let i=1;i<=10;i++){
+      this.manage.assignStoM(i.toString(), 'HqhzW9O5epY6CIGXWEmZEHWYKtR2');
+    }
+    for(let i=11;i<=20;i++){
+      this.manage.assignStoM(i.toString(), '3GajxzC6GgPgUcpeX71v08kaUzy1');
+    }
+    for(let i=21;i<=25;i++){
+      this.manage.assignStoM(i.toString(), '9mghlLnVGkbQQOEocE7D9TX0DGs2');
+    }
   }
 
   getStudents() {
@@ -90,6 +101,35 @@ export class ManagerDataComponent implements OnInit {
   }
 
   assignManually() {
-    console.log(this.nos);
+    if (
+      this.nos.includes(null) ||
+      this.nos.includes(undefined) ||
+      this.nos.length !== this.managerTAs.length
+    ) {
+      this.funcs.handleMessages('Please fill all the fields');
+      return;
+    }
+    let sum = 0;
+    this.nos.forEach((val) => (sum += val));
+    if (sum !== this.preData.length * 3) {
+      this.funcs.handleMessages(
+        'Sum of all values should be 3 * ' +
+          this.preData.length.toString() +
+          ' = ' +
+          (this.preData.length * 3).toString()
+      );
+      return;
+    }
+    let idx = 0;
+    const assigner: {id: string, tas: string[]}[] = [];
+    this.preData.forEach(stu => assigner.push({id: stu.uid, tas: []}));
+    this.nos.forEach((no, index) => {
+      for(let i=0;i<no;i++){
+        if(idx === this.preData.length)idx=0;
+        assigner[idx].tas.push(this.managerTAs[index].uid);
+        idx++;
+      }
+    })
+    assigner.forEach(element => this.manage.assignStoTa(element.id, element.tas));
   }
 }

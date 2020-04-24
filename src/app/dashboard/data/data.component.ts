@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { DashboardComponent } from '../dashboard.component';
 import { Funcs } from 'src/app/utility/funcs';
+import { StudentDataService } from 'src/app/services/student-data.service';
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',
