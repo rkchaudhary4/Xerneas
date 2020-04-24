@@ -5,7 +5,6 @@ import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
 import { ManageService } from 'src/app/services/manage.service';
 import { Funcs } from 'src/app/utility/funcs';
-import { StudentDataService } from '../../../services/student-data.service';
 @Component({
   selector: 'app-manager-data',
   templateUrl: './manager-data.component.html',
@@ -26,7 +25,6 @@ export class ManagerDataComponent implements OnInit {
     private router: Router,
     private manage: ManageService,
     private funcs: Funcs,
-    private $data: StudentDataService,
   ) {}
 
   ngOnInit(): void {
@@ -81,7 +79,7 @@ export class ManagerDataComponent implements OnInit {
   getTas() {
     if (!this.managerTAs) {
       this.afs
-        .collection('users', (ref) => ref.where('manager', '==', this.uid))
+        .collection('users', (ref) => ref.where('manager', '==', this.uid).where('approved', '==', true))
         .valueChanges()
         .subscribe((res) => {
           this.managerTAs = res;
@@ -122,7 +120,7 @@ export class ManagerDataComponent implements OnInit {
       );
       return;
     }
-    this.nos.forEach(val => {
+    for(const val of this.nos) {
       if( val > this.preData.length){
         this.funcs.handleMessages('Chutiya gaya hai kya bsdk, max students se jyada kaise de sakta hai kisi TA ko');
         return;
@@ -131,7 +129,7 @@ export class ManagerDataComponent implements OnInit {
         this.funcs.handleMessages('Negative kaise assign hote hain MC');
         return;
       }
-    })
+    }
     let idx = 0;
     const assigner: {id: string, tas: string[]}[] = [];
     this.preData.forEach(stu => assigner.push({id: stu.uid, tas: []}));
@@ -142,6 +140,7 @@ export class ManagerDataComponent implements OnInit {
         idx++;
       }
     })
-    assigner.forEach(element => this.manage.assignStoTa(element.id, element.tas));
+    console.log(assigner);
+    // assigner.forEach(element => this.manage.assignStoTa(element.id, element.tas));
   }
 }

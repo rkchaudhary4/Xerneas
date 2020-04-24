@@ -1,6 +1,6 @@
 <div *ngIf="input && uid">
     <div [ngSwitch]="role">
-        <app-admin-data *ngSwitchCase="'Admin'" (csv)="uploadCSV($event)" (pdf)="uploadPDF($event)"></app-admin-data>
+        <app-admin-data *ngSwitchCase="'Admin'" (csv)="uploadCSV($event)" (pdf)="uploadPDF($event)" [matData]="input"></app-admin-data>
         <app-manager-data *ngSwitchCase="'Manager'" [matData]="input" [uid]="uid"></app-manager-data>
         <app-ta-data *ngSwitchCase="'Teaching Assistant (TA)'" [matData]="input"></app-ta-data>
     </div>

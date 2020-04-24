@@ -25,3 +25,11 @@ label {
     border: 2px solid #f16624;
     color: #dadada !important;
 }
+
+.row_wrapper {
+    width: 100%;
+}
+
+.name {
+    width: 50%;
+}

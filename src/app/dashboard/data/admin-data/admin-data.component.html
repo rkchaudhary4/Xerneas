@@ -11,3 +11,91 @@
         <label for="upload-pdf"><h3>Choose files</h3></label>
     </ng-template>
 </mat-expansion-panel>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>Students</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+        <button mat-raised-button color="primary" (click)="openEditor()">
+      Open Editor
+    </button>
+        <div *ngIf="!preData">Loading....</div>
+        <div *ngIf="preData && preData.length == 0">
+            Koi kaam nahi hai maze kar bhai
+        </div>
+        <app-mat-table *ngIf="preData && preData.length > 0" [data]="data" [columnsToDisplay]="columnsToDisplay" [fields]="fields"></app-mat-table>
+    </ng-template>
+</mat-expansion-panel>
+<mat-expansion-panel (opened)="getManagers()">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Assign Managers
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-tab-group *ngIf="managers && managers.length > 0" mat-stretch-tabs>
+        <mat-tab label="Automatic">
+            <ng-template matTabContent>
+                <button mat-button (click)="assignManagersAutomatically()">Automatic</button>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Manual">
+            <ng-template matTabContent>
+                <mat-list>
+                    <mat-list-item>
+                        <div fxLayout="row wrap" class="row_wrapper">
+                            <div class="name"><strong>Manager</strong></div>
+                            <div><strong>No. of TAs</strong></div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item *ngFor="let manager of managers; last as last; let i = index">
+                        <div fxLayout="row wrap" class="row_wrapper">
+                            <div class="name">{{ manager.displayName }}</div>
+                            <div>
+                                <input type="number" [(ngModel)]="taToM[i]" min="0" />
+                            </div>
+                        </div>
+                        <mat-divider *ngIf="!last"></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+                <button mat-raised-button (click)="assignManagersManually()">Assign</button>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</mat-expansion-panel>
+
+<mat-expansion-panel (opened)="getManagers()">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Assign Students
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-tab-group *ngIf="managers && managers.length > 0" mat-stretch-tabs>
+        <mat-tab label="Automatic">
+            <ng-template matTabContent>
+                <button mat-button (click)="assignStudentsAutomatically()">Automatic</button>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Manual">
+            <ng-template matTabContent>
+                <mat-list>
+                    <mat-list-item>
+                        <div fxLayout="row wrap" class="row_wrapper">
+                            <div class="name"><strong>TA</strong></div>
+                            <div><strong>No. of Students</strong></div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item *ngFor="let manager of managers; last as last; let i = index">
+                        <div fxLayout="row wrap" class="row_wrapper">
+                            <div class="name">{{ manager.displayName }}</div>
+                            <div>
+                                <input type="number" [(ngModel)]="sToM[i]" min="0" />
+                            </div>
+                        </div>
+                        <mat-divider *ngIf="!last"></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+                <button mat-raised-button (click)="assignStudentsManually()">Assign</button>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</mat-expansion-panel>
