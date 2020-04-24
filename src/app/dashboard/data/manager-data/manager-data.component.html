@@ -40,7 +40,7 @@
                             <div fxLayout="row wrap" class="row_wrapper">
                                 <div class="name">{{ ta.displayName }}</div>
                                 <div>
-                                    <input type="number" [(ngModel)]="nos[i]">
+                                    <input matInput type="number" [(ngModel)]="nos[i]" min="0">
                                 </div>
                             </div>
                             <mat-divider *ngIf="!last"></mat-divider>

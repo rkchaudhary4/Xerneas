@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
 import { ManageService } from 'src/app/services/manage.service';
 import { Funcs } from 'src/app/utility/funcs';
+import { StudentDataService } from '../../../services/student-data.service';
 @Component({
   selector: 'app-manager-data',
   templateUrl: './manager-data.component.html',
@@ -24,20 +25,21 @@ export class ManagerDataComponent implements OnInit {
     private afs: AngularFirestore,
     private router: Router,
     private manage: ManageService,
-    private funcs: Funcs
+    private funcs: Funcs,
+    private $data: StudentDataService,
   ) {}
 
   ngOnInit(): void {
     this.getStudents();
-    for(let i=1;i<=10;i++){
-      this.manage.assignStoM(i.toString(), 'HqhzW9O5epY6CIGXWEmZEHWYKtR2');
-    }
-    for(let i=11;i<=20;i++){
-      this.manage.assignStoM(i.toString(), '3GajxzC6GgPgUcpeX71v08kaUzy1');
-    }
-    for(let i=21;i<=25;i++){
-      this.manage.assignStoM(i.toString(), '9mghlLnVGkbQQOEocE7D9TX0DGs2');
-    }
+    // for(let i=1;i<=10;i++){
+      // this.manage.assignStoM(i.toString(), 'HqhzW9O5epY6CIGXWEmZEHWYKtR2');
+    // }
+    // for(let i=11;i<=20;i++){
+      // this.manage.assignStoM(i.toString(), '3GajxzC6GgPgUcpeX71v08kaUzy1');
+    // }
+    // for(let i=21;i<=25;i++){
+      // this.manage.assignStoM(i.toString(), '9mghlLnVGkbQQOEocE7D9TX0DGs2');
+    // }
   }
 
   getStudents() {
@@ -120,6 +122,16 @@ export class ManagerDataComponent implements OnInit {
       );
       return;
     }
+    this.nos.forEach(val => {
+      if( val > this.preData.length){
+        this.funcs.handleMessages('Chutiya gaya hai kya bsdk, max students se jyada kaise de sakta hai kisi TA ko');
+        return;
+      }
+      if( val < 0){
+        this.funcs.handleMessages('Negative kaise assign hote hain MC');
+        return;
+      }
+    })
     let idx = 0;
     const assigner: {id: string, tas: string[]}[] = [];
     this.preData.forEach(stu => assigner.push({id: stu.uid, tas: []}));

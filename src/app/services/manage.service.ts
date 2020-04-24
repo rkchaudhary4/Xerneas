@@ -30,18 +30,38 @@ export class ManageService {
 
   assignStoTa(student: string, tas: Array<string>) {
     tas.forEach((ta) => {
-      this.taRef(ta, student).set({
-        uid: student,
-        comments: [],
-        time: Timestamp.now(),
-      });
+      this.taRef(ta, student)
+        .get()
+        .pipe(first())
+        .subscribe((res) => {
+          if (!res.exists) {
+            this.taRef(ta, student).set({
+              uid: student,
+              comments: [],
+              time: Timestamp.now(),
+            });
+          }
+        });
     });
     this.studentRef(student)
       .valueChanges()
       .pipe(first())
       .subscribe((data: Student) => {
+        const toRemove =[];
+        data.tas.forEach(ta => {
+          if( !tas.includes(ta)){
+            this.taRef(ta, data.uid).delete();
+            toRemove.push(ta);
+          }
+        });
+        data.tas = data.tas.filter(obj => !(toRemove.includes(obj)));
+        tas.forEach((id) => {
+          if (!data.tas.includes(id)) {
+            data.tas.push(id);
+          }
+        });
         this.studentRef(student).update({
-          tas: [...data.tas.concat(tas)],
+          tas: data.tas
         });
       });
   }

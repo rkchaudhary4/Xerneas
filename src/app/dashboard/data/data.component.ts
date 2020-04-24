@@ -17,6 +17,7 @@ export class DataComponent implements OnInit {
     private loginService: LoggedUserService,
     private dash: DashboardComponent,
     private funcs: Funcs,
+    private $data: StudentDataService,
   ) {
     this.loginService.$logged.subscribe(res => {
       this.role = res.role;
