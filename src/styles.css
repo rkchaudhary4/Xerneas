@@ -3,11 +3,13 @@
 @font-face {
     font-family: 'europhonica';
     src: url('/assets/fonts/Europhonic.otf');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'raleway';
     src: url('/assets/fonts/Raleway-Regular.ttf');
+    font-display: swap;
 }
 
 html,
