@@ -4,10 +4,10 @@ import { AngularFireModule } from '@angular/fire';
 import { environment} from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+// import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+// import { AngularFirestoreModule } from '@angular/fire/firestore';
+// import { AngularFireStorageModule } from '@angular/fire/storage';
+// import { AngularFireAuthModule } from '@angular/fire/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginHomeComponent } from './login/login-home/login-home.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
@@ -32,11 +32,11 @@ import { Funcs } from './utility/funcs';
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAnalyticsModule,
+    // AngularFireAnalyticsModule,
     AngularFireModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
-    AngularFirestoreModule,
+    // AngularFireAuthModule,
+    // AngularFireStorageModule,
+    // AngularFirestoreModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
