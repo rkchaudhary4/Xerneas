@@ -14,7 +14,7 @@ import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
-import { DashboardModule } from './dashboard/dashboard.module';
+// import { DashboardModule } from './dashboard/dashboard.module';
 import { LoadMaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UpdateNameComponent } from './dashboard/profile/update-name/update-name.component';
@@ -41,7 +41,7 @@ import { Funcs } from './utility/funcs';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    DashboardModule,
+    // DashboardModule,
     LoadMaterialModule,
     HttpClientModule
   ],
