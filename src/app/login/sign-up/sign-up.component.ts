@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Injectable } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,7 +6,6 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { LoggedUserService } from '../../services/logged-user.service';
-import { Router } from '@angular/router';
 import { Funcs } from 'src/app/utility/funcs';
 
 @Component({
@@ -21,7 +20,6 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private loginService: LoggedUserService,
-    private router: Router,
     @Inject(FormBuilder) fb: FormBuilder,
     private funcs: Funcs
   ) {
@@ -43,7 +41,7 @@ export class SignUpComponent implements OnInit {
         },
         { validator: this.areEqual }
       ),
-      name: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z ]*$')])],
       role: ['', Validators.required],
     });
   }
