@@ -45,6 +45,17 @@ export class LoggedInGuard implements CanActivate {
       })
     );
   }
+
+  canLoad(): Observable<boolean>{
+    return this.localUserService.$logged.pipe(
+      map((res) => {
+        if (res) {
+          this.router.navigate(['/dashboard']);
+        }
+        return !res;
+      })
+    );
+  }
 }
 
 @Injectable({
