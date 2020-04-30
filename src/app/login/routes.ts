@@ -8,7 +8,7 @@ export const userRoutes: Routes = [
   {
     path: 'login',
     component: LoginHomeComponent,
-    canActivate: [LoggedInGuard]
+    canActivate: [LoggedInGuard],
   },
   { path: 'signup', component: SignUpComponent, canActivate: [LoggedInGuard] },
   {

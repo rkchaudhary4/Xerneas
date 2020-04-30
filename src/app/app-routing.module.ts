@@ -5,7 +5,7 @@ import { userRoutes } from './login/routes';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {

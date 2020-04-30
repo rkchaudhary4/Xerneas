@@ -39,7 +39,7 @@ export class LoggedInGuard implements CanActivate {
     return this.localUserService.$logged.pipe(
       map((res) => {
         if (res) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/dashboard']);
         }
         return !res;
       })

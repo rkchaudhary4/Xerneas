@@ -53,7 +53,7 @@ export class LoggedUserService {
             .subscribe(data => {
               app = data.approved;
               if (app === true) {
-                this.router.navigate(['/']);
+                this.router.navigate(['/dashboard']);
               } else {
                 this.funcs.handleMessages('Account not activated by the admin');
                 this.logout();
