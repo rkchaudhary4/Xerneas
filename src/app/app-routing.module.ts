@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { userRoutes } from './login/routes';
-import { LoggedInGuard } from './auth.guard';
+import { LocalUserGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +12,6 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-    canLoad: [LoggedInGuard]
   }
 ];
 
@@ -28,5 +27,4 @@ RouterModule.forChild([
 ])],
 exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}
