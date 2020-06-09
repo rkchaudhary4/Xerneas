@@ -1,3 +1,12 @@
-<button mat-raised-button (click)="open()">Change Name</button>
-<button mat-raised-button (click)="changePass()">Reset Password</button>
-<button mat-raised-button (click)="openPic()">Upload Profile Picture</button>
+<div fxLayout="column" class="content" fxLayoutAlign="start center" fxLayoutGap="2.7vh">
+    <img class="dp" [src]="user && user.dpUrl ? user.dpUrl: '/assets/default-user.png'">
+    <div class="name" [innerHTML]="user ? user.displayName: ''"></div>
+    <div class="post" [innerHTML]="user ? user.role: ''"></div>
+    <div *ngIf="manager" class="post" [innerHTML]="'Manager: ' + manager"></div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around center" class="footer">
+    <button mat-raised-button (click)="open()">Change Name</button>
+    <button mat-raised-button (click)="changePass()">Reset Password</button>
+    <button mat-raised-button (click)="openPic()">Upload Profile Picture</button>
+</div>

@@ -1,0 +1,22 @@
+.content {
+    margin: 4vh 0;
+}
+
+.dp {
+    height: 38vh;
+    width: 38vh;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.footer button {
+    min-width: 170px;
+}
+
+.name {
+    font-size: 3.5vh;
+}
+
+.post {
+    font-size: 2.8vh;
+}

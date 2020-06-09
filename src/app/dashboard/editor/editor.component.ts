@@ -77,7 +77,7 @@ export class EditorComponent implements OnInit {
       .ref(`/pdfs/${path}`)
       .getDownloadURL()
       .subscribe(res => (this.url = res));
-    this.index = this.data.findIndex(e => e.id === this.id);
+    this.index = this.data.findIndex(e => e['Application Ref. No.'].split('\\')[3] === this.id);
     this.currentData = this.data[this.index];
     this.fields = this.headers.map(x => x);
     this.loaded = true;

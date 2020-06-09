@@ -39,8 +39,9 @@ export class StudentDataService {
           skipEmptyLines: true,
           complete: result => {
             result.data.forEach(stu => {
-              this.studentRef(stu.id).set({
-                uid: stu.id,
+              // console.log(stu);
+              this.studentRef(stu['Application Ref. No.'].split('\\')[3]).set({
+                uid: stu['Application Ref. No.'].split('\\')[3],
                 comments: [],
                 manager: '',
                 tas: []
