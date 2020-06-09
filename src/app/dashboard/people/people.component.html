@@ -1,32 +1,26 @@
-<div class="wrapper" fxLayout="row">
-    <table mat-table #table [dataSource]="content" class="mat-elevation-z8 content" fxFlex="auto">
-        <ng-container matColumnDef="displayName">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">
-                <div class="firstCol" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
-                    <img [src]="element.dpUrl ? element.dpUrl : '/assets/default-user.png'" class="dp" />
-                    <div>{{ element.displayName }}</div>
-                </div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>E-mail ID</th>
-            <td mat-cell *matCellDef="let element">
-                <a [href]="'mailto:' + element.email">{{ element.email }}</a>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef>Role</th>
-            <td mat-cell *matCellDef="let element">{{ element.role }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="approved" *ngIf="admin">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let element">
-                <button mat-raised-button (click)="approve(element.uid, element.approved)" [innerHTML]="element.approved ? 'Decline' : 'Approve'" [style.color]="element.approved ? 'red' : 'black'" [disabled]="element.role === 'Admin'"></button>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-    </table>
+<div class="wrapper">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            Admins
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+            <app-table [content]="admins" [columnsToDisplay]="columnsToDisplay" (toggle)="approve($event)"></app-table>
+        </ng-template>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            Managers
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+            <app-table [content]="managers" [columnsToDisplay]="columnsToDisplay" (toggle)="approve($event)"></app-table>
+        </ng-template>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            Teaching Assistant (TA)
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+            <app-table [content]="tas" [columnsToDisplay]="columnsToDisplay" (toggle)="approve($event)"></app-table>
+        </ng-template>
+    </mat-expansion-panel>
 </div>

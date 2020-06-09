@@ -23,6 +23,7 @@ import { ManagerEditorComponent } from './editor/manager-editor/manager-editor.c
 import { TaCsvComponent } from './editor/ta-csv/ta-csv.component';
 import { ManagerCsvComponent } from './editor/manager-csv/manager-csv.component';
 import { Funcs } from 'src/app/utility/funcs';
+import { TableComponent } from './people/table/table.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { Funcs } from 'src/app/utility/funcs';
     ManagerEditorComponent,
     TaCsvComponent,
     ManagerCsvComponent,
+    TableComponent,
   ],
   imports: [
     CommonModule,
