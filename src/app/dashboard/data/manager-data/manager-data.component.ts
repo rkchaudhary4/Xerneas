@@ -29,15 +29,6 @@ export class ManagerDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStudents();
-    // for(let i=1;i<=10;i++){
-      // this.manage.assignStoM(i.toString(), 'HqhzW9O5epY6CIGXWEmZEHWYKtR2');
-    // }
-    // for(let i=11;i<=20;i++){
-      // this.manage.assignStoM(i.toString(), '3GajxzC6GgPgUcpeX71v08kaUzy1');
-    // }
-    // for(let i=21;i<=25;i++){
-      // this.manage.assignStoM(i.toString(), '9mghlLnVGkbQQOEocE7D9TX0DGs2');
-    // }
   }
 
   getStudents() {
@@ -122,11 +113,11 @@ export class ManagerDataComponent implements OnInit {
     }
     for(const val of this.nos) {
       if( val > this.preData.length){
-        this.funcs.handleMessages('Chutiya gaya hai kya bsdk, max students se jyada kaise de sakta hai kisi TA ko');
+        this.funcs.handleMessages('You cannot assign more students than available to any TA.');
         return;
       }
       if( val < 0){
-        this.funcs.handleMessages('Negative kaise assign hote hain MC');
+        this.funcs.handleMessages('You cannot assign negative students to any TA.');
         return;
       }
     }

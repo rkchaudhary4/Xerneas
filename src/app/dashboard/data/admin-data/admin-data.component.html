@@ -21,7 +21,7 @@
     </button>
         <div *ngIf="!preData">Loading....</div>
         <div *ngIf="preData && preData.length == 0">
-            Koi kaam nahi hai maze kar bhai
+            There are no students yet.
         </div>
         <app-mat-table *ngIf="preData && preData.length > 0" [data]="data" [columnsToDisplay]="columnsToDisplay" [fields]="fields"></app-mat-table>
     </ng-template>

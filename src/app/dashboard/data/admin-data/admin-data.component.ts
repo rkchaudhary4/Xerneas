@@ -124,11 +124,11 @@ export class AdminDataComponent implements OnInit {
     }
     for(const val of this.taToM){
       if( val > this.tas.length){
-        this.funcs.handleMessages('Chutiya gaya hai kya bsdk, max students se jyada kaise de sakta hai kisi TA ko');
+        this.funcs.handleMessages('You cannot assign more TAs than available to any manager.');
         return;
       }
       if( val < 0){
-        this.funcs.handleMessages('Negative kaise assign hote hain MC');
+        this.funcs.handleMessages('You cannot assign negative TAs to any manager.');
         return;
       }
     }
@@ -170,11 +170,11 @@ export class AdminDataComponent implements OnInit {
     }
     for(const val of this.sToM){
       if( val > this.preData.length){
-        this.funcs.handleMessages('Chutiya gaya hai kya bsdk, max students se jyada kaise de sakta hai kisi TA ko');
+        this.funcs.handleMessages('You cannot assign more students than available to any manager.');
         return;
       }
       if( val < 0){
-        this.funcs.handleMessages('Negative kaise assign hote hain MC');
+        this.funcs.handleMessages('You cannot assign negative students to any manager.');
         return;
       }
     }
