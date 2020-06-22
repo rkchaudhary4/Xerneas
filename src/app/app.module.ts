@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UpdateNameComponent } from './dashboard/profile/update-name/update-name.component';
 import { WaitingBarComponent } from './utility/waiting-bar/waiting-bar.component';
 import { Funcs } from './utility/funcs';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { Funcs } from './utility/funcs';
     ReactiveFormsModule,
     FormsModule,
     LoadMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [SignUpComponent, Funcs],
   bootstrap: [AppComponent],
