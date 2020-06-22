@@ -43,7 +43,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     FormsModule,
     LoadMaterialModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
   ],
   providers: [SignUpComponent, Funcs],
   bootstrap: [AppComponent],
