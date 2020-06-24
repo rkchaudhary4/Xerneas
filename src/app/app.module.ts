@@ -20,7 +20,6 @@ import { UpdateNameComponent } from './dashboard/profile/update-name/update-name
 import { WaitingBarComponent } from './utility/waiting-bar/waiting-bar.component';
 import { Funcs } from './utility/funcs';
 import { ServiceWorkerModule } from '@angular/service-worker';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,11 +44,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
   ],
-  providers: [SignUpComponent, Funcs],
-  bootstrap: [AppComponent],
-  entryComponents:[
-    UpdateNameComponent,
-    WaitingBarComponent
-  ]
+  providers: [Funcs],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
