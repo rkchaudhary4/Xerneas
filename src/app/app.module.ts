@@ -16,7 +16,6 @@ import { FormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 import { LoadMaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
-import { UpdateNameComponent } from './dashboard/profile/update-name/update-name.component';
 import { WaitingBarComponent } from './utility/waiting-bar/waiting-bar.component';
 import { Funcs } from './utility/funcs';
 import { ServiceWorkerModule } from '@angular/service-worker';
