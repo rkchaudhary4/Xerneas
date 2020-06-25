@@ -2,7 +2,7 @@ export class Student {
   public uid: string;
   public comments: {field: string, ta: string, comment: string}[];
   public manager: string;
-  public tas: Array<string>
+  public tas: Array<string>;
 
   constructor(student){
     this.uid = student.id;

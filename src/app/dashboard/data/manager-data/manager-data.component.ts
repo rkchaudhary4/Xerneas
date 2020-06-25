@@ -37,7 +37,7 @@ export class ManagerDataComponent implements OnInit {
         let completed = 0;
         student.names = [];
         student.tas.forEach((ta, innerIndex) => {
-          if (student.comments.findIndex((e) => e.ta === ta) > -1) completed++;
+          if (student.comments.findIndex((e) => e.ta === ta) > -1) { completed++; }
           this.afs
             .doc(`users/${ta}`)
             .valueChanges()
@@ -104,19 +104,16 @@ export class ManagerDataComponent implements OnInit {
     this.nos.forEach((val) => (sum += val));
     if (sum !== this.preData.length * 3) {
       this.funcs.handleMessages(
-        'Sum of all values should be 3 * ' +
-          this.preData.length.toString() +
-          ' = ' +
-          (this.preData.length * 3).toString()
+        `Sum of all values should be 3 * ${this.preData.length.toString()} = ${(this.preData.length * 3).toString()}`
       );
       return;
     }
-    for(const val of this.nos) {
-      if( val > this.preData.length){
+    for (const val of this.nos) {
+      if ( val > this.preData.length){
         this.funcs.handleMessages('You cannot assign more students than available to any TA.');
         return;
       }
-      if( val < 0){
+      if ( val < 0){
         this.funcs.handleMessages('You cannot assign negative students to any TA.');
         return;
       }
@@ -125,12 +122,12 @@ export class ManagerDataComponent implements OnInit {
     const assigner: {id: string, tas: string[]}[] = [];
     this.preData.forEach(stu => assigner.push({id: stu.uid, tas: []}));
     this.nos.forEach((no, index) => {
-      for(let i=0;i<no;i++){
-        if(idx === this.preData.length)idx=0;
+      for (let i = 0; i < no; i++){
+        if (idx === this.preData.length) {idx = 0; }
         assigner[idx].tas.push(this.managerTAs[index].uid);
         idx++;
       }
-    })
+    });
     console.log(assigner);
     // assigner.forEach(element => this.manage.assignStoTa(element.id, element.tas));
   }

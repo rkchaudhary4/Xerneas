@@ -9,6 +9,6 @@ export class TaStudent {
   constructor( student ) {
     this.uid = student.uid,
     this.comments = student.comments,
-    this.time = student.time
+    this.time = student.time;
   }
 }

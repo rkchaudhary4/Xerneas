@@ -23,7 +23,7 @@ export class UpdateNameComponent implements OnInit {
   }
 
   onSubmit(name: string){
-    if(name === this.user.displayName ){
+    if (name === this.user.displayName ){
       this.funcs.handleMessages('You entered the same name');
     } else {
       this.loginService.changeName(name);

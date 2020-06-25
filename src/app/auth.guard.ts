@@ -77,9 +77,9 @@ export class EditorGuard implements CanActivate {
             this.router.navigate(['/dashboard/data']);
             return false;
           }
-          if (this.role === 'Admin') return true;
+          if (this.role === 'Admin') { return true; }
           if (this.role === 'Manager') {
-            if (res.manager === this.uid) return true;
+            if (res.manager === this.uid) { return true; }
             else {
               this.router.navigate(['/dashboard/data']);
               return false;
@@ -91,7 +91,7 @@ export class EditorGuard implements CanActivate {
               if (i > -1) {
                 this.router.navigate(['/dashboard/data']);
                 return false;
-              } else return true;
+              } else { return true; }
             } else {
               this.router.navigate(['/dashboard/data']);
               return false;

@@ -13,7 +13,7 @@ import { Funcs } from 'src/app/utility/funcs';
 export class ProfilePictureComponent implements OnInit {
   file: File;
   path: string;
-  id: string
+  id: string;
 
   constructor(
     private login: LoggedUserService,
@@ -27,10 +27,10 @@ export class ProfilePictureComponent implements OnInit {
 
   upload(event: FileList) {
     this.file = event.item(0);
-    if( this.file.type.split('/')[0] !== 'image') {
+    if ( this.file.type.split('/')[0] !== 'image') {
       this.funcs.handleMessages('Please upload a valid image');
       return;
-    } else if(this.file.size > 1000000){
+    } else if (this.file.size > 1000000){
       this.funcs.handleMessages('File size must be less than 1 MB');
       return;
     } else {
@@ -41,14 +41,14 @@ export class ProfilePictureComponent implements OnInit {
   }
 
   complete($event) {
-    if( $event ) {
+    if ( $event ) {
       this.storage.ref(this.path).getDownloadURL().subscribe(res => {
         this.login.userRef(this.id).update({
           dpUrl: res
-        })
-      this.dialog.closeAll();
+        });
+        this.dialog.closeAll();
         this.funcs.handleMessages('Profile Picture updated successfully');
-      })
+      });
     }
   }
 }

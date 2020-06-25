@@ -23,19 +23,19 @@ export class DashboardComponent implements OnInit {
 
   constructor(private logged: LoggedUserService, private router: Router) {
     this.router.events.subscribe((event) => {
-      if( event instanceof NavigationEnd) {
+      if ( event instanceof NavigationEnd) {
         const link = event.url.split('/')[2];
-        if( link === undefined) this.route = 'home';
-        else if( link === 'editor') this.route = '';
-        else this.route = link;
+        if ( link === undefined) { this.route = 'home'; }
+        else if ( link === 'editor') { this.route = ''; }
+        else { this.route = link; }
       }
-    })
+    });
    }
 
   ngOnInit(): void {
     this.logged.currentUser.subscribe(res => {
       this.user = res;
-      if (this.user) this.loaded = false;
+      if (this.user) { this.loaded = false; }
     });
     if (this.user && !this.user.approved) {
       this.logged.logout();

@@ -41,7 +41,13 @@ export class SignUpComponent implements OnInit {
         },
         { validator: this.areEqual }
       ),
-      name: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z ]*$')])],
+      name: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z ]*$'),
+        ]),
+      ],
       role: ['', Validators.required],
     });
   }
@@ -50,7 +56,7 @@ export class SignUpComponent implements OnInit {
     return g.get('password').value === g.get('repeat').value
       ? null
       : { mismatch: true };
-  };
+  }
 
   ngOnInit() {}
 
@@ -79,5 +85,5 @@ export class SignUpComponent implements OnInit {
             });
         }
       });
-  };
+  }
 }

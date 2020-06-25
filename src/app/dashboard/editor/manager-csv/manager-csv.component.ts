@@ -22,6 +22,6 @@ export class ManagerCsvComponent implements OnInit {
         console.log('df',  this.currentData);
         this.data.emit(this.currentData);
       }
-    })
+    });
   }
 }

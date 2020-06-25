@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild, OnChanges, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  OnChanges,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
@@ -11,20 +18,18 @@ export class MatTableComponent implements OnInit, OnChanges {
   @Input() data;
   @Input() columnsToDisplay: Array<string>;
   @Input() fields: Array<string>;
-  constructor(private ChangeDetector: ChangeDetectorRef) { }
+  constructor(private ChangeDetector: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges() {
-    if( this.data ) {
+    if (this.data) {
       this.ChangeDetector.detectChanges();
-      this.data.paginator= this.paginator;
+      this.data.paginator = this.paginator;
     }
   }
 
-  getVal(col){
+  getVal(col) {
     return this.fields[this.columnsToDisplay.indexOf(col)];
   }
-
 }

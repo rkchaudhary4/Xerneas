@@ -14,13 +14,13 @@ import Timestamp = firestore.Timestamp;
 })
 export class ManageService {
   public studentRef = (id: string): AngularFirestoreDocument<Student> =>
-    this.afs.doc(`students/${id}`);
+    this.afs.doc(`students/${id}`)
 
   public taRef = (
     id: string,
     studentId: string
   ): AngularFirestoreDocument<TaStudent> =>
-    this.afs.doc(`users/${id}/data/${studentId}`);
+    this.afs.doc(`users/${id}/data/${studentId}`)
 
   assignStoM(student: string, manage: string) {
     this.studentRef(student).update({
@@ -47,9 +47,9 @@ export class ManageService {
       .valueChanges()
       .pipe(first())
       .subscribe((data: Student) => {
-        const toRemove =[];
+        const toRemove = [];
         data.tas.forEach(ta => {
-          if( !tas.includes(ta)){
+          if ( !tas.includes(ta)){
             this.taRef(ta, data.uid).delete();
             toRemove.push(ta);
           }

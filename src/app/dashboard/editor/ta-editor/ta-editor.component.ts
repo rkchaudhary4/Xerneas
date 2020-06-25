@@ -46,7 +46,7 @@ export class TaEditorComponent implements OnInit, OnChanges {
         }
         this.taComment.forEach((key) => {
           const i = this.fields.indexOf(key.field);
-          if (i >= 0) this.fields.splice(i, 1);
+          if (i >= 0) { this.fields.splice(i, 1); }
         });
       });
   }
@@ -66,16 +66,17 @@ export class TaEditorComponent implements OnInit, OnChanges {
 
   private _filter(value: string): string[] {
     const filtervalue = value.toLowerCase();
-    if (this.fields)
+    if (this.fields) {
       return this.fields.filter((option) =>
         option.toLowerCase().includes(filtervalue)
       );
-    else return [];
+    }
+    else { return []; }
   }
 
   add(option) {
     const Index = this.fields.indexOf(option);
-    if (Index >= 0) this.fields.splice(Index, 1);
+    if (Index >= 0) { this.fields.splice(Index, 1); }
   }
 
   save() {

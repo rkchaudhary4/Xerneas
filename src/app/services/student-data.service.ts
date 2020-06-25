@@ -22,10 +22,10 @@ export class StudentDataService {
   downloadURL: Observable<string>;
 
   public studentRef = (id: string): AngularFirestoreDocument<Student> =>
-    this.afs.doc(`students/${id}`);
+    this.afs.doc(`students/${id}`)
 
   public taRef = (id: string, studentId: string): AngularFirestoreDocument<TaStudent> =>
-    this.afs.doc(`users/${id}/data/${studentId}`);
+    this.afs.doc(`users/${id}/data/${studentId}`)
 
   updateData() {
     const path = `/data.csv`;
@@ -39,7 +39,6 @@ export class StudentDataService {
           skipEmptyLines: true,
           complete: result => {
             result.data.forEach(stu => {
-              // console.log(stu);
               this.studentRef(stu['Application Ref. No.'].split('\\')[3]).set({
                 uid: stu['Application Ref. No.'].split('\\')[3],
                 comments: [],
