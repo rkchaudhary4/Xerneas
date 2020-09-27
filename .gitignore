@@ -47,3 +47,5 @@ Thumbs.db
 
 #firebase
 /.firebase
+
+/src/environments
