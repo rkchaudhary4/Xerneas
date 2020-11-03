@@ -4,7 +4,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Papa } from 'ngx-papaparse';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { StudentDataService } from '../../services/student-data.service';
-import { first, finalize } from 'rxjs/internal/operators';
+import { first, finalize } from 'rxjs/operators';
 import { SafeUrl } from '@angular/platform-browser';
 import { Funcs } from 'src/app/utility/funcs';
 

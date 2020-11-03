@@ -5,9 +5,9 @@ import {
 } from '@angular/fire/firestore';
 import { Student } from '../models/student';
 import { TaStudent } from '../models/data';
-import { first } from 'rxjs/internal/operators';
-import { firestore } from 'firebase/app';
-import Timestamp = firestore.Timestamp;
+import { first } from 'rxjs/operators';
+import firebase from 'firebase/app';
+import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable({
   providedIn: 'root',

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { StudentDataService } from 'src/app/services/student-data.service';
-import { first } from 'rxjs/internal/operators';
+import { first } from 'rxjs/operators';
 import { Student } from 'src/app/models/student';
-import { firestore } from 'firebase/app';
-import Timestamp = firestore.Timestamp;
+import firebase from 'firebase/app';
+import Timestamp = firebase.firestore.Timestamp;
 import { Router } from '@angular/router';
 import { Funcs } from 'src/app/utility/funcs';
 

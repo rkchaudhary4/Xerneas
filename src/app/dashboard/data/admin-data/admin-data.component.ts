@@ -3,8 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ManageService } from 'src/app/services/manage.service';
 import { Funcs } from 'src/app/utility/funcs';
-import { User } from 'firebase';
 import { MatTableDataSource } from '@angular/material/table';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-admin-data',
@@ -43,7 +43,9 @@ export class AdminDataComponent implements OnInit {
         student.names = [];
         student.manage = '';
         student.tas.forEach((ta, innerIndex) => {
-          if (student.comments.findIndex((e) => e.ta === ta) > -1) { completed++; }
+          if (student.comments.findIndex((e) => e.ta === ta) > -1) {
+            completed++;
+          }
           this.afs
             .doc(`users/${ta}`)
             .valueChanges()
@@ -105,7 +107,7 @@ export class AdminDataComponent implements OnInit {
     });
   }
 
-  assignManagersManually(){
+  assignManagersManually() {
     if (
       this.taToM.includes(null) ||
       this.taToM.includes(undefined) ||
@@ -122,20 +124,26 @@ export class AdminDataComponent implements OnInit {
       );
       return;
     }
-    for (const val of this.taToM){
-      if ( val > this.tas.length){
-        this.funcs.handleMessages('You cannot assign more TAs than available to any manager.');
+    for (const val of this.taToM) {
+      if (val > this.tas.length) {
+        this.funcs.handleMessages(
+          'You cannot assign more TAs than available to any manager.'
+        );
         return;
       }
-      if ( val < 0){
-        this.funcs.handleMessages('You cannot assign negative TAs to any manager.');
+      if (val < 0) {
+        this.funcs.handleMessages(
+          'You cannot assign negative TAs to any manager.'
+        );
         return;
       }
     }
     let i = 0;
     this.taToM.forEach((no, index) => {
-      for (let idx = 0; idx < no; idx++){
-        if (i >= this.tas.length) {i = 0; }
+      for (let idx = 0; idx < no; idx++) {
+        if (i >= this.tas.length) {
+          i = 0;
+        }
         this.manage.assignMtoTa(this.managers[index].uid, this.tas[i].uid);
         i++;
       }
@@ -146,12 +154,12 @@ export class AdminDataComponent implements OnInit {
     this.preData.forEach((student, index) => {
       this.manage.assignStoM(
         student.uid,
-        this.managers[index % this.managers.length].uid,
+        this.managers[index % this.managers.length].uid
       );
     });
   }
 
-  assignStudentsManually(){
+  assignStudentsManually() {
     if (
       this.sToM.includes(null) ||
       this.sToM.includes(undefined) ||
@@ -168,20 +176,26 @@ export class AdminDataComponent implements OnInit {
       );
       return;
     }
-    for (const val of this.sToM){
-      if ( val > this.preData.length){
-        this.funcs.handleMessages('You cannot assign more students than available to any manager.');
+    for (const val of this.sToM) {
+      if (val > this.preData.length) {
+        this.funcs.handleMessages(
+          'You cannot assign more students than available to any manager.'
+        );
         return;
       }
-      if ( val < 0){
-        this.funcs.handleMessages('You cannot assign negative students to any manager.');
+      if (val < 0) {
+        this.funcs.handleMessages(
+          'You cannot assign negative students to any manager.'
+        );
         return;
       }
     }
     let i = 0;
     this.sToM.forEach((no, index) => {
-      for (let idx = 0; idx < no; idx++){
-        if (i >= this.preData.length) {i = 0; }
+      for (let idx = 0; idx < no; idx++) {
+        if (i >= this.preData.length) {
+          i = 0;
+        }
         this.manage.assignStoM(this.preData[i].uid, this.managers[index].uid);
         i++;
       }

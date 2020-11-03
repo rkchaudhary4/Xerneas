@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoggedUserService } from './services/logged-user.service';
-import { map } from 'rxjs/internal/operators';
+import { map } from 'rxjs/operators';
 import { StudentDataService } from './services/student-data.service';
 
 @Injectable({

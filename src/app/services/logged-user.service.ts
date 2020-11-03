@@ -6,7 +6,7 @@ import {
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, switchMap, catchError } from 'rxjs/internal/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { Funcs } from 'src/app/utility/funcs';
 @Injectable({
