@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ManagerCsvComponent } from './manager-csv.component';
 
@@ -6,7 +6,7 @@ describe('ManagerCsvComponent', () => {
   let component: ManagerCsvComponent;
   let fixture: ComponentFixture<ManagerCsvComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ManagerCsvComponent ]
     })
