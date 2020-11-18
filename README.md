@@ -4,7 +4,7 @@ The project Xerneas is a web-application with the objective of data-management. 
 
 ## Technology Stack
 
-This project uses Angular 9.0.2 as the framework for frontend and firebase for the backend. Angular Material UI has been used for the frontend. Firebase Authentication, Firestore and Storage has been used. Backend is written in typescript.
+This project uses Angular as the framework for frontend and firebase for the backend. Angular Material UI has been used for the frontend. Firebase Authentication has been used for user management, Firestore has been used for database management and Storage for storing files like pdfs and images has been used. Backend is written in typescript.
 
 ## Development server
 
