@@ -24,6 +24,15 @@ import { TaCsvComponent } from './editor/ta-csv/ta-csv.component';
 import { ManagerCsvComponent } from './editor/manager-csv/manager-csv.component';
 import { Funcs } from 'src/app/utility/funcs';
 import { TableComponent } from './people/table/table.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -53,9 +62,18 @@ import { TableComponent } from './people/table/table.component';
     LoadMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatExpansionModule,
+    MatPaginatorModule,
+    MatDividerModule,
+    MatTabsModule,
   ],
   entryComponents: [ProfilePictureComponent, ConfirmDialogComponent],
-  providers: [Funcs]
+  providers: [Funcs],
 })
 export class DashboardModule {}
