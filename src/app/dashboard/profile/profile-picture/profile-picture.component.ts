@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AngularFireStorage
-} from '@angular/fire/storage';
+} from '@angular/fire/compat/storage';
 import { LoggedUserService } from '../../../services/logged-user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreDocument
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 import {
   AngularFireStorage,
   AngularFireUploadTask
-} from '@angular/fire/storage';
+} from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { Papa } from 'ngx-papaparse';
 import { Student } from '../models/student';

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UpdateNameComponent } from './update-name/update-name.component';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'src/app/models/user';
 
 @Component({

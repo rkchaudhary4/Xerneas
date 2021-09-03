@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestoreDocument,
   AngularFirestore,
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 import { Student } from '../models/student';
 import { TaStudent } from '../models/data';
 import { first } from 'rxjs/operators';
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable({

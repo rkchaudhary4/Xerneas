@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import {
   AngularFireUploadTask,
   AngularFireStorage
-} from '@angular/fire/storage';
+} from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
